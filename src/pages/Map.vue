@@ -19,6 +19,8 @@
     import Indicator from '@/components/Indicator'
 
     export default {
+        name: 'map-page',
+
         components: {Indicator, SitesMap},
 
         data() {

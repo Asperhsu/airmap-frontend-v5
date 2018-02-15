@@ -1,11 +1,12 @@
 import {isTypeExist, getSupportTypes} from '@/services/indicator';
+import {arrayIntersection} from '@/services/helpers';
 
 export default {
     strict: true,
     namespaced: true,
     state: {
         groups: {},
-        activeGroups: [],
+        activeGroups: null,
         indicators: getSupportTypes(),
         indicatorType: "PM2.5",
         analysisTypes: [
@@ -22,6 +23,21 @@ export default {
     mutations: {
         setGroups(state, groups) {
             state.groups = Object.assign({}, groups);
+
+            if (state.activeGroups === null) {
+                // set default activeGroups
+                state.activeGroups = Object.keys(state.groups);
+            } else {
+                // remove group not in groups
+                let groupNames =  Object.keys(state.groups);
+                let activeGroups = state.activeGroups.filter(group => {
+                    return groupNames.indexOf(group) > -1;
+                });
+
+                if (activeGroups.length !== state.activeGroups.length) {
+                    state.activeGroups = activeGroups;
+                }
+            }
         },
         setActiveGroups(state, groups) {
             state.activeGroups = [].concat(groups);

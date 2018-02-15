@@ -28,7 +28,8 @@
 
     export default {
         mounted () {
-            google.maps.event.addDomListener(window, "load", this.init);
+            // google.maps.event.addDomListener(window, "load", this.init);
+            this.init();
         },
 
         props: {
@@ -37,6 +38,7 @@
 
         data() {
             return {
+                booted: false,
                 mapElementId: 'google-map',
                 mapObject: null,
                 markerInstances: [],
@@ -61,20 +63,7 @@
             center (latlng) { this.mapObject.setCenter(latlng); },
             zoom (zoom) { this.mapObject.setZoom(zoom); },
             markers (newMarkers, oldMarkers) {
-                let markerInstances = [].concat(this.markerInstances);
-                this.markerInstances = updateMarkers(oldMarkers, newMarkers, markerInstances, (option) => {
-                    let marker = new google.maps.Marker($.extend({}, {
-                        map: this.mapObject,
-                    }, option));
-
-                    google.maps.event.addListener(marker, 'click', () => {
-                        this.$emit('markerClicked', marker);
-                    });
-
-                    return marker;
-                });
-
-                this.$emit('markersLoaded');
+                this.updateMarkers(oldMarkers, newMarkers);
             },
         },
 
@@ -158,6 +147,22 @@
                 controlDiv.index = 1;
                 this.mapObject.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
             },
+            updateMarkers (oldMarkers, newMarkers) {
+                let markerInstances = [].concat(this.markerInstances);
+                this.markerInstances = updateMarkers(oldMarkers, newMarkers, markerInstances, (option) => {
+                    let marker = new google.maps.Marker($.extend({}, {
+                        map: this.mapObject,
+                    }, option));
+
+                    google.maps.event.addListener(marker, 'click', () => {
+                        this.$emit('markerClicked', marker);
+                    });
+
+                    return marker;
+                });
+
+                this.$emit('markersLoaded');
+            }
         }
     }
 </script>

@@ -21,3 +21,11 @@ export const debounce = function(func, wait, immediate) {
 		if (callNow) func.apply(context, args);
 	};
 };
+
+export const arrayIntersection = function(){
+	return Array.from(arguments).reduce(function(previous, current){
+		return previous.filter(function(element){
+			return current.indexOf(element) > -1;
+		});
+	});
+};

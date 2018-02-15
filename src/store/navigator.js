@@ -24,5 +24,8 @@ export default {
         options(state, newOptions = {}) {
             state.options = newOptions;
         }
-    }
+    },
+    getters: {
+        pageStack: state => state.stack
+    },
 }

@@ -9,7 +9,7 @@
     import Vue from 'vue'
     import axios from 'axios';
     import SnazzyInfoWindow from 'snazzy-info-window';
-    import {debounce} from '@/services/helpers'
+    import {debounce, arrayIntersection} from '@/services/helpers'
     import SiteMapSetting from '@/pages/SiteMapSetting'
     import GoogleMap from '@/components/GoogleMap'
     import SiteInfowindow from '@/components/SiteInfowindow'
@@ -28,8 +28,17 @@
         computed: {
             mapObject () { return this.$refs.map.mapObject; },
             markerInstances () { return this.$refs.map.markerInstances; },
+            markers () { return this.$store.state.map.markers; },
+
             indicatorType () { return this.$store.state.site.indicatorType; },
-            markers () { return this.$store.state.map.markers; }
+            activeGroups () { return this.$store.state.site.activeGroups; },
+            activeAnalysisTypes () { return this.$store.state.site.activeAnalysisTypes; },
+        },
+
+        watch: {
+            indicatorType () { this.updateMarkerIcon(); },
+            activeGroups () { this.applyMarkerFilter(); },
+            activeAnalysisTypes () { this.applyMarkerFilter(); },
         },
 
         methods: {
@@ -94,12 +103,14 @@
 
                     this.$store.commit('map/setMarkers', markers);
                     this.$store.commit('site/setGroups', groups);
-                    this.$store.commit('site/setActiveGroups', Object.keys(groups));
                     this.$store.commit('site/updateAnalysisTypeCount', analysis);
                 });
 
                 // set interval
-                // setTimeout(() => {this.fetchSites();}, 5 * 60 * 1000);
+                if (this.$route.name == 'map') {
+                    // setTimeout(() => {this.fetchSites();}, 5 * 60 * 1000);
+                    setTimeout(() => {this.fetchSites();}, 1 * 60 * 1000);
+                }
             },
             openInfowindow (marker) {
                 if (this.infowindow) {
@@ -138,7 +149,26 @@
                 })
 
                 this.siteCount = count;
-            }
+            },
+            updateMarkerIcon() {
+                this.markerInstances.map(marker => {
+                    let site = marker.site;
+                    let icon = site.markerIcon(this.indicatorType);
+                    marker.setIcon(icon);
+                });
+            },
+            applyMarkerFilter() {
+                this.markerInstances.map(marker => {
+                    let site = marker.site;
+
+                    let inGroup = this.activeGroups.indexOf(site.group) > -1;
+                    let inAnalysisType = arrayIntersection(this.activeAnalysisTypes,site.analysisStatus).length > 0;
+
+                    marker.setVisible(inGroup && inAnalysisType);
+                });
+
+                this.countSitesInView();
+            },
         }
     }
 </script>

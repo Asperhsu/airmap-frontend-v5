@@ -37,7 +37,7 @@ export default class Site {
     }
     get analysisStatus() {
         let status = this.getProperty('Analysis.status');
-        return status ? status.split('|') : [];
+        return status ? status.split('|') : ['normal'];
     }
 
     measureValue(indicatorType) {

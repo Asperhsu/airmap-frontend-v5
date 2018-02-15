@@ -76,31 +76,50 @@ export const updateMarkers = (oldMarkers, newMarkers, markerInstances, createCb)
     });
 
     // updated
-    Object.values(diff.updated).map((option) => {
+    try {
+        let updatedPositionStr = [];
+        for (let key in diff.updated) {
+            let updatedOption = newMarkers[key];
+            let position = updatedOption.position;
+            updatedPositionStr[key] = position.lat + '-' + position.lng;
+        }
+
         markerInstances.map((marker, index) => {
             let position = marker.getPosition();
-            if (option.position.lat === position.lat && option.position.lng === position.lng) {
-                marker.setOptions(option);
+            let posStr = position.lat + '-' + position.lng;
+            let key = updatedPositionStr.indexOf(posStr);
+
+            if (key > -1) {
+                let updatedOption = newMarkers[key];
+                marker.setOptions(updatedOption);
             }
         });
-    });
+    } catch(err) {
+        console.log(err);
+    }
 
     // deleted
-    let deleted = Object.values(diff.deleted);
-    if (deleted.length) {
-        deleted.map((option) => {
-            markerInstances.map((marker, index) => {
-                let position = marker.getPosition();
-                if (option.position.lat === position.lat && option.position.lng === position.lng) {
-                    marker.setMap(null);
-                    markerInstances[index] = null;
-                }
-            });
+    try {
+        let deletedPositionStr = Object.keys(diff.deleted).map(key => {
+            let position = newMarkers[key].position;
+            return position.lat + '-' + position.lng;
+        });
+
+        markerInstances.map((marker, index) => {
+            let position = marker.getPosition();
+            let posStr = position.lat + '-' + position.lng;
+
+            if (deletedPositionStr.indexOf(posStr) > -1) {
+                marker.setMap(null);
+                markerInstances[index] = null;
+            }
         });
 
         markerInstances = markerInstances.filter((marker) => {
             return marker !== null;
         });
+    } catch(err) {
+        console.log(err);
     }
 
     return markerInstances;
