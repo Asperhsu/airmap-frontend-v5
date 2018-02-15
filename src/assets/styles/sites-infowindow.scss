@@ -1,0 +1,68 @@
+//////////////////////////////
+// Variables
+//////////////////////////////
+
+// Set the Snazzy Info Window SCSS variables before
+// the plugin's SCSS is imported. Check the /dist/_settings.scss
+// for the available variables.
+
+$si-content-padding:        10px;
+$si-border-width:           4px;
+$si-border-color:           #2b3031;
+$si-font-size:	            18px;
+$si-shadow-h:           	10px;
+$si-shadow-v:           	-10px;
+$si-shadow-blur:        	0;
+$si-shadow-spread:          0;
+$si-shadow-opacity:         0.4;
+$si-close-font-size:        2em;
+$si-close-opacity:          0.7;
+$si-close-hover-opacity:    1;
+
+
+
+//////////////////////////////
+// Imports
+//////////////////////////////
+
+// Import the Snazzy Info Window SCSS.
+
+@import '~snazzy-info-window/dist/snazzy-info-window.scss';
+
+//////////////////////////////
+// Custom Snazzy Info Window CSS
+//////////////////////////////
+
+// Adjust the Snazzy Info Window styles using
+// the existing classes. Check the Readme for
+// the full markup and available classes.
+
+.si-wrapper-top {
+    width: 50vw;
+    max-width: 300px;
+
+    @media (min-width: 600px) {
+        max-width: 400px;
+    }
+
+    @media (min-width: 992px) {
+        max-width: 500px;
+    }
+}
+
+.si-close-button {
+    width: 40px;
+    height: 40px;
+}
+
+
+
+//////////////////////////////
+// Info Window Content Styles
+//////////////////////////////
+
+// Add styles to the content set in index.js.
+
+.si-content {
+
+}
