@@ -7,6 +7,7 @@
 
 <script>
     import SettingStorage from '@/services/settingStorage';
+    import { init as langInit } from '@/services/i18n'
     import AppTabbar from './AppTabbar.vue';
 
     export default {
@@ -15,6 +16,7 @@
         },
 
         created () {
+            langInit();
             // SettingStorage.registerWatcher([
             //     {commit: 'site/setIndicatorType', stateKey: 'site.indicatorType'},
             // ]);

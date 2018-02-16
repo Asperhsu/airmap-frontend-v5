@@ -1,4 +1,6 @@
-const Cookies = require("js.cookie");
+import moment from 'moment';
+import "moment/locale/zh-tw";
+import store from '@/store';
 
 const supportLangs = ['en', 'tw'];
 
@@ -10,19 +12,19 @@ const translations = {
 };
 
 export const isLangExist = (lang) => {
-    return supportLangs.indexOf(userLang) > -1;
+    return supportLangs.indexOf(lang) > -1;
 }
 
 export const getLang = () => {
-    return currentLang;
+    return store.state.app.lang;
 }
 
 export const setLang = (lang) => {
     if (!isLangExist(lang)) { return false; }
 
-    userLang = lang;
-    Cookies.set('language', lang);
+    moment.locale(lang == 'tw' ? 'zh-tw' : 'en');
 
+    store.commit('app/setLang', lang);
     return true;
 }
 
@@ -36,5 +38,8 @@ export const lang = (index) => {
     return '!!'+index+'!!';
 }
 
-var userLang = Cookies.get('language') || navigator.language || navigator.userLanguage;
-var currentLang = isLangExist(userLang) ? userLang : 'tw';
+export const init = () => {
+    var userLang = navigator.language || navigator.userLanguage;
+    var lang = isLangExist(userLang) ? userLang : 'tw';
+    setLang(lang);
+}

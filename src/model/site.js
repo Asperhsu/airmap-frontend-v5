@@ -1,4 +1,4 @@
-
+import moment from 'moment';
 import {getObjectValue} from '@/services/helpers';
 import {getTypeColor} from '@/services/indicator';
 import * as MarkerIcon from '@/services/map/markerIconService'
@@ -34,6 +34,13 @@ export default class Site {
     }
     get humidity() {
         return this.getProperty('Data.Humidity');
+    }
+    get publishedAt() {
+        return moment(this.getProperty('Data.Create_at'));
+    }
+    get analysisRanking() {
+        let ranking = this.getProperty('Analysis.ranking');
+        return ranking === null ? 0 : ranking;
     }
     get analysisStatus() {
         let status = this.getProperty('Analysis.status');

@@ -71,5 +71,6 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery"
         }),
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     ]
 }

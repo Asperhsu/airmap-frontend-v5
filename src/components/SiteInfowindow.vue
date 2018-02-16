@@ -85,12 +85,12 @@
         </div>
 
         <div class="footer">
-            <div class="ranking">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
+            <div class="published-time" :title="publishedAt.format('YYYY-MM-DD HH:mm:ss')">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                {{ publishedAt.toNow(true) }}
+            </div>
+            <div class="ranking" title="">
+                <i class="fa fa-star" v-for="i in ranking" :key="i"></i>
             </div>
             <div class="buttons">
                 <button class="btn-site-page"><i class="fa fa-bookmark"></i></button>
@@ -109,6 +109,8 @@
         computed: {
             title () { return this.site.title; },
             value () { return this.site.measureValue(this.indicatorType); },
+            publishedAt () { return this.site.publishedAt; },
+            ranking () { return this.site.analysisRanking; },
         }
     }
 </script>
@@ -135,10 +137,16 @@
 
     .footer {
         margin-top: 1em;
+        padding-top: .5em;
         border-top: 1px solid #999999;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        font-size: .8em;
+
+        .published-time {
+            font-size: .8em;
+        }
 
         .ranking {
             color: #F8CB6B;
