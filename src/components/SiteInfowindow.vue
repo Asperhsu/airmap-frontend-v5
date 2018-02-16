@@ -35,6 +35,11 @@
                             <li>具有氣喘的人可能需增加使用吸入劑的頻率</li>
                         </ol>
                     </div>
+                    <div class="link">
+                        <div class="label-suggestion">資料來源<br/>
+                            <a target="_blank" href="http://taqm.epa.gov.tw/taqm/tw/fpmi.aspx">行政院環保署細懸浮微粒(PM2.5)指標對照表與活動建議 (連結失效)</a>
+                        </div>
+                    </div>
                 </div>
 
                 <div v-show="indicatorType == 'AQI'">
@@ -79,6 +84,11 @@
                             <li>具有氣喘的人應增加使用吸入劑的頻率。</li>
                         </ol>
                     </div>
+                    <div class="link">
+                        <div class="label-suggestion">資料來源
+                            <a target="_blank" href="https://taqm.epa.gov.tw/taqm/tw/b0201.aspx">行政院環境保護署空氣品質指標</a>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -86,15 +96,15 @@
 
         <div class="footer">
             <div class="published-time" :title="publishedAt.format('YYYY-MM-DD HH:mm:ss')">
-                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                <i class="fa fa-clock-o" aria-hidden="true" style="padding: 0 5px;"></i>
                 {{ publishedAt.toNow(true) }}
             </div>
             <div class="ranking" title="">
-                <i class="fa fa-star" v-for="i in ranking" :key="i"></i>
+                <i class="fa fa-star" style="padding: 0 2px;" v-for="i in ranking" :key="i"></i>
             </div>
             <div class="buttons">
-                <button class="btn-site-page"><i class="fa fa-bookmark"></i></button>
-                <button class="btn-widget-page"><i class="fa fa-tachometer"></i></button>
+                <v-ons-button modifier="light" style="padding: 0px 8px;" class="btn-site-page"><i class="fa fa-bookmark"></i></v-ons-button>
+                <v-ons-button modifier="light" style="padding: 0px 8px;" class="btn-widget-page"><i class="fa fa-tachometer"></i></v-ons-button>
             </div>
         </div>
     </div>
@@ -132,6 +142,15 @@
             margin: 0;
             font-size: .9em;
             padding-left: 2.5em;
+        }
+
+        .label-suggestion {
+            margin-top: .5em;
+            margin-bottom: .3em;
+            font-weight: bold;
+            border: 1px solid #999;
+            border-radius: 18px;
+            padding: 3px 8px;
         }
     }
 

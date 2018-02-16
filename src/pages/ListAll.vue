@@ -11,6 +11,9 @@
                 All
             </v-ons-list-item>
         </v-ons-list>
+
+        <v-ons-button modifier="light" class="btn-site-page"><i class="fa fa-bookmark"></i></v-ons-button>
+        <v-ons-button modifier="outline" class="btn-widget-page"><i class="fa fa-tachometer"></i></v-ons-button>
     </v-ons-page>
 </template>
 

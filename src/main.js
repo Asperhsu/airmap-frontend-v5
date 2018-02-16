@@ -23,7 +23,7 @@ Vue.use($ons)
 Object.values(VOns).forEach(comp => Vue.component(comp.name, comp))
 
 // helpers
-Vue.prototype.lang = lang;
+window.lang = Vue.prototype.lang = lang;
 
 // configs
 axios.defaults.baseURL = process.env.BASE_URL;

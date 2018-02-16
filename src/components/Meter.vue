@@ -52,7 +52,6 @@
                 return `linear-gradient(to right, ${colors})`;
             },
             pointerPosition () {
-                // pointer range is 3 ~ 95
                 let min = 0;
                 let max = 90;
                 let percent = this.getPercent(this.value);
@@ -61,14 +60,6 @@
                     return {right: (100 - percent)+'%'};
                 }
                 return {left: percent+'%'};
-
-                // let pointerPercent = (percent * (max - min))/100 + min;
-                // return percent;
-
-                if (pointerPercent)
-
-                console.log(percent, foo);
-                return foo;
             },
         },
         methods: {
@@ -132,7 +123,7 @@
 
         .value {
             border: 1px solid #000;
-            padding: 0 3px;
+            padding: 2px;
             font-size: .7em;
             border-radius: 5px;
         }

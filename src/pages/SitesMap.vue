@@ -1,7 +1,16 @@
 <template>
     <div style="width: 100%; height: 100%;">
         <GoogleMap ref="map" @markerClicked="markerClicked" @mapBooted="mapBooted" @markersLoaded="countSitesInView" />
+
         <div id="sites-count" title="站點數量">{{ siteCount }}</div>
+
+        <v-ons-modal :visible="isLoading">
+            <p style="text-align: center">
+                <v-ons-progress-circular indeterminate></v-ons-progress-circular>
+                <br><br>
+                {{ loadingMsg }}
+            </p>
+        </v-ons-modal>
     </div>
 </template>
 
@@ -15,13 +24,30 @@
     import SiteInfowindow from '@/components/SiteInfowindow'
     import Site from '@/model/site'
 
+    let config = {
+        // url: 'json/airmap.json',
+        url: 'static/lass.json',
+        enableReloadSite: false,
+        reloadSiteSeconds: 5 * 60,
+        loadingMsg: {
+            map: 'Loading Google Map',
+            site: 'Loading Data',
+        },
+    };
+
     export default {
         components: {SiteMapSetting, GoogleMap},
+
+        mounted () {
+            this.loadingMsg = config.loadingMsg.map;
+        },
 
         data () {
             return {
                 infowindow: null,
                 siteCount: 0,
+                isLoading: true,
+                loadingMsg: config.loadingMsg.map,
             };
         },
 
@@ -71,46 +97,52 @@
                 this.mapObject.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
             },
             fetchSites () {
+                this.isLoading = true;
+                this.loadingMsg = config.loadingMsg.site;
+
+                // axios.get('json/airmap.json').then(response => {
+                axios.get(config.url).then(response => {
+                    this.processSiteData(response.data);
+                    this.isLoading = false;
+                });
+
+                // set interval
+                if (this.$route.name == 'map' && config.enableReloadSite) {
+                    setTimeout(() => {this.fetchSites();}, config.reloadSiteSeconds * 1000);
+                }
+            },
+            processSiteData (data = []) {
                 let markers = [];
                 let groups = {};
                 let analysis = {};
                 let indicatorType = this.$store.getters['site/getIndicatorType'];
 
-                // axios.get('json/airmap.json').then(response => {
-                axios.get('static/lass.json').then(response => {
-                    response.data.map(data => {
-                        let site = new Site(data);
+                data.map(data => {
+                    let site = new Site(data);
 
-                        // markers
-                        let marker = site.marker(indicatorType);
-                        marker.site = site;
-                        markers.push(marker);
+                    // markers
+                    let marker = site.marker(indicatorType);
+                    marker.site = site;
+                    markers.push(marker);
 
-                        // site groups
-                        let group = site.group;
-                        groups.hasOwnProperty(group) ? groups[group]++ : (groups[group] = 1);
+                    // site groups
+                    let group = site.group;
+                    groups.hasOwnProperty(group) ? groups[group]++ : (groups[group] = 1);
 
-                        // analysis status
-                        let statuses = site.analysisStatus;
-                        if (statuses.length) {
-                            statuses.map(status => {
-                                analysis.hasOwnProperty(status) ? analysis[status]++ : (analysis[status] = 1);
-                            });
-                        } else {
-                            analysis.hasOwnProperty('normal') ? analysis['normal']++ : (analysis['normal'] = 1);
-                        }
-                    });
-
-                    this.$store.commit('map/setMarkers', markers);
-                    this.$store.commit('site/setGroups', groups);
-                    this.$store.commit('site/updateAnalysisTypeCount', analysis);
+                    // analysis status
+                    let statuses = site.analysisStatus;
+                    if (statuses.length) {
+                        statuses.map(status => {
+                            analysis.hasOwnProperty(status) ? analysis[status]++ : (analysis[status] = 1);
+                        });
+                    } else {
+                        analysis.hasOwnProperty('normal') ? analysis['normal']++ : (analysis['normal'] = 1);
+                    }
                 });
 
-                // set interval
-                if (this.$route.name == 'map') {
-                    // setTimeout(() => {this.fetchSites();}, 5 * 60 * 1000);
-                    setTimeout(() => {this.fetchSites();}, 1 * 60 * 1000);
-                }
+                this.$store.commit('map/setMarkers', markers);
+                this.$store.commit('site/setGroups', groups);
+                this.$store.commit('site/updateAnalysisTypeCount', analysis);
             },
             openInfowindow (marker) {
                 if (this.infowindow) {
