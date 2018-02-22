@@ -1,18 +1,18 @@
 <template>
     <div class="meter">
         <div class="inner">
+            <div class="indicator-type">{{ indicatorType }}</div>
             <div class="bar" :style="{background: barGradient}"></div>
             <div class="pointer" :style="pointerPosition">
-                <div class="arrow-down"></div>
-                <div class="line"></div>
-                <div class="value">{{ value }}</div>
+                <div class="arrow-down" :style="{'border-top-color': arrowColor}"></div>
+                <div class="value">{{ Math.round(value) }}</div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import {getTypeColors} from '@/services/indicator';
+    import {getTypeColors, getTypeColor} from '@/services/indicator';
 
     export default {
         props: {
@@ -35,25 +35,16 @@
             barGradient () {
                 let colors = [];
                 this.indicatorColors.map((level, index) => {
-                    if (index == (this.indicatorColors.length - 1)) {
-                        colors.push(`${level.color}`);
-                        return;
-                    }
-
-                    if (index == 0) {
-                        colors.push(`${level.color}`);
-                    }
-
-                    let percent = this.getPercent(level.max);
-                    colors.push(`${level.color} ${percent}%`);
+                    ['min', 'max'].map(type => {
+                        let percent = this.getPercent(level[type]);
+                        colors.push(`${level.color} ${percent}%`);
+                    });
                 });
                 colors = colors.join(', ');
 
                 return `linear-gradient(to right, ${colors})`;
             },
             pointerPosition () {
-                let min = 0;
-                let max = 90;
                 let percent = this.getPercent(this.value);
 
                 if (percent > 50) {
@@ -61,6 +52,9 @@
                 }
                 return {left: percent+'%'};
             },
+            arrowColor () {
+                return getTypeColor(this.indicatorType, this.value);
+            }
         },
         methods: {
             getPercent(value) {
@@ -86,14 +80,21 @@
 </script>
 
 <style lang="scss" scoped>
-    .meter { height: 60px; overflow: hidden; }
+    .meter { height: 50px; overflow: hidden; margin: 5px 0; }
 
     .inner { position: relative; }
 
+    .indicator-type {
+        font-size: .75em;
+        color: #999;
+        text-align: right;
+        margin-right: 2%;
+    }
+
     .bar {
         height: 23px;
-        border-radius: 8px;
-        margin: 10px 2% 0 3px;
+        border-radius: 11px;
+        margin: 0px 2% 0 3px;
         box-shadow: 0px 3px 5px grey;
     }
 
@@ -103,7 +104,7 @@
         align-items: center;
 
         position: absolute;
-        top: -8px;
+        top: 8px;
 
         .arrow-down {
             width: 0;
@@ -111,21 +112,17 @@
             border-left: 8px solid transparent;
             border-right: 8px solid transparent;
 
-            border-top: 10px solid #C90000;
-        }
-
-        .line {
-            width: 2px;
-            height: 27px;
-            background-color: #fff;
-            box-shadow: 0px 0px 3px #000;
+            border-top-width: 10px;
+            border-top-style: solid;
         }
 
         .value {
             border: 1px solid #000;
-            padding: 2px;
+            padding: 2px 5px;
+            margin-top: 1px;
             font-size: .7em;
             border-radius: 5px;
+            background: rgba(255,255,255,.8);
         }
      }
 

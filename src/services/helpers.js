@@ -29,3 +29,18 @@ export const arrayIntersection = function(){
 		});
 	});
 };
+
+export const getInstanceName = function(instance) {
+	const file = instance.__file // injected by vue-loader
+	if (file) {
+		let filename = file.replace(/^.*[\\\/]/, '').replace('.vue', '');
+		return classify(filename);
+	}
+}
+
+var classifyRE = /(?:^|[-_/])(\w)/g;
+export const classify = (str) => {
+	return str.replace(classifyRE, function (_, c) {
+		return c ? c.toUpperCase() : ''
+	})
+}

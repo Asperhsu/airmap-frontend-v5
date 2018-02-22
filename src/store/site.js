@@ -7,8 +7,15 @@ export default {
     state: {
         groups: {},
         activeGroups: null,
-        indicators: getSupportTypes(),
-        indicatorType: "PM2.5",
+
+        indicatorTypes: {
+            'PM25': ['PM2.5', 'AQI', 'PM2.5_NASA'],
+            'Temperature': null,
+            'Humidity': null,
+        },
+        measureType: 'PM25',
+        pm25IndicatorType: 'PM2.5',
+
         analysisTypes: [
             {name: 'normal', text: '一般站點 (無分析資料)', method: 'getCircleUrl', count: 0},
             {name: 'indoor', text: '可能放置於室內或設備故障', method: 'getHomeUrl', count: 0},
@@ -18,7 +25,13 @@ export default {
         activeAnalysisTypes: ['normal', 'indoor', 'shortterm-pollution', 'longterm-pollution'],
     },
     getters: {
-        getIndicatorType: state => state.indicatorType,
+        getIndicatorType: state => {
+            if (state.measureType == 'PM25') {
+                return state.pm25IndicatorType;
+            }
+
+            return state.measureType;
+        },
     },
     mutations: {
         setGroups(state, groups) {
@@ -42,9 +55,18 @@ export default {
         setActiveGroups(state, groups) {
             state.activeGroups = [].concat(groups);
         },
-        setIndicatorType(state, type) {
-            state.indicatorType = type;
+
+        setMeasureType(state, type) {
+            if (Object.keys(state.indicatorTypes).indexOf(type) > -1) {
+                state.measureType = type;
+            }
         },
+        setPM25IndicatorType(state, type) {
+            if (state.indicatorTypes['PM25'].indexOf(type) > -1) {
+                state.pm25IndicatorType = type;
+            }
+        },
+
         updateAnalysisTypeCount(state, analysis) {
             let types = [];
 

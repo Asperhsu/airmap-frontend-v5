@@ -1,0 +1,85 @@
+<template>
+    <div></div>
+</template>
+
+<script>
+    import axios from 'axios';
+    import WindLayer from '@/services/map/windLayer';
+
+    export default {
+        props: {
+            map: {
+                required: true,
+            },
+            show: {
+                type: Boolean,
+                default: true,
+            },
+            opts: {
+                type: Object,
+                default: () => {},
+            },
+        },
+
+        data () {
+            return {
+                booted: false,
+                overlay: null,
+            }
+        },
+
+        computed: {
+            fillOpacity () { return this.$store.state.windLayer.fillOpacity; },
+            moveSpeed () { return this.$store.state.windLayer.moveSpeed; },
+
+            overlayFillOpacity () {return this.overlay && this.overlay.fillOpacity; },
+            overlayMoveSpeed () {return this.overlay && this.overlay.moveSpeed; },
+            gfsPublishAt () { return this.overlay && this.overlay.gfsPublishAt; },
+        },
+
+        watch: {
+            show (flag) {
+                this.booted && (this.overlay.enable = flag);
+
+                if (!this.booted) { this.boot(); }
+            },
+            fillOpacity (value) {
+                this.overlay && (this.overlay.fillOpacity = value);
+            },
+            overlayFillOpacity (value) {
+                if (value !== this.fillOpacity) {
+                    this.$store.commit('windLayer/setFillOpacity', value);
+                }
+            },
+            moveSpeed (value) {
+                this.overlay && (this.overlay.moveSpeed = value);
+            },
+            overlayMoveSpeed (value) {
+                if (value !== this.moveSpeed) {
+                    this.$store.commit('windLayer/setMoveSpeed', value);
+                }
+            },
+        },
+
+        methods: {
+            boot () {
+                let opts = Object.assign({}, this.opts, {
+                    map: this.map,
+                    fillOpacity: this.fillOpacity,
+                    moveSpeed: this.moveSpeed,
+                });
+
+                this.overlay = new WindLayer(opts);
+                this.show && this.fetchGfs();
+
+                this.booted = true;
+            },
+            fetchGfs() {
+                axios.get('/static/gfs.json').then(response => {
+                    this.overlay.gfs = response.data;
+                    this.overlay.enable = this.show;
+                });
+            }
+        },
+    }
+</script>

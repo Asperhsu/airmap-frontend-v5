@@ -6,7 +6,10 @@
         <v-ons-list modifier="inset">
             <v-ons-list-header>群組</v-ons-list-header>
             <v-ons-list-item v-for="(count, name) in groups" :key="name" tappable>
-                <label class="left">
+                <label class="center" :for="'groupcheckbox-' + name">
+                    <div class="badge">{{ count }}</div> {{ name }}
+                </label>
+                <label class="right">
                     <v-ons-checkbox
                         :input-id="'groupcheckbox-' + name"
                         :value="name"
@@ -14,71 +17,54 @@
                     >
                     </v-ons-checkbox>
                 </label>
-                <label class="center" :for="'groupcheckbox-' + name">
-                    {{ name }}
-                </label>
-                <label class="right">
-                    <div class="badge">{{ count }}</div>
-                </label>
-            </v-ons-list-item>
-
-            <v-ons-list-header>量測指標</v-ons-list-header>
-            <v-ons-list-item v-for="(indicator, index) in indicators" :key="index" tappable>
-                <label class="left">
-                    <v-ons-radio
-                        :input-id="'indicatorradio-' + indicator"
-                        :value="indicator"
-                        v-model="indicatorType"
-                    >
-                    </v-ons-radio>
-                </label>
-                <label class="center" :for="'indicatorradio-' + indicator">
-                    {{ indicator }}
-                </label>
             </v-ons-list-item>
 
             <v-ons-list-header>圖示</v-ons-list-header>
             <v-ons-list-item v-for="(stat, index) in analysisTypes" :key="stat.name" tappable>
                 <label class="left">
-                    <v-ons-checkbox
-                        :input-id="'statcheckbox-' + index"
-                        :value="stat.name"
-                        v-model="activeAnalysisTypes"
-                    >
-                    </v-ons-checkbox>
+                    <img :src="getIcon(stat.method, stat.count)" />
                 </label>
                 <label class="center" :for="'statcheckbox-' + index">
                     {{ stat.text }}
                 </label>
                 <label class="right">
-                    <img :src="getIcon(stat.method, stat.count)" />
+                    <v-ons-checkbox
+                        :input-id="'statcheckbox-' + index"
+                        :value="stat.name"
+                        v-model="activeAnalysisTypes"
+                    ></v-ons-checkbox>
                 </label>
             </v-ons-list-item>
         </v-ons-list>
+
+        <IndicatorSetting />
 
         <v-ons-list-title>風力線</v-ons-list-title>
         <v-ons-list modifier="inset">
             <v-ons-list-item tappable>
                 <div class="left">
-                    <v-ons-switch input-id="enableWindySwitch" v-model="enableWindy" />
+                    <i class="fa fa-power-off" aria-hidden="true"></i>
                 </div>
                 <div class="center">啟動</div>
+                <div class="right">
+                    <v-ons-switch input-id="enableWindySwitch" v-model="windLayerEnable" />
+                </div>
             </v-ons-list-item>
 
             <v-ons-list-header>線條亮度</v-ons-list-header>
             <v-ons-list-item>
                 <div class="center">
-                    <v-ons-range v-model="windyLineOpacity" style="width: 100%;"></v-ons-range>
+                    <v-ons-range v-model="windFillOpacity" style="width: 100%;" min="1" max="10" step="1"></v-ons-range>
                 </div>
-                <div class="right">{{ windyLineOpacity }}</div>
+                <div class="right">{{ windFillOpacity }}</div>
             </v-ons-list-item>
 
             <v-ons-list-header>移動速度</v-ons-list-header>
             <v-ons-list-item>
                 <div class="center">
-                    <v-ons-range v-model="windyMovingSpeed" style="width: 100%;"></v-ons-range>
+                    <v-ons-range v-model="windMoveSpeed" style="width: 100%;" min="1" max="10" step="1"></v-ons-range>
                 </div>
-                <div class="right">{{ windyMovingSpeed }}</div>
+                <div class="right">{{ windMoveSpeed }}x</div>
             </v-ons-list-item>
 
             <v-ons-list-header>資料資訊</v-ons-list-header>
@@ -114,16 +100,15 @@
 
 <script>
     import BackToolbar from '@/components/BackToolbar'
+    import IndicatorSetting from '@/components/IndicatorSetting'
     import * as MarkerIcon from '@/services/map/markerIconService'
 
     export default {
-        components: {BackToolbar},
+        components: {BackToolbar, IndicatorSetting},
 
         data() {
             return {
-                enableWindy: false,
-                windyLineOpacity: 50,
-                windyMovingSpeed: 50,
+                //
             };
         },
 
@@ -138,16 +123,6 @@
                 }
             },
 
-            indicators () { return this.$store.state.site.indicators; },
-            indicatorType: {
-                get: function () {
-                    return this.$store.state.site.indicatorType;
-                },
-                set: function (type) {
-                    this.$store.commit('site/setIndicatorType', type);
-                }
-            },
-
             analysisTypes () { return this.$store.state.site.analysisTypes; },
             activeAnalysisTypes: {
                 get: function () {
@@ -155,6 +130,33 @@
                 },
                 set: function (types) {
                     this.$store.commit('site/setActiveAnalysisTypes', types);
+                }
+            },
+
+            windLayerEnable: {
+                get: function () {
+                    return this.$store.state.windLayer.enable;
+                },
+                set: function (flag) {
+                    this.$store.commit('windLayer/setEnable', flag);
+                }
+            },
+            windFillOpacity: {
+                get: function () {
+                    return this.$store.state.windLayer.fillOpacity * 10;    // range: 0 ~ 1
+                },
+                set: function (value) {
+                    this.$store.commit('windLayer/setFillOpacity', value/10);
+                }
+            },
+            windMoveSpeed: {
+                get: function () {
+                    let speed = this.$store.state.windLayer.moveSpeed;
+                    if (speed === 1) { return 1; }
+                    return '1/' + speed;
+                },
+                set: function (value) {
+                    this.$store.commit('windLayer/setMoveSpeed', value);
                 }
             },
         },
@@ -167,18 +169,4 @@
     };
 </script>
 
-<style lang="scss" scoped>
-    .list-title { font-size: 1.2em; padding: .5em 0; text-align: center; }
-    .badge {
-        width: 2em;
-        height: 2em;
-        box-sizing: initial;
-
-        border: 2px solid #0076FF;
-        text-align: center;
-        border-radius: 50%;
-
-        line-height: 2em;
-        box-sizing: content-box;
-    }
-</style>
+<style lang="scss" src="@/assets/styles/setting-page.scss" scoped></style>

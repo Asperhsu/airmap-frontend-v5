@@ -9,6 +9,7 @@ import navigator from './navigator'
 // import tabbar from './tabbar'
 import map from './map'
 import site from './site'
+import windLayer from './windLayer'
 
 export default new Vuex.Store({
     modules: {
@@ -18,5 +19,6 @@ export default new Vuex.Store({
         // tabbar,
         map,
         site,
+        windLayer,
     }
 });

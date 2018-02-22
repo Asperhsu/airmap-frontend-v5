@@ -51,17 +51,9 @@ export default class SiteOverlay extends getGoogleClass() {
         div.style.height = (sw.y - ne.y) + 'px';
     }
 
-    toggle (flag) {
-
-    }
-
     googleMapProjection (lat, lng) {
         let overlayProjection = this.getProjection();
         let googleCoordinates = new google.maps.LatLng(lat, lng);
         return overlayProjection.fromLatLngToDivPixel(googleCoordinates);
-    }
-
-    addSite() {
-        //
     }
 }

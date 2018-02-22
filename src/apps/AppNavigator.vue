@@ -8,7 +8,7 @@
 <script>
     import SettingStorage from '@/services/settingStorage';
     import { init as langInit } from '@/services/i18n'
-    import AppTabbar from './AppTabbar.vue';
+    import AppTabbar from '@/apps/AppTabbar.vue';
 
     export default {
         beforeCreate() {
@@ -17,9 +17,10 @@
 
         created () {
             langInit();
-            // SettingStorage.registerWatcher([
-            //     {commit: 'site/setIndicatorType', stateKey: 'site.indicatorType'},
-            // ]);
+            SettingStorage.registerWatcher([
+                {commit: 'site/setMeasureType', stateKey: 'site.measureType'},
+                {commit: 'site/setPM25IndicatorType', stateKey: 'site.pm25IndicatorType'},
+            ]);
         },
 
         data() {

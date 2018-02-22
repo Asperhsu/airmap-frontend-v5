@@ -4,6 +4,7 @@
 import 'font-awesome/css/font-awesome.css'
 import 'onsenui/css/onsenui.css'
 import 'onsenui/css/onsen-css-components.css'
+import '@/assets/styles/app.scss'
 
 import Vue from 'vue'
 import $ons from 'vue-onsenui/esm'

@@ -16,8 +16,8 @@
 <style scoped>
     #indicatorLevel{
         position: absolute;
-        bottom: 15px;
-        left: 15px;
+        bottom: 20px;
+        right: 45px;
         z-index:2;
         opacity: 0.8;
         height: 2em;
@@ -72,7 +72,7 @@
                 return this.$store.state.map.showIndicator;
             },
             type () {
-                return this.$store.state.site.indicatorType;
+                return this.$store.getters['site/getIndicatorType'];
             },
             unit () {
                 return service.getUnit(this.type);

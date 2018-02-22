@@ -51,6 +51,10 @@ class SettingStorage {
         configs.map(config => {
             let watcher = store.watch(
                 (state) => {
+                    if (config.hasOwnProperty('getter')) {
+                        return store.getters[config.getter];
+                    }
+
                     return getObjectValue(state, config.stateKey);
                 },
                 (oldValue, newValue) => {

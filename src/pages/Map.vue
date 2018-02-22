@@ -8,20 +8,20 @@
             </div>
         </v-ons-toolbar>
 
-        <SitesMap />
+        <SiteMap />
 
         <indicator />
     </v-ons-page>
 </template>
 
 <script>
-    import SitesMap from '@/pages/SitesMap'
+    import SiteMap from '@/pages/SiteMap'
     import Indicator from '@/components/Indicator'
 
     export default {
         name: 'map-page',
 
-        components: {Indicator, SitesMap},
+        components: {Indicator, SiteMap},
 
         data() {
             return {

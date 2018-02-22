@@ -11,6 +11,8 @@
                 {{ loadingMsg }}
             </p>
         </v-ons-modal>
+
+        <WindLayer :map="$refs.map && $refs.map.mapObject" :show="showWindLayer" />
     </div>
 </template>
 
@@ -18,11 +20,15 @@
     import Vue from 'vue'
     import axios from 'axios';
     import SnazzyInfoWindow from 'snazzy-info-window';
-    import {debounce, arrayIntersection} from '@/services/helpers'
+    import {deletedDiff} from 'deep-object-diff';
+
+    import Site from '@/model/site'
+    import {getObjectValue, debounce, arrayIntersection, getInstanceName} from '@/services/helpers'
+
     import SiteMapSetting from '@/pages/SiteMapSetting'
     import GoogleMap from '@/components/GoogleMap'
     import SiteInfowindow from '@/components/SiteInfowindow'
-    import Site from '@/model/site'
+    import WindLayer from '@/components/WindLayer'
 
     let config = {
         // url: 'json/airmap.json',
@@ -36,7 +42,7 @@
     };
 
     export default {
-        components: {SiteMapSetting, GoogleMap},
+        components: {SiteMapSetting, GoogleMap, WindLayer},
 
         mounted () {
             this.loadingMsg = config.loadingMsg.map;
@@ -48,6 +54,8 @@
                 siteCount: 0,
                 isLoading: true,
                 loadingMsg: config.loadingMsg.map,
+
+                showWindLayer: false,
             };
         },
 
@@ -56,15 +64,25 @@
             markerInstances () { return this.$refs.map.markerInstances; },
             markers () { return this.$store.state.map.markers; },
 
-            indicatorType () { return this.$store.state.site.indicatorType; },
+            indicatorType () { return this.$store.getters['site/getIndicatorType']; },
+            pm25IndicatorType () { return this.$store.state.site.pm25IndicatorType; },
+
             activeGroups () { return this.$store.state.site.activeGroups; },
             activeAnalysisTypes () { return this.$store.state.site.activeAnalysisTypes; },
+
+            navigatorStack () { return [].concat(this.$store.state.navigator.stack); },
         },
 
         watch: {
             indicatorType () { this.updateMarkerIcon(); },
             activeGroups () { this.applyMarkerFilter(); },
             activeAnalysisTypes () { this.applyMarkerFilter(); },
+            navigatorStack (current, prev) {
+                let index = Object.keys(deletedDiff(prev, current)).pop();
+                if (index && getInstanceName(prev[index]) === 'SiteMapSetting') {
+                    this.backFromSetting();
+                }
+            }
         },
 
         methods: {
@@ -115,13 +133,12 @@
                 let markers = [];
                 let groups = {};
                 let analysis = {};
-                let indicatorType = this.$store.getters['site/getIndicatorType'];
 
                 data.map(data => {
                     let site = new Site(data);
 
                     // markers
-                    let marker = site.marker(indicatorType);
+                    let marker = site.marker(this.indicatorType);
                     marker.site = site;
                     markers.push(marker);
 
@@ -162,7 +179,7 @@
                             new Vue({
                                 el: '#site-infowindow',
                                 render: h => h(SiteInfowindow, {
-                                    props: {site: marker.site, indicatorType: this.indicatorType}
+                                    props: {site: marker.site, pm25IndicatorType: this.pm25IndicatorType}
                                 })
                             })
                         },
@@ -201,6 +218,9 @@
 
                 this.countSitesInView();
             },
+            backFromSetting () {
+                this.showWindLayer = this.$store.state.windLayer.enable;
+            }
         }
     }
 </script>
