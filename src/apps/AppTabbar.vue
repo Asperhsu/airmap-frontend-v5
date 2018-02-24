@@ -1,15 +1,15 @@
 <template>
     <v-ons-page>
-        <v-ons-tabbar position="bottom">
+        <v-ons-tabbar position="bottom" @postchange="postchange">
             <keep-alive slot="pages" include="map-page">
                 <router-view></router-view>
             </keep-alive>
 
-            <v-ons-tab v-for="tab in tabs" :key="tab.name"
+            <v-ons-tab v-for="tab in tabs" :key="tab.name" :ref="tab.name"
                 :label="tab.label"
                 :icon="tab.icon"
                 :active="$route.name === tab.name"
-                @click="$router.push(tab.name)"
+                @click.prevent="$router.push(tab.name)"
             ></v-ons-tab>
         </v-ons-tabbar>
     </v-ons-page>
@@ -54,5 +54,18 @@
                 return this.tabs[this.index].title || this.tabs[this.index].label;
             },
         },
+
+        methods: {
+            postchange (e) {
+                this.tabs.map(tab => {
+                    if (!this.$refs.hasOwnProperty(this.$route.name)) {
+                        return;
+                    }
+
+                    let active = tab.name == this.$route.name;
+                    this.$refs[tab.name][0].$el.setActive(active);
+                });
+            }
+        }
     };
 </script>
