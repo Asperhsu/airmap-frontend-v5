@@ -36,8 +36,13 @@
                         name: 'list',
                     },
                     {
+                        label: 'Favorite',
+                        icon: 'fa-star',
+                        name: 'favorite-list',
+                    },
+                    {
                         label: 'Resources',
-                        icon: 'fa-server',
+                        icon: 'fa-bookmark',
                         name: 'resource',
                     },
                     {

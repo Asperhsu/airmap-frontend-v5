@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import {getTypeColors, getTypeColor} from '@/services/indicator';
+    import {getTypeColors, getTypeColor, ColorBar, generateColorBar} from '@/services/indicator';
 
     export default {
         props: {
@@ -29,23 +29,16 @@
             indicatorColors () {
                 return getTypeColors(this.indicatorType);
             },
-            range () {
-                return this.getRange(this.indicatorColors);
-            },
             barGradient () {
-                let colors = [];
-                this.indicatorColors.map((level, index) => {
-                    ['min', 'max'].map(type => {
-                        let percent = this.getPercent(level[type]);
-                        colors.push(`${level.color} ${percent}%`);
-                    });
-                });
-                colors = colors.join(', ');
+                let colors = generateColorBar(this.indicatorType).map(level => {
+                    return `${level.color} ${level.percent}%`
+                }).join(', ');
 
                 return `linear-gradient(to right, ${colors})`;
             },
             pointerPosition () {
-                let percent = this.getPercent(this.value);
+                let {min, max} = ColorBar.getRange(this.indicatorColors);
+                let percent = ColorBar.getPercent(min, max, this.value);
 
                 if (percent > 50) {
                     return {right: (100 - percent)+'%'};
@@ -56,26 +49,6 @@
                 return getTypeColor(this.indicatorType, this.value);
             }
         },
-        methods: {
-            getPercent(value) {
-                let range = this.range.max - this.range.min;
-                let percent = Math.round(((value - this.range.min) / range) * 100);
-
-                if (percent < 0) { percent = 0; }
-                if (percent > 100) { percent = 100; }
-
-                return percent;
-            },
-            getRange(colors) {
-                let last = colors[colors.length-1];
-                let max = last.max === Infinity ? last.min * 1.3 : last.max;
-
-                return {
-                    min: colors[0].min,
-                    max: max,
-                };
-            },
-        }
     }
 </script>
 

@@ -18,7 +18,7 @@ export default {
             state.markers = [].concat(markers);
         },
         setShowIndicator(state, flag) {
-            state.showIndicator = flag;
+            state.showIndicator = !!flag;
         }
     }
 };

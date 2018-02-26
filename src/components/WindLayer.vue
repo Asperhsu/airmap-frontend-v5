@@ -7,6 +7,10 @@
     import WindLayer from '@/services/map/windLayer';
 
     export default {
+        beforeDestroy () {
+            this.overlay && this.overlay.destroy();
+        },
+
         props: {
             map: {
                 required: true,
@@ -58,6 +62,9 @@
                 if (value !== this.moveSpeed) {
                     this.$store.commit('windLayer/setMoveSpeed', value);
                 }
+            },
+            gfsPublishAt (value) {
+                value && this.$store.commit('windLayer/setPublishedAt', value);
             },
         },
 

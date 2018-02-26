@@ -1,8 +1,10 @@
+import axios from 'axios';
 import moment from 'moment';
 import {getObjectValue} from '@/services/helpers';
 import {getTypeColor} from '@/services/indicator';
 import * as MarkerIcon from '@/services/map/markerIconService'
 
+let historyUrlTemplate = "/json/query-history?group={{group}}&id={{id}}&start={{start}}&end={{end}}";
 
 export default class Site {
     constructor(data) {
@@ -17,8 +19,14 @@ export default class Site {
     get uid() {
         return this.getProperty('SiteGroup') + '$' + this.getProperty('uniqueKey');
     }
+    get uniqKey() {
+        return this.getProperty('uniqueKey');
+    }
     get title() {
         return '[' + this.getProperty('SiteGroup') + '] ' + this.getProperty('SiteName');
+    }
+    get name() {
+        return this.getProperty('SiteName');
     }
     get group() {
         return this.getProperty('SiteGroup');
@@ -87,5 +95,41 @@ export default class Site {
             anchor: google.maps.Point(15, 15),
             url: url,
         }
+    }
+
+    fetchHistory(offsetHours = 24) {
+        // get url
+        let params = {
+            group: this.group,
+            id: this.uniqKey,
+            start: moment().subtract(parseInt(offsetHours), 'hours').unix(),
+            end: moment().unix(),
+        };
+
+        let url = historyUrlTemplate;
+        Object.keys(params).map(name => {
+            url = url.replace(`{{${name}}}`, params[name]);
+        });
+
+
+        return axios.get(url).then(response => {
+            let labels = [];
+            let datasets = {};
+
+            Object.keys(response.data).map(index => {
+                let data = response.data[index];
+
+                if (index === 'isotimes') {
+                    labels = data.map(isoString => {
+						return moment(isoString).format('h');
+					});
+					return;
+                }
+
+                datasets[index] = data;
+            });
+
+            return {labels, datasets};
+        });
     }
 }

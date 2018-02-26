@@ -21,6 +21,7 @@
     "onsenui": "~2.9",
     "snazzy-info-window": "^1.1.1",
     "vue": "^2.5.2",
+    "vue-chart-js": "^1.4.1",
     "vue-onsenui": "~2.5",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.0"

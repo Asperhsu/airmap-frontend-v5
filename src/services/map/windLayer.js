@@ -164,16 +164,22 @@ export default class WindLayer {
     }
 
     stop () {
-        this._isInit = false;
         this.clear();
+        this._isInit = false;
+        this._windy = null;
+        this._canvasLayer = null;
     }
 
     clear () {
         if (this._windy) {
             this._windy.stop();
-
 			this._canvasLayer.canvas.getContext('2d').clearRect(0, 0, 3000, 3000);
         }
+    }
+
+    destroy () {
+        this.stop();
+        this._gfs = null;
     }
 
 }

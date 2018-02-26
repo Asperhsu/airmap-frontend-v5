@@ -4,9 +4,6 @@
         <v-ons-list modifier="inset">
             <v-ons-list-header>PM2.5</v-ons-list-header>
             <v-ons-list-item v-for="(name) in pm25Types" :key="name" tappable>
-                <div class="left">
-                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </div>
                 <label class="center" :for="'indicatorradio-' + name">
                     {{ name }}
                 </label>
@@ -22,9 +19,6 @@
 
             <v-ons-list-header>Other</v-ons-list-header>
             <v-ons-list-item v-for="(name) in otherTypes" :key="name" tappable>
-                <div class="left">
-                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </div>
                 <label class="center" :for="'indicatorradio-' + name">
                     {{ name }}
                 </label>

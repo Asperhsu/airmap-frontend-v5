@@ -5,6 +5,7 @@ export default {
         enable: false,
         fillOpacity: 0.6,
         moveSpeed: 1,
+        publishedAt: null,
     },
     mutations: {
         setEnable(state, flag) {
@@ -15,6 +16,9 @@ export default {
         },
         setMoveSpeed(state, speed) {
             state.moveSpeed = parseInt(speed, 10);
+        },
+        setPublishedAt(state, date) {
+            state.publishedAt = date;
         },
     }
 };

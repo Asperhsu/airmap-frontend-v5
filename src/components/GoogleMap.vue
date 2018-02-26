@@ -3,7 +3,8 @@
 </template>
 
 <script>
-    import {findCurrentLocation, updateMarkers} from '@/services/map/mapService'
+    import {findCurrentLocation, updateMarkers} from '@/services/map/mapService';
+    import {debounce} from '@/services/helpers';
 
     let mapOption = {
         streetViewControl: true,
@@ -32,10 +33,6 @@
             this.init();
         },
 
-        props: {
-
-        },
-
         data() {
             return {
                 booted: false,
@@ -60,8 +57,16 @@
         },
 
         watch: {
-            center (latlng) { this.mapObject.setCenter(latlng); },
-            zoom (zoom) { this.mapObject.setZoom(zoom); },
+            center (latlng) {
+                let center = this.mapObject.getCenter().toJSON();
+                if (center.lat !== latlng.lat || center.lng !== latlng.lng) {
+                    this.mapObject.setCenter(latlng);
+                }
+            },
+            zoom (zoom) {
+                if (zoom === this.mapObject.getZoom()) { return; }
+                this.mapObject.setZoom(zoom);
+            },
             markers (newMarkers, oldMarkers) {
                 this.updateMarkers(oldMarkers, newMarkers);
             },
@@ -85,6 +90,12 @@
                 google.maps.event.addListenerOnce(this.mapObject, 'idle', () => {
                     this.$emit('mapBooted');
                 });
+                google.maps.event.addListener(this.mapObject, 'center_changed', debounce(() => {
+                    this.$store.commit('map/setCenter', this.mapObject.getCenter().toJSON());
+                }, 500));
+                google.maps.event.addListener(this.mapObject, 'zoom_changed', debounce(() => {
+                    this.$store.commit('map/setZoom', this.mapObject.getZoom());
+                }, 500));
             },
             addUserLocationButton () {
                 var $element = $([

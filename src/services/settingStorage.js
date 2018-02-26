@@ -44,7 +44,9 @@ class SettingStorage {
     }
 
     emitCommit () {
-
+        Object.keys(this.settings).map(commit => {
+            store.commit(commit, this.settings[commit]);
+        });
     }
 
     registerWatcher (configs = []) {
@@ -57,9 +59,8 @@ class SettingStorage {
 
                     return getObjectValue(state, config.stateKey);
                 },
-                (oldValue, newValue) => {
+                (newValue, oldValue) => {
                     this.set(config.commit, newValue);
-                    console.log(`set ${config.commit}`);
                 },
                 { deep: true }
             );

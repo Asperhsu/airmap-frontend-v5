@@ -18,11 +18,10 @@
 
 <script>
     import Vue from 'vue'
-    import axios from 'axios';
     import SnazzyInfoWindow from 'snazzy-info-window';
     import {deletedDiff} from 'deep-object-diff';
 
-    import Site from '@/model/site'
+    import {fetch} from '@/services/siteLoader';
     import {getObjectValue, debounce, arrayIntersection, getInstanceName} from '@/services/helpers'
 
     import SiteMapSetting from '@/pages/SiteMapSetting'
@@ -31,8 +30,6 @@
     import WindLayer from '@/components/WindLayer'
 
     let config = {
-        // url: 'json/airmap.json',
-        url: 'static/lass.json',
         enableReloadSite: false,
         reloadSiteSeconds: 5 * 60,
         loadingMsg: {
@@ -62,7 +59,6 @@
         computed: {
             mapObject () { return this.$refs.map.mapObject; },
             markerInstances () { return this.$refs.map.markerInstances; },
-            markers () { return this.$store.state.map.markers; },
 
             indicatorType () { return this.$store.getters['site/getIndicatorType']; },
             pm25IndicatorType () { return this.$store.state.site.pm25IndicatorType; },
@@ -118,9 +114,17 @@
                 this.isLoading = true;
                 this.loadingMsg = config.loadingMsg.site;
 
-                // axios.get('json/airmap.json').then(response => {
-                axios.get(config.url).then(response => {
-                    this.processSiteData(response.data);
+                fetch().then(({sites, groups, analysis}) => {
+                    let markers = sites.map(site => {
+                        let marker = site.marker(this.indicatorType);
+                        marker.site = site;
+                        return marker;
+                    });
+
+                    this.$store.commit('map/setMarkers', markers);
+                    this.$store.commit('site/setGroups', groups);
+                    this.$store.commit('site/updateAnalysisTypeCount', analysis);
+
                     this.isLoading = false;
                 });
 
@@ -128,38 +132,6 @@
                 if (this.$route.name == 'map' && config.enableReloadSite) {
                     setTimeout(() => {this.fetchSites();}, config.reloadSiteSeconds * 1000);
                 }
-            },
-            processSiteData (data = []) {
-                let markers = [];
-                let groups = {};
-                let analysis = {};
-
-                data.map(data => {
-                    let site = new Site(data);
-
-                    // markers
-                    let marker = site.marker(this.indicatorType);
-                    marker.site = site;
-                    markers.push(marker);
-
-                    // site groups
-                    let group = site.group;
-                    groups.hasOwnProperty(group) ? groups[group]++ : (groups[group] = 1);
-
-                    // analysis status
-                    let statuses = site.analysisStatus;
-                    if (statuses.length) {
-                        statuses.map(status => {
-                            analysis.hasOwnProperty(status) ? analysis[status]++ : (analysis[status] = 1);
-                        });
-                    } else {
-                        analysis.hasOwnProperty('normal') ? analysis['normal']++ : (analysis['normal'] = 1);
-                    }
-                });
-
-                this.$store.commit('map/setMarkers', markers);
-                this.$store.commit('site/setGroups', groups);
-                this.$store.commit('site/updateAnalysisTypeCount', analysis);
             },
             openInfowindow (marker) {
                 if (this.infowindow) {

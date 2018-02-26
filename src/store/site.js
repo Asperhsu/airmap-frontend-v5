@@ -23,6 +23,9 @@ export default {
             {name: 'longterm-pollution', text: '可能接近長時間的固定污染源或設備故障', method: 'getCloudUrl', count: 0},
         ],
         activeAnalysisTypes: ['normal', 'indoor', 'shortterm-pollution', 'longterm-pollution'],
+
+        onlyShowFavoriteSwitch: false,
+        favorites: [],
     },
     getters: {
         getIndicatorType: state => {
@@ -31,6 +34,9 @@ export default {
             }
 
             return state.measureType;
+        },
+        isInFavorite: state => (site) => {
+            return state.favorites.indexOf(site.uid) > -1;
         },
     },
     mutations: {
@@ -80,6 +86,21 @@ export default {
         },
         setActiveAnalysisTypes(state, types) {
             state.activeAnalysisTypes = [].concat(types);
+        },
+
+        setOnlyShowFavoriteSwitch(state, flag) {
+            state.onlyShowFavoriteSwitch = !!flag;
+        },
+        setFavorites(state, favorites) {
+            state.favorites = favorites;
+        },
+        addFavorite(state, site) {
+            state.favorites = [].concat(state.favorites, site.uid);
+        },
+        removeFavorite(state, site) {
+            state.favorites = state.favorites.filter(uid => {
+                return uid !== site.uid;
+            });
         },
     }
 };

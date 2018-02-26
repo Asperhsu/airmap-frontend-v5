@@ -89,3 +89,169 @@ export const getTypeColor = (type, value) => {
 
     return level && level[0] && level[0].color ? level[0].color : 'transparent';
 }
+
+export const ColorBar = {
+    getRange: function (colors) {
+        let last = colors[colors.length-1];
+        let max = last.max === Infinity ? last.min * 1.3 : last.max;
+
+        return {
+            min: colors[0].min,
+            max: max,
+        };
+    },
+    getPercent: function(min, max, value) {
+        let range = max - min;
+        let percent = Math.round(((value - min) / range) * 100);
+
+        if (percent < 0) { percent = 0; }
+        if (percent > 100) { percent = 100; }
+
+        return percent;
+    },
+};
+export const generateColorBar = (type) => {
+    if (!isTypeExist(type)) {
+        console.log(`${type} is not support`); return;
+    }
+
+    let colors = getTypeColors(type);
+    let {min, max} = ColorBar.getRange(colors);
+
+    let colorbar = [];
+    colors.map(level => {
+        ['min', 'max'].map(index => {
+            let percent = ColorBar.getPercent(min, max, level[index]);
+            colorbar.push({
+                percent: percent,
+                color: level.color,
+            });
+        });
+    });
+
+    return colorbar;
+}
+
+export const hexToRgb = function(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+export const rgbToHex = function(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+const suggestion = {
+    meta: {
+        normalHumanTitle: '一般民眾活動建議',
+        sensitiveHumanTitle: '敏感性族群活動建議',
+        'PM2.5-Datasource': {
+            text: '行政院環保署細懸浮微粒(PM2.5)指標對照表與活動建議 (連結失效)',
+            link: 'http://taqm.epa.gov.tw/taqm/tw/fpmi.aspx',
+        },
+        'AQI-Datasource': {
+            text: '行政院環境保護署空氣品質指標',
+            link: 'https://taqm.epa.gov.tw/taqm/tw/b0201.aspx',
+        }
+    },
+
+    'PM2.5': [
+        {
+            humanType: 'normal',
+            levels: [
+                {min: 0, max: 53, words: ['正常戶外活動']},
+                {min: 54, max: 70, words: ['任何人如果有不適，如眼痛，咳嗽或喉嚨痛等，應該考慮減少戶外活動']},
+                {min: 71, max: 999, words: ['任何人如果有不適，如眼痛，咳嗽或喉嚨痛等，應減少體力消耗，特別是減少戶外活動']},
+            ],
+        },
+        {
+            humanType: 'sensitive',
+            levels: [
+                {min: 0, max: 35, words: ['正常戶外活動']},
+                {min: 36, max: 53, words: ['有心臟、呼吸道及心血管疾病的成人與孩童感受到癥狀時，應考慮減少體力消耗，特別是減少戶外活動']},
+                {min: 54, max: 70, words: [
+                    '有心臟、呼吸道及心血管疾病的成人與孩童，應減少體力消耗，特別是減少戶外活動',
+                    '老年人應減少體力消耗',
+                    '具有氣喘的人可能需增加使用吸入劑的頻率',
+                ]},
+                {min: 71, max: 999, words: [
+                    '有心臟、呼吸道及心血管疾病的成人與孩童，以及老年人應避免體力消耗，特別是避免戶外活動',
+                    '具有氣喘的人可能需增加使用吸入劑的頻率',
+                ]},
+            ]
+        }
+    ],
+
+    'AQI': [
+        {
+            humanType: 'normal',
+            levels: [
+                {min: 0, max: 100, words: ['正常戶外活動']},
+                {min: 101, max: 150, words: [
+                    '一般民眾如果有不適，如眼痛，咳嗽或喉嚨痛等，應該考慮減少戶外活動',
+                    '學生仍可進行戶外活動，但建議減少長時間劇烈運動'
+                ]},
+                {min: 151, max: 200, words: [
+                    '一般民眾如果有不適，如眼痛，咳嗽或喉嚨痛等，應減少體力消耗，特別是減少戶外活動',
+                    '學生應避免長時間劇烈運動，進行其他戶外活動時應增加休息時間',
+                ]},
+                {min: 201, max: 300, words: [
+                    '一般民眾應減少戶外活動',
+                    '學生應立即停止戶外活動，並將課程調整於室內進行',
+                ]},
+                {min: 301, max: 500, words: [
+                    '一般民眾應避免戶外活動，室內應緊閉門窗，必要外出應配戴口罩等防護用具',
+                    '學生應立即停止戶外活動，並將課程調整於室內進行',
+                ]},
+            ]
+        },
+        {
+            humanType: 'sensitive',
+            levels: [
+                {min: 0, max: 50, words: ['正常戶外活動']},
+                {min: 51, max: 100, words: ['極特殊敏感族群建議注意可能產生的咳嗽或呼吸急促症狀，但仍可正常戶外活動']},
+                {min: 101, max: 150, words: [
+                    '有心臟、呼吸道及心血管疾病患者、孩童及老年人，建議減少體力消耗活動及戶外活動，必要外出應配戴口罩',
+                    '具有氣喘的人可能需增加使用吸入劑的頻率'
+                ]},
+                {min: 151, max: 200, words: [
+                    '有心臟、呼吸道及心血管疾病患者、孩童及老年人，建議留在室內並減少體力消耗活動，必要外出應配戴口罩',
+                    '具有氣喘的人可能需增加使用吸入劑的頻率'
+                ]},
+                {min: 201, max: 500, words: [
+                    '有心臟、呼吸道及心血管疾病患者、孩童及老年人應留在室內並減少體力消耗活動，必要外出應配戴口罩',
+                    '具有氣喘的人應增加使用吸入劑的頻率'
+                ]},
+            ]
+        }
+    ],
+}
+
+export const getSuggestion = function (type, value) {
+    if (!suggestion.hasOwnProperty(type)) {
+        console.log(`${type} suggestion not defined`); return;
+    }
+
+    let words = {};
+
+    suggestion[type].map(item => {
+        item.levels.map(level => {
+            if (value >= level.min && value <= level.max) {
+                words[item.humanType] = level.words;
+            }
+        })
+    });
+
+    return {
+        meta: {
+            normalHumanTitle: suggestion.meta.normalHumanTitle,
+            sensitiveHumanTitle: suggestion.meta.sensitiveHumanTitle,
+            datasource: suggestion.meta[`${type}-Datasource`],
+        },
+        words: words
+    };
+}

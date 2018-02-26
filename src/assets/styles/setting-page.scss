@@ -5,15 +5,18 @@
 }
 
 .badge {
-    width: 2em;
-    height: 2em;
+    width: 1.6em;
+    height: 1.6em;
     box-sizing: initial;
 
-    border: 2px solid #0076FF;
     text-align: center;
     border-radius: 50%;
 
-    line-height: 2em;
+    line-height: 1.6em;
     box-sizing: content-box;
     margin: 0 5px;
+    padding: 3px;
+
+    font-size: .6em;
+    border: 2px solid #0076FF;
 }

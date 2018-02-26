@@ -1,45 +1,145 @@
 <template>
     <v-ons-page>
-        <v-ons-toolbar>
-            <div class="center">
-                <v-ons-segment tabbar-id="tabbar" :index.sync="segmentIndex" style="width: 180px">
-                    <button>ALL</button>
-                    <button>Favorite</button>
-                </v-ons-segment>
+        <BasicToolbar>List</BasicToolbar>
+
+        <div class="search-container">
+            <v-ons-search-input
+                v-model="search"
+                placeholder="Search Sites" class="site-search-input">
+            </v-ons-search-input>
+
+            <div class="close" @click="clearSearch">
+                <i class="fa fa-times" aria-hidden="true"></i>
             </div>
-        </v-ons-toolbar>
+        </div>
 
-        <v-ons-tabbar id="tabbar"
-            :tabs="tabs"
-            :index.sync="tabbarIndex"
-        ></v-ons-tabbar>
+        <v-ons-list>
+            <v-ons-list-item v-for="(count, name) in filterGroups" :key="name" modifier="chevron" tappable @click="showSites(name)">
+                <label class="center" :for="'groupcheckbox-' + name">
+                    {{ name }} <div class="badge">{{ count }}</div>
+                </label>
+            </v-ons-list-item>
+        </v-ons-list>
 
+        <v-ons-modal :visible="isLoading">
+            <p style="text-align: center">
+                <v-ons-progress-circular indeterminate></v-ons-progress-circular>
+                <br><br>
+                {{ loadingMsg }}
+            </p>
+        </v-ons-modal>
     </v-ons-page>
 </template>
 
 <script>
+    import {fetch} from '@/services/siteLoader';
+
     import BasicToolbar from '@/components/BasicToolbar'
-    import ListAll from '@/pages/ListAll'
-    import ListFavorite from '@/pages/ListFavorite'
+    import ListGroupSites from '@/pages/ListGroupSites'
 
     export default {
-        components: {BasicToolbar, ListAll, ListFavorite},
-        methods: {
+        name: 'list-page',
 
+        components: {BasicToolbar},
+
+        mounted () {
+            this.fetchSites();
         },
+
         data() {
             return {
-                segmentIndex: 0,
-                tabbarIndex: 0,
-                tabs: [
-                    {page: ListAll},
-                    {page: ListFavorite},
-                ]
+                isLoading: false,
+                loadingMsg: 'Loading Data',
+                search: '',
+
+                groups: {},
+                sites: {},
+
+                filterGroups: {},
+                filterSites: {},
             };
+        },
+
+        computed: {
+            indicatorType () { return this.store.getters['site/getIndicatorType']; },
+        },
+
+        watch: {
+            search (keyword) {
+                if (keyword && keyword.length) {
+                    let filterGroups = {};
+                    let filterSites = {};
+
+                    for(let group in this.sites) {
+                        let sites = this.sites[group].filter(site => {
+                            return site.name.indexOf(keyword) > -1;
+                        });
+
+                        filterGroups[group] = sites.length;
+                        filterSites[group] = sites;
+                    }
+
+                    this.filterGroups = filterGroups;
+                    this.filterSites = filterSites;
+                    return;
+                }
+
+                this.filterGroups = this.groups;
+                this.filterSites = this.sites;
+            }
+        },
+
+        methods: {
+            clearSearch () {
+                this.search = '';
+            },
+            fetchSites () {
+                this.isLoading = true;
+
+                fetch().then(({sites, groups, analysis}) => {
+                    let groupSites = {};
+
+                    sites.map(site => {
+                        if (!groupSites.hasOwnProperty(site.group)) {
+                            groupSites[site.group] = [];
+                        }
+
+                        groupSites[site.group].push(site);
+                    });
+
+                    this.sites = this.filterSites = groupSites;
+                    this.groups = this.filterGroups = groups;
+                    this.isLoading = false;
+                });
+            },
+            showSites(group) {
+                this.$store.commit('navigator/push', {
+                    ...ListGroupSites,
+                    store: this.$store,
+                    onsNavigatorProps: {
+                        name: group,
+                        sites: this.filterSites[group],
+                    }
+                });
+            },
         }
     };
 </script>
 
 <style lang="scss" scoped>
+    .search-container {
+        margin: .5em;
+        display: flex;
 
+        .site-search-input {
+            flex-grow: 1;
+            margin: 0 .5em;
+        }
+
+        .close {
+            margin-right: .5em;
+        }
+    }
 </style>
+
+<style lang="scss" src="@/assets/styles/setting-page.scss" scoped></style>

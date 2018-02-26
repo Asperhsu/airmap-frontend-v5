@@ -2,7 +2,10 @@ import moment from 'moment';
 import "moment/locale/zh-tw";
 import store from '@/store';
 
-const supportLangs = ['en', 'tw'];
+const supportLangs = {
+    en: 'English',
+    tw: 'Traditional Chinese',
+};
 
 const translations = {
     recruit: {
@@ -12,11 +15,15 @@ const translations = {
 };
 
 export const isLangExist = (lang) => {
-    return supportLangs.indexOf(lang) > -1;
+    return supportLangs.hasOwnProperty(lang);
 }
 
 export const getLang = () => {
     return store.state.app.lang;
+}
+
+export const getSupportLangs = () => {
+    return supportLangs;
 }
 
 export const setLang = (lang) => {

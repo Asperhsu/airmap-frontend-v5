@@ -5,6 +5,7 @@ import store from '@/store';
 import AppTabbar from '@/apps/AppTabbar.vue';
 import Map from '@/pages/Map'
 import List from '@/pages/List'
+import FavoriteList from '@/pages/FavoriteList'
 import Resource from '@/pages/Resource'
 import AppSetting from '@/pages/AppSetting'
 
@@ -22,6 +23,11 @@ const router = new VueRouter({
             path: '/list',
             name: 'list',
             component: List
+        },
+        {
+            path: '/favorite-list',
+            name: 'favorite-list',
+            component: FavoriteList
         },
         {
             path: '/resource',
