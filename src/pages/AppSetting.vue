@@ -1,6 +1,6 @@
 <template>
     <v-ons-page>
-        <BasicToolbar>個人化設定</BasicToolbar>
+        <BasicToolbar>{{ lang('setting.title') }}</BasicToolbar>
 
         <AppLangSetting />
 

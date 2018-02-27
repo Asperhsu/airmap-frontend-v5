@@ -1,22 +1,45 @@
 .list-title {
-    font-size: 1.2em;
+    font-size: 1em;
     padding: .5em 0;
-    text-align: center;
+    margin-left: .5em;
 }
 
+// .badge {
+//     width: 1.6em;
+//     height: 1.6em;
+//     box-sizing: initial;
+
+//     text-align: center;
+//     border-radius: 50%;
+
+//     line-height: 1.6em;
+//     box-sizing: content-box;
+//     margin: 0 5px;
+//     padding: 3px;
+
+//     font-size: .6em;
+//     border: 2px solid #0076FF;
+// }
+
 .badge {
-    width: 1.6em;
-    height: 1.6em;
-    box-sizing: initial;
-
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
     text-align: center;
-    border-radius: 50%;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+}
 
-    line-height: 1.6em;
-    box-sizing: content-box;
-    margin: 0 5px;
-    padding: 3px;
+.badge-fill {
+    padding-right: .6em;
+    padding-left: .6em;
+    border-radius: 10rem;
+}
 
-    font-size: .6em;
-    border: 2px solid #0076FF;
+.badge-primary {
+    color: #fff;
+    background-color: #007bff;
 }

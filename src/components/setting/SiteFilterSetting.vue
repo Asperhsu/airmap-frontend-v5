@@ -1,22 +1,25 @@
 <template>
     <div>
-        <v-ons-list-title>站點過濾</v-ons-list-title>
+        <v-ons-list-title>{{ lang('setting.siteFilter') }}</v-ons-list-title>
         <v-ons-list modifier="inset">
-            <v-ons-list-header>我的最愛</v-ons-list-header>
+            <v-ons-list-header>{{ lang('setting.favorite') }}</v-ons-list-header>
             <v-ons-list-item tappable>
                 <div class="center"></div>
                 <label class="center" for="onlyShowFavoriteSwitch">
-                    只顯示我的最愛
+                    {{ lang('setting.onlyShowFavorite') }}
                 </label>
                 <div class="right">
                     <v-ons-switch input-id="onlyShowFavoriteSwitch" v-model="onlyShowFavoriteSwitch" />
                 </div>
             </v-ons-list-item>
 
-            <v-ons-list-header>群組</v-ons-list-header>
+            <v-ons-list-header>{{ lang('setting.group') }}</v-ons-list-header>
             <v-ons-list-item v-for="(count, name) in groups" :key="name" tappable>
+                <div class="left">
+                    <div class="badge badge-fill badge-primary">{{ count }}</div>
+                </div>
                 <label class="center" :for="'groupcheckbox-' + name">
-                    {{ name }} <div class="badge">{{ count }}</div>
+                    {{ name }}
                 </label>
                 <label class="right">
                     <v-ons-checkbox
@@ -29,13 +32,13 @@
                 </label>
             </v-ons-list-item>
 
-            <v-ons-list-header>圖示</v-ons-list-header>
+            <v-ons-list-header>{{ lang('setting.markerIcon') }}</v-ons-list-header>
             <v-ons-list-item v-for="(stat, index) in analysisTypes" :key="stat.name" tappable>
                 <label class="left">
                     <img :src="getIcon(stat.method, stat.count)" />
                 </label>
                 <label class="center" :for="'statcheckbox-' + index">
-                    {{ stat.text }}
+                    {{ lang(`analysisTypes.${stat.name}`) }}
                 </label>
                 <label class="right">
                     <v-ons-checkbox
@@ -92,5 +95,12 @@
         },
     }
 </script>
+
+<style lang="scss" scoped>
+    .list-item .left {
+        width: 3em;
+        justify-content: center;
+    }
+</style>
 
 <style lang="scss" src="@/assets/styles/setting-page.scss" scoped></style>

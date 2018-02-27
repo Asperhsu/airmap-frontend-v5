@@ -2,8 +2,7 @@
     <div>
         <v-ons-list-title>
             <v-ons-icon icon="fa-heart"></v-ons-icon>
-            特別致謝
-            <v-ons-icon icon="fa-heart"></v-ons-icon>
+            {{ lang('setting.specialThanks') }}
         </v-ons-list-title>
         <v-ons-list modifier="inset">
             <v-ons-list-item>
@@ -11,9 +10,11 @@
                     <img src="https://i.imgur.com/z11DvN7.png" height="50px" />
                 </div>
                 <div class="center" style="text-align:left;">
-                    本站硬體由 ProbeCube 團隊熱心支援<br/>
+                    {{ lang('setting.specialThanksText') }}
                 </div>
             </v-ons-list-item>
         </v-ons-list>
     </div>
 </template>
+
+<style lang="scss" src="@/assets/styles/setting-page.scss" scoped></style>

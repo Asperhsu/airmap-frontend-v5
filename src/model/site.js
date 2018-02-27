@@ -97,7 +97,7 @@ export default class Site {
         }
     }
 
-    fetchHistory(offsetHours = 24) {
+    fetchHistory(offsetHours = 12) {
         // get url
         let params = {
             group: this.group,
@@ -121,7 +121,7 @@ export default class Site {
 
                 if (index === 'isotimes') {
                     labels = data.map(isoString => {
-						return moment(isoString).format('h');
+						return moment(isoString).format('kk:mm');
 					});
 					return;
                 }

@@ -1,7 +1,7 @@
 <template>
     <div class="meter">
         <div class="inner">
-            <div class="indicator-type">{{ indicatorType }}</div>
+            <div class="title">{{ title }}</div>
             <div class="bar" :style="{background: barGradient}"></div>
             <div class="pointer" :style="pointerPosition">
                 <div class="arrow-down" :style="{'border-top-color': arrowColor}"></div>
@@ -16,6 +16,10 @@
 
     export default {
         props: {
+            title: {
+                type: String,
+                default: '',
+            },
             indicatorType: {
                 type: String,
                 required: true,
@@ -57,11 +61,13 @@
 
     .inner { position: relative; }
 
-    .indicator-type {
+    .title {
         font-size: .75em;
         color: #999;
         text-align: right;
+        margin: 0;
         margin-right: 2%;
+        min-height: 1.4em;
     }
 
     .bar {
@@ -97,6 +103,5 @@
             border-radius: 5px;
             background: rgba(255,255,255,.8);
         }
-     }
-
+    }
 </style>

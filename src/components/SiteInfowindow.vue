@@ -5,13 +5,17 @@
         </div>
 
         <div class="content">
-            <Meter :indicatorType="pm25IndicatorType" :value="site.pm25" />
+            <Meter :title="pm25IndicatorType"
+                :indicatorType="pm25IndicatorType" :value="site.pm25" />
 
-            <PM25Suggestion :showDatasource="false" :indicatorType="pm25IndicatorType" :value="site.pm25" />
+            <PM25Suggestion :showDatasource="false"
+                :indicatorType="pm25IndicatorType" :value="site.pm25" />
 
-            <Meter v-if="site.temp" indicatorType="Temperature" :value="site.temp" />
+            <Meter v-if="site.temp" :title="lang('temperature')"
+                indicatorType="Temperature" :value="site.temp" />
 
-            <Meter v-if="site.humidity" indicatorType="Humidity" :value="site.humidity" />
+            <Meter v-if="site.humidity" :title="lang('humidity')"
+                indicatorType="Humidity" :value="site.humidity" />
         </div>
 
         <div class="footer">
@@ -19,12 +23,15 @@
                 <i class="fa fa-clock-o" aria-hidden="true" style="padding: 0 5px;"></i>
                 {{ site.publishedAt.toNow(true) }}
             </div>
+
             <div class="ranking" title="">
                 <i class="fa fa-star" style="padding: 0 2px;" v-for="i in site.analysisRanking" :key="i"></i>
             </div>
+
             <div class="buttons">
-                <v-ons-button modifier="light" class="btn btn-site-page"><i class="fa fa-bookmark"></i></v-ons-button>
-                <v-ons-button modifier="light" class="btn btn-widget-page"><i class="fa fa-tachometer"></i></v-ons-button>
+                <v-ons-button modifier="light" class="btn btn-site-page" @click="openSiteDetail">
+                    <i class="fa fa-thumb-tack"></i>
+                </v-ons-button>
             </div>
         </div>
     </div>
@@ -33,15 +40,32 @@
 <script>
     import Meter from '@/components/Meter';
     import PM25Suggestion from '@/components/PM25Suggestion'
+    import ListSiteDetail from '@/pages/ListSiteDetail'
 
     export default {
         components: {Meter, PM25Suggestion},
 
-        props: ['site', 'pm25IndicatorType'],
+        props: {
+            site: {
+                required: true,
+            },
+            pm25IndicatorType: {
+                type: String,
+                required: true,
+            }
+        },
 
-        computed: {
-            //
-        }
+        methods: {
+            openSiteDetail () {
+                this.$store.commit('navigator/push', {
+                    ...ListSiteDetail,
+                    store: this.$store,
+                    onsNavigatorProps: {
+                        site: this.site,
+                    }
+                });
+            }
+        },
     }
 </script>
 

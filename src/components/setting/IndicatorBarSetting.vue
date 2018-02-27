@@ -3,7 +3,7 @@
         <v-ons-list-item tappable>
             <div class="center"></div>
             <label class="center" for="showIndicator">
-                顯示指示條
+                {{ lang('setting.showIndicator') }}
             </label>
             <div class="right">
                 <v-ons-switch input-id="showIndicator" v-model="showIndicator" />

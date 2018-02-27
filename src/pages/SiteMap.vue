@@ -1,8 +1,8 @@
 <template>
     <div style="width: 100%; height: 100%;">
-        <GoogleMap ref="map" @markerClicked="markerClicked" @mapBooted="mapBooted" @markersLoaded="countSitesInView" />
+        <GoogleMap ref="map" @markerClicked="markerClicked" @mapBooted="mapBooted" @markersLoaded="markersLoaded" />
 
-        <div id="sites-count" title="站點數量">{{ siteCount }}</div>
+        <div id="sites-count">{{ siteCount }}</div>
 
         <v-ons-modal :visible="isLoading">
             <p style="text-align: center">
@@ -32,17 +32,13 @@
     let config = {
         enableReloadSite: false,
         reloadSiteSeconds: 5 * 60,
-        loadingMsg: {
-            map: 'Loading Google Map',
-            site: 'Loading Data',
-        },
     };
 
     export default {
         components: {SiteMapSetting, GoogleMap, WindLayer},
 
         mounted () {
-            this.loadingMsg = config.loadingMsg.map;
+            this.loadingMsg = lang('loading.map');
         },
 
         data () {
@@ -50,7 +46,7 @@
                 infowindow: null,
                 siteCount: 0,
                 isLoading: true,
-                loadingMsg: config.loadingMsg.map,
+                loadingMsg: null,
 
                 showWindLayer: false,
             };
@@ -90,6 +86,10 @@
                     debounce(() => this.countSitesInView(), 500)
                 );
             },
+            markersLoaded () {
+                this.countSitesInView();
+                this.applyMarkerFilter();
+            },
             markerClicked (marker) {
                 this.openInfowindow(marker);
             },
@@ -112,7 +112,7 @@
             },
             fetchSites () {
                 this.isLoading = true;
-                this.loadingMsg = config.loadingMsg.site;
+                this.loadingMsg = lang('loading.site');
 
                 fetch().then(({sites, groups, analysis}) => {
                     let markers = sites.map(site => {
@@ -150,6 +150,7 @@
                         open: () => {
                             new Vue({
                                 el: '#site-infowindow',
+                                store: this.$store,
                                 render: h => h(SiteInfowindow, {
                                     props: {site: marker.site, pm25IndicatorType: this.pm25IndicatorType}
                                 })

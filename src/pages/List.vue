@@ -1,6 +1,6 @@
 <template>
     <v-ons-page>
-        <BasicToolbar>List</BasicToolbar>
+        <BasicToolbar>{{ lang('list.site') }}</BasicToolbar>
 
         <div class="search-container">
             <v-ons-search-input
@@ -15,8 +15,11 @@
 
         <v-ons-list>
             <v-ons-list-item v-for="(count, name) in filterGroups" :key="name" modifier="chevron" tappable @click="showSites(name)">
+                <div class="left">
+                    <div class="badge badge-fill badge-primary">{{ count }}</div>
+                </div>
                 <label class="center" :for="'groupcheckbox-' + name">
-                    {{ name }} <div class="badge">{{ count }}</div>
+                    {{ name }}
                 </label>
             </v-ons-list-item>
         </v-ons-list>
@@ -139,6 +142,11 @@
         .close {
             margin-right: .5em;
         }
+    }
+
+    .list-item .left {
+        width: 3em;
+        justify-content: center;
     }
 </style>
 

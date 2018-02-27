@@ -17,10 +17,10 @@ export default {
         pm25IndicatorType: 'PM2.5',
 
         analysisTypes: [
-            {name: 'normal', text: '一般站點 (無分析資料)', method: 'getCircleUrl', count: 0},
-            {name: 'indoor', text: '可能放置於室內或設備故障', method: 'getHomeUrl', count: 0},
-            {name: 'shortterm-pollution', text: '偵測到小型污染源', method: 'getFactoryUrl', count: 0},
-            {name: 'longterm-pollution', text: '可能接近長時間的固定污染源或設備故障', method: 'getCloudUrl', count: 0},
+            {name: 'normal', method: 'getCircleUrl', count: 0},
+            {name: 'indoor', method: 'getHomeUrl', count: 0},
+            {name: 'shortterm-pollution', method: 'getFactoryUrl', count: 0},
+            {name: 'longterm-pollution', method: 'getCloudUrl', count: 0},
         ],
         activeAnalysisTypes: ['normal', 'indoor', 'shortterm-pollution', 'longterm-pollution'],
 

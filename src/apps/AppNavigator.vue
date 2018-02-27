@@ -32,19 +32,9 @@
             ]);
         },
 
-        data() {
-            return {
-                //
-            }
-        },
-
         computed: {
-            pageStack() {
-                return this.$store.state.navigator.stack;
-            },
-            options() {
-                return this.$store.state.navigator.options;
-            }
+            pageStack() { return this.$store.state.navigator.stack; },
+            options() { return this.$store.state.navigator.options; }
         },
 
         methods: {

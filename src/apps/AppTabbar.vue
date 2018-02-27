@@ -6,7 +6,7 @@
             </keep-alive>
 
             <v-ons-tab v-for="tab in tabs" :key="tab.name" :ref="tab.name"
-                :label="tab.label"
+                :label="lang(tab.label)"
                 :icon="tab.icon"
                 :active="$route.name === tab.name"
                 @click.prevent="$router.push(tab.name)"
@@ -26,27 +26,27 @@
             return {
                 tabs: [
                     {
-                        label: 'Map',
+                        label: 'menu.map',
                         icon: 'fa-map',
                         name: 'map',
                     },
                     {
-                        label: 'List',
+                        label: 'menu.list',
                         icon: 'fa-list',
                         name: 'list',
                     },
                     {
-                        label: 'Favorite',
+                        label: 'menu.favorite',
                         icon: 'fa-star',
                         name: 'favorite-list',
                     },
                     {
-                        label: 'Resources',
+                        label: 'menu.resource',
                         icon: 'fa-bookmark',
                         name: 'resource',
                     },
                     {
-                        label: 'Setting',
+                        label: 'menu.setting',
                         icon: 'fa-cog',
                         name: 'setting',
                     },

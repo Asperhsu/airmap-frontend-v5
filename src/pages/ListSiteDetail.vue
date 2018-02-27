@@ -20,13 +20,13 @@
             </div>
 
             <div class="measure">
-                <div class="title">Temp.</div>
+                <div class="title">{{ lang('temperature') }}</div>
                 <div class="value">{{ site.temp }}</div>
                 <div class="unit">&#8451;</div>
             </div>
 
             <div class="measure">
-                <div class="title">Humidity</div>
+                <div class="title">{{ lang('humidity') }}</div>
                 <div class="value">{{ site.humidity }}</div>
                 <div class="unit">%</div>
             </div>
@@ -42,9 +42,9 @@
             <div class="datasource">
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                 <span class="info">
-                    資料分析來源:
+                    {{ lang('list.analysis.datasource') }}:
                     <a href="https://pm25.lass-net.org/zh_tw/#api" target="_blank">
-                        台灣中央研究院資訊科學研究所網路研究實驗室
+                        {{ lang('list.analysis.datasourceText') }}
                     </a>
                 </span>
             </div>
@@ -63,12 +63,12 @@
             </div>
 
             <div class="chartContainer" v-if="chartData.temp">
-                <div class="title">Temperature</div>
+                <div class="title">{{ lang('temperature') }}</div>
                 <LineChart type="line" :data="chartData.temp" :options="chartOptions" :gradientFillColor="generateColorBar('Temperature')" />
             </div>
 
             <div class="chartContainer" v-if="chartData.humidity">
-                <div class="title">Humidity</div>
+                <div class="title">{{ lang('humidity') }}</div>
                 <LineChart type="line" :data="chartData.humidity" :options="chartOptions" :gradientFillColor="generateColorBar('Humidity')" />
             </div>
         </div>
@@ -114,14 +114,22 @@
                                 display: false
                             }
                         }],
+                        xAxes: [{
+                            gridLines: {
+                                zeroLineColor: "transparent"
+                            },
+                            ticks: {
+                                autoSkipPadding: 30,
+                                fontColor: "rgba(0,0,0,0.5)",
+                                fontStyle: "bold"
+                            }
+                        }]
                     },
                     tooltips: {
                         displayColors: false,
                     },
                     elements: {
                         point: {
-                            radius: 5,
-                            hoverRadius: 10,
                             hitRadius: 3
                         }
                     }
@@ -149,8 +157,8 @@
                 let action = this.inFavorite ? 'removeFavorite' : 'addFavorite';
                 this.$store.commit(`site/${action}`, this.site);
 
-                let notiWord = this.inFavorite ? 'added' : 'removed';
-                this.$ons.notification.toast(`Favorite ${notiWord}`, {timeout: 2000})
+                let notiWord = this.inFavorite ? 'list.favorite.added' : 'list.favorite.removed';
+                this.$ons.notification.toast(lang(notiWord), {timeout: 2000})
             },
             generateColorBar (type) {
                 let colorbar = generateColorBar(type)
@@ -165,19 +173,21 @@
             },
             fetchHistory (type) {
                 this.site.fetchHistory().then(chartData => {
+                    let labels = [].concat(chartData.labels).reverse();
+
                     this.chartData.pm25 = {
-                        labels: chartData.labels,
-                        datasets: [{ data: chartData.datasets.Dust2_5}]
+                        labels: labels,
+                        datasets: [{ data: [].concat(chartData.datasets.Dust2_5).reverse() }]
                     }
 
                     this.chartData.temp = {
-                        labels: chartData.labels,
-                        datasets: [{ data: chartData.datasets.Temperature}]
+                        labels: labels,
+                        datasets: [{ data: [].concat(chartData.datasets.Temperature).reverse() }]
                     }
 
                     this.chartData.humidity = {
-                        labels: chartData.labels,
-                        datasets: [{ data: chartData.datasets.Humidity}]
+                        labels: labels,
+                        datasets: [{ data: [].concat(chartData.datasets.Humidity).reverse() }]
                     }
                 });
             },

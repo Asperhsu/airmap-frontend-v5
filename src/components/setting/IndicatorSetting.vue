@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-ons-list-title>量測指標</v-ons-list-title>
+        <v-ons-list-title>{{ lang('setting.measureType') }}</v-ons-list-title>
         <v-ons-list modifier="inset">
             <v-ons-list-header>PM2.5</v-ons-list-header>
             <v-ons-list-item v-for="(name) in pm25Types" :key="name" tappable>
@@ -17,7 +17,7 @@
                 </label>
             </v-ons-list-item>
 
-            <v-ons-list-header>Other</v-ons-list-header>
+            <v-ons-list-header>{{ lang('setting.other') }}</v-ons-list-header>
             <v-ons-list-item v-for="(name) in otherTypes" :key="name" tappable>
                 <label class="center" :for="'indicatorradio-' + name">
                     {{ name }}

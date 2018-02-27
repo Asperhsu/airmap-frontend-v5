@@ -2,7 +2,7 @@
     <v-ons-page>
         <v-ons-list modifier="inset">
             <v-ons-list-item tappable>
-                Favorite
+                {{ lang('list.favorite') }}
             </v-ons-list-item>
         </v-ons-list>
     </v-ons-page>

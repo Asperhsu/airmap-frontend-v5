@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-ons-list-title>顯示語言</v-ons-list-title>
+        <v-ons-list-title>{{ lang('setting.displaylang') }}</v-ons-list-title>
         <v-ons-list modifier="inset">
             <v-ons-list-item v-for="(text, name) in supportLangs" :key="name" tappable>
                 <label class="center" :for="'applangradio-' + name">
@@ -10,7 +10,7 @@
                     <v-ons-radio
                         :input-id="'applangradio-' + name"
                         :value="name"
-                        v-model="lang"
+                        v-model="language"
                     >
                     </v-ons-radio>
                 </label>
@@ -24,7 +24,7 @@
 
     export default {
         computed: {
-            lang: {
+            language: {
                 get () {
                     return getLang();
                 },

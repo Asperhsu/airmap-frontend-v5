@@ -1,17 +1,11 @@
 import moment from 'moment';
 import "moment/locale/zh-tw";
 import store from '@/store';
+import translations from '@/assets/langs';
 
 const supportLangs = {
     en: 'English',
     tw: 'Traditional Chinese',
-};
-
-const translations = {
-    recruit: {
-        en: "Station Recruit",
-        tw: "自造募集",
-    }
 };
 
 export const isLangExist = (lang) => {
@@ -36,17 +30,17 @@ export const setLang = (lang) => {
 }
 
 export const lang = (index) => {
-    const lang = getLang();
+    let currentLang = getLang();
 
-    if (translations[index] && translations[index][lang]) {
-        return translations[index][lang];
+    if (!translations.hasOwnProperty(currentLang) || !translations[currentLang].hasOwnProperty(index)) {
+        return '!!'+index+'!!';
     }
 
-    return '!!'+index+'!!';
+    return translations[currentLang][index];
 }
 
 export const init = () => {
-    var userLang = navigator.language || navigator.userLanguage;
+    var userLang = getLang() || navigator.language || navigator.userLanguage;
     var lang = isLangExist(userLang) ? userLang : 'tw';
     setLang(lang);
 }

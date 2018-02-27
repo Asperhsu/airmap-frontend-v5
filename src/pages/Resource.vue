@@ -1,6 +1,6 @@
 <template>
     <v-ons-page>
-        <BasicToolbar>相關資源</BasicToolbar>
+        <BasicToolbar>{{ lang('menu.resource') }}</BasicToolbar>
 
         <v-ons-list modifier="inset">
             <v-ons-list-header>Default</v-ons-list-header>

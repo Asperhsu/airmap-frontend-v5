@@ -1,6 +1,6 @@
 <template>
     <v-ons-page>
-        <BackToolbar>地圖選單</BackToolbar>
+        <BackToolbar>{{ lang('setting.siteTitle') }}</BackToolbar>
 
         <SiteFilterSetting />
 
