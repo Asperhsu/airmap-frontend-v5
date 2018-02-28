@@ -5,6 +5,9 @@ export default {
     strict: true,
     namespaced: true,
     state: {
+        data: null,
+        dataFetchedAt: null,
+
         groups: {},
         activeGroups: null,
 
@@ -36,10 +39,19 @@ export default {
             return state.measureType;
         },
         isInFavorite: state => (site) => {
-            return state.favorites.indexOf(site.uid) > -1;
+            return state.favorites.filter(favorite => {
+                return favorite.uid === site.uid;
+            }).length > 0;
         },
     },
     mutations: {
+        setData(state, data) {
+            if (data) {
+                state.data = data;
+                state.dataFetchedAt = (new Date()).getTime();
+            }
+        },
+
         setGroups(state, groups) {
             state.groups = Object.assign({}, groups);
 
@@ -95,11 +107,14 @@ export default {
             state.favorites = favorites;
         },
         addFavorite(state, site) {
-            state.favorites = [].concat(state.favorites, site.uid);
+            state.favorites = [].concat(state.favorites, {
+                uid: site.uid,
+                name: site.name,
+            });
         },
         removeFavorite(state, site) {
-            state.favorites = state.favorites.filter(uid => {
-                return uid !== site.uid;
+            state.favorites = state.favorites.filter(favorite => {
+                return favorite.uid !== site.uid;
             });
         },
     }

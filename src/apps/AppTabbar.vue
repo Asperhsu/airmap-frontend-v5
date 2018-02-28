@@ -9,6 +9,7 @@
                 :label="lang(tab.label)"
                 :icon="tab.icon"
                 :active="$route.name === tab.name"
+                :badge="getBadge(tab)"
                 @click.prevent="$router.push(tab.name)"
             ></v-ons-tab>
         </v-ons-tabbar>
@@ -39,6 +40,7 @@
                         label: 'menu.favorite',
                         icon: 'fa-star',
                         name: 'favorite-list',
+                        badge: 'favoriteCount'
                     },
                     {
                         label: 'menu.resource',
@@ -58,6 +60,9 @@
             title() {
                 return this.tabs[this.index].title || this.tabs[this.index].label;
             },
+            favoriteCount () {
+                return this.$store.state.site.favorites.length || null;
+            },
         },
 
         methods: {
@@ -70,6 +75,9 @@
                     let active = tab.name == this.$route.name;
                     this.$refs[tab.name][0].$el.setActive(active);
                 });
+            },
+            getBadge (tab) {
+                return tab.badge ? this[tab.badge]: null;
             }
         }
     };

@@ -69,7 +69,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .title {
         margin-top: 0px;
         margin-bottom: 8px;

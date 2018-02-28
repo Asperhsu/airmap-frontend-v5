@@ -40,7 +40,6 @@
     }
 
     .center {
-        max-width: 35%;
         overflow: hidden;
         flex-direction: column;
         align-items: flex-start;
@@ -54,6 +53,7 @@
     .right {
         flex-direction: column;
         align-items: flex-end;
+        justify-content: center;
     }
 
     .publishAt {
@@ -83,6 +83,12 @@
                 color: gray;
             }
         }
+    }
+
+    .humidity .value {
+        min-width: 1.7em;
+        text-align: right;
+        display: inline-block;
     }
 </style>
 

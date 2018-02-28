@@ -16,10 +16,11 @@
             <v-ons-list-header>{{ lang('setting.group') }}</v-ons-list-header>
             <v-ons-list-item v-for="(count, name) in groups" :key="name" tappable>
                 <div class="left">
-                    <div class="badge badge-fill badge-primary">{{ count }}</div>
+                    <img :src="getLogo(name)" style="width: 100%"/>
                 </div>
                 <label class="center" :for="'groupcheckbox-' + name">
                     {{ name }}
+                    <div class="badge badge-fill badge-primary">{{ count }}</div>
                 </label>
                 <label class="right">
                     <v-ons-checkbox
@@ -55,6 +56,7 @@
 
 <script>
     import * as MarkerIcon from '@/services/map/markerIconService'
+    import Logo from '@/config/logo';
 
     export default {
         computed: {
@@ -91,7 +93,15 @@
         methods: {
             getIcon(method, cnt) {
                 return MarkerIcon[method]('#999', cnt);
-            }
+            },
+            getLogo (name) {
+                name = name.toLowerCase();
+                if (Logo.hasOwnProperty(name)) {
+                    return Logo[name];
+                }
+
+                return Logo.nologo;
+            },
         },
     }
 </script>
@@ -100,6 +110,9 @@
     .list-item .left {
         width: 3em;
         justify-content: center;
+    }
+    .badge {
+        margin-left: .5em;
     }
 </style>
 

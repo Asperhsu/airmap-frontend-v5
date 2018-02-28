@@ -3,11 +3,22 @@ import Site from '@/model/site';
 import store from '@/store';
 
 const resourceUrl = 'json/airmap.json';
-// const resourceUrl = 'static/lass.json';
+const expiredMicroSeconds = 5 * 60 * 1000;  // 5 mins
+
+const currentTimestamp = function() {
+    return (new Date()).getTime();
+}
 
 export const fetch = (url = resourceUrl) => {
+    if (store.state.site.data && store.state.site.dataFetchedAt > (currentTimestamp() - expiredMicroSeconds)) {
+        return Promise.resolve(store.state.site.data);
+    }
+
     return axios.get(url).then(response => {
-        return processSiteData(response.data);
+        let data = processSiteData(response.data);
+        store.commit('site/setData', data);
+
+        return data;
     });
 }
 

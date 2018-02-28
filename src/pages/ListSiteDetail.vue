@@ -88,7 +88,10 @@
 
         mounted () {
             this.fetchHistory();
-            this.loadLocation();
+
+            setTimeout(() => {
+                this.loadLocation();
+            }, 2000);
         },
 
         props: {
@@ -175,20 +178,26 @@
                 this.site.fetchHistory().then(chartData => {
                     let labels = [].concat(chartData.labels).reverse();
 
-                    this.chartData.pm25 = {
-                        labels: labels,
-                        datasets: [{ data: [].concat(chartData.datasets.Dust2_5).reverse() }]
-                    }
+                    setTimeout(() => {
+                        this.chartData.pm25 = {
+                            labels: labels,
+                            datasets: [{ data: [].concat(chartData.datasets.Dust2_5).reverse() }]
+                        }
+                    }, 0);
 
-                    this.chartData.temp = {
-                        labels: labels,
-                        datasets: [{ data: [].concat(chartData.datasets.Temperature).reverse() }]
-                    }
+                    setTimeout(() => {
+                        this.chartData.temp = {
+                            labels: labels,
+                            datasets: [{ data: [].concat(chartData.datasets.Temperature).reverse() }]
+                        }
+                    }, 500);
 
-                    this.chartData.humidity = {
-                        labels: labels,
-                        datasets: [{ data: [].concat(chartData.datasets.Humidity).reverse() }]
-                    }
+                    setTimeout(() => {
+                        this.chartData.humidity = {
+                            labels: labels,
+                            datasets: [{ data: [].concat(chartData.datasets.Humidity).reverse() }]
+                        }
+                    }, 1000);
                 });
             },
             loadLocation() {
@@ -227,7 +236,19 @@
             text-align: center;
             min-width: 25%;
 
-            .title { font-size: .75em; background: gray; color: white; padding: .1em .3em; }
+            .title {
+                font-size: .75em;
+                background: gray;
+                color: white;
+                padding: .1em .3em;
+            }
+
+            .value {
+                min-height: 1em;
+                font-size: 1.8em;
+                line-height: 1em;
+            }
+
             .unit { font-size: .6em; padding: .3em; }
         }
     }

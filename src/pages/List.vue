@@ -5,7 +5,7 @@
         <div class="search-container">
             <v-ons-search-input
                 v-model="search"
-                placeholder="Search Sites" class="site-search-input">
+                :placeholder="lang('list.searchPlaceholder')" class="site-search-input">
             </v-ons-search-input>
 
             <div class="close" @click="clearSearch">
@@ -16,11 +16,14 @@
         <v-ons-list>
             <v-ons-list-item v-for="(count, name) in filterGroups" :key="name" modifier="chevron" tappable @click="showSites(name)">
                 <div class="left">
-                    <div class="badge badge-fill badge-primary">{{ count }}</div>
+                    <img :src="getLogo(name)" style="width: 100%"/>
                 </div>
                 <label class="center" :for="'groupcheckbox-' + name">
                     {{ name }}
                 </label>
+                <div class="right">
+                    <div class="badge badge-fill badge-primary">{{ count }}</div>
+                </div>
             </v-ons-list-item>
         </v-ons-list>
 
@@ -36,6 +39,7 @@
 
 <script>
     import {fetch} from '@/services/siteLoader';
+    import Logo from '@/config/logo';
 
     import BasicToolbar from '@/components/BasicToolbar'
     import ListGroupSites from '@/pages/ListGroupSites'
@@ -75,7 +79,7 @@
 
                     for(let group in this.sites) {
                         let sites = this.sites[group].filter(site => {
-                            return site.name.indexOf(keyword) > -1;
+                            return site.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
                         });
 
                         filterGroups[group] = sites.length;
@@ -95,6 +99,14 @@
         methods: {
             clearSearch () {
                 this.search = '';
+            },
+            getLogo (name) {
+                name = name.toLowerCase();
+                if (Logo.hasOwnProperty(name)) {
+                    return Logo[name];
+                }
+
+                return Logo.nologo;
             },
             fetchSites () {
                 this.isLoading = true;
