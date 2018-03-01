@@ -2,15 +2,18 @@ import axios from 'axios';
 import Site from '@/model/site';
 import store from '@/store';
 
-const resourceUrl = 'json/airmap.json';
-const expiredMicroSeconds = 5 * 60 * 1000;  // 5 mins
+const airmapUrl = 'json/airmap.json';
+const airmapExpiredms = 5 * 60 * 1000;  // 5 mins
+
+const townUrl = 'json/townmap.json';
+const townmapExpiredms = 5 * 60 * 1000;  // 5 mins
 
 const currentTimestamp = function() {
     return (new Date()).getTime();
 }
 
-export const fetch = (url = resourceUrl) => {
-    if (store.state.site.data && store.state.site.dataFetchedAt > (currentTimestamp() - expiredMicroSeconds)) {
+export const fetchSiteMap = (url = airmapUrl) => {
+    if (store.state.site.data && store.state.site.dataFetchedAt > (currentTimestamp() - airmapExpiredms)) {
         return Promise.resolve(store.state.site.data);
     }
 
@@ -47,4 +50,17 @@ const processSiteData = (data = []) => {
     });
 
     return {sites, groups, analysis};
+}
+
+export const fetchTownMap = (url = townUrl) => {
+    if (store.state.town.data && store.state.town.dataFetchedAt > (currentTimestamp() - townmapExpiredms)) {
+        return Promise.resolve(store.state.town.data);
+    }
+
+    return axios.get(url).then(response => {
+        let data = response.data;
+        store.commit('town/setData', data);
+
+        return data;
+    });
 }

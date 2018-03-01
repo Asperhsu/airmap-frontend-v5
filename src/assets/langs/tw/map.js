@@ -13,6 +13,11 @@ export default {
     'setting.windLayer.notice': '提醒',
     'setting.windLayer.noticeText': '風力線十分消耗資源，容易造成瀏覽器當機，請斟酌使用。風力資料於 5, 11, 17, 23 半整點(UTC +8)更新資料',
 
+    'setting.mapSelect.title': '地圖類型',
+    'setting.mapSelect.type.site': '站點地圖',
+    'setting.mapSelect.type.town': '鄉鎮地圖',
+
     'loading.map': '地圖資源載入中',
     'loading.site': '站點資料載入中',
+    'loading.town': '鄉鎮資料載入中',
 }

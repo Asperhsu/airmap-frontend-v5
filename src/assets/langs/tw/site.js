@@ -7,6 +7,8 @@ export default {
     'setting.group': '群組',
     'setting.markerIcon': '圖示',
 
+    'site.notfound': '無對應站點資料',
+
     'analysisTypes.normal': '一般站點 (無分析資料)',
     'analysisTypes.indoor': '可能放置於室內或設備故障',
     'analysisTypes.shortterm-pollution': '偵測到小型污染源',

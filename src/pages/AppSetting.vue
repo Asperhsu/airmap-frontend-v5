@@ -4,6 +4,8 @@
 
         <AppLangSetting />
 
+        <MapSelectSetting />
+
         <IndicatorSetting />
 
         <SpecialThanks />
@@ -14,12 +16,14 @@
 <script>
     import BasicToolbar from '@/components/BasicToolbar'
     import AppLangSetting from '@/components/setting/AppLangSetting'
+    import MapSelectSetting from '@/components/setting/MapSelectSetting'
     import IndicatorSetting from '@/components/setting/IndicatorSetting'
     import SpecialThanks from '@/components/setting/SpecialThanks'
 
     export default {
         components: {
-            BasicToolbar, AppLangSetting, IndicatorSetting, SpecialThanks
+            BasicToolbar, MapSelectSetting, AppLangSetting,
+            IndicatorSetting, SpecialThanks
         },
     };
 </script>

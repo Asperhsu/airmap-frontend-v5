@@ -124,3 +124,18 @@ export const updateMarkers = (oldMarkers, newMarkers, markerInstances, createCb)
 
     return markerInstances;
 }
+
+
+/* map button */
+export const addButton = (map, position, html, onClick=()=>{}) => {
+    if (!map) { console.log('Need Pass Map instance'); return; }
+    if (!position || !google.maps.ControlPosition.hasOwnProperty(position)) {
+        console.log('map controls position not correct.'); return;
+    }
+    if (!html || !html.length) { console.log('Need Pass button html'); return; }
+
+    let $element = $(html).click(onClick);
+    let controlDiv = $element[0];
+    controlDiv.index = 1;
+    map.controls[google.maps.ControlPosition[position]].push(controlDiv);
+}

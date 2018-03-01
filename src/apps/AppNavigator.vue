@@ -19,13 +19,14 @@
             langInit();
             SettingStorage.registerWatcher([
                 {commit: 'app/setLang', stateKey: 'app.lang'},
+                {commit: 'app/setMapType', stateKey: 'app.mapType'},
+                {commit: 'app/setMeasureType', stateKey: 'app.measureType'},
+                {commit: 'app/setPM25IndicatorType', stateKey: 'app.pm25IndicatorType'},
 
                 {commit: 'map/setCenter', stateKey: 'map.center'},
                 {commit: 'map/setZoom', stateKey: 'map.zoom'},
                 {commit: 'map/setShowIndicator', stateKey: 'map.showIndicator'},
 
-                {commit: 'site/setMeasureType', stateKey: 'site.measureType'},
-                {commit: 'site/setPM25IndicatorType', stateKey: 'site.pm25IndicatorType'},
                 {commit: 'site/setActiveAnalysisTypes', stateKey: 'site.activeAnalysisTypes'},
                 {commit: 'site/setFavorites', stateKey: 'site.favorites'},
                 {commit: 'site/setOnlyShowFavoriteSwitch', stateKey: 'site.onlyShowFavoriteSwitch'},

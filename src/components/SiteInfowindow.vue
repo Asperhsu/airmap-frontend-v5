@@ -5,10 +5,13 @@
         </div>
 
         <div class="content">
-            <Meter :title="pm25IndicatorType"
+            <Meter v-if="town.pm25 !== null"
+                :title="pm25IndicatorType"
                 :indicatorType="pm25IndicatorType" :value="site.pm25" />
 
-            <PM25Suggestion :showDatasource="false"
+            <PM25Suggestion
+                v-if="town.pm25 !== null"
+                :showDatasource="false"
                 :indicatorType="pm25IndicatorType" :value="site.pm25" />
 
             <Meter v-if="site.temp" :title="lang('temperature')"

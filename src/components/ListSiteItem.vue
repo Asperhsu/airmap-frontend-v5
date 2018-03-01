@@ -105,7 +105,7 @@
         },
 
         computed: {
-            indicatorType () { return this.$store.getters['site/getIndicatorType']; },
+            indicatorType () { return this.$store.getters['app/getIndicatorType']; },
         },
 
         methods: {

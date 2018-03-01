@@ -30,7 +30,7 @@
 
 <script>
     import Vue from 'vue';
-    import {fetch} from '@/services/siteLoader';
+    import {fetchSiteMap} from '@/services/resourceLoader';
     import BasicToolbar from '@/components/BasicToolbar'
     import ListSiteItem from '@/components/ListSiteItem';
     import ListSiteItemNoData from '@/components/ListSiteItemNoData';
@@ -57,7 +57,7 @@
             fetchSites () {
                 this.isLoading = true;
 
-                fetch().then(({sites, groups, analysis}) => {
+                fetchSiteMap().then(({sites, groups, analysis}) => {
                     let favoriteSites = {};
                     let favoriteUids = this.favorites.map(favorite => favorite.uid);
 

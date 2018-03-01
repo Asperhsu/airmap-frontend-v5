@@ -151,7 +151,7 @@
                 return this.$store.getters['site/isInFavorite'](this.site);
             },
             pm25IndicatorType () {
-                return this.$store.state.site.pm25IndicatorType;
+                return this.$store.state.app.pm25IndicatorType;
             },
         },
 
@@ -282,5 +282,3 @@
         min-height: 300px;
     }
 </style>
-
-

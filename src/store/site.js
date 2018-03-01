@@ -1,4 +1,3 @@
-import {isTypeExist, getSupportTypes} from '@/services/indicator';
 import {arrayIntersection} from '@/services/helpers';
 
 export default {
@@ -10,14 +9,6 @@ export default {
 
         groups: {},
         activeGroups: null,
-
-        indicatorTypes: {
-            'PM25': ['PM2.5', 'AQI', 'PM2.5_NASA'],
-            'Temperature': null,
-            'Humidity': null,
-        },
-        measureType: 'PM25',
-        pm25IndicatorType: 'PM2.5',
 
         analysisTypes: [
             {name: 'normal', method: 'getCircleUrl', count: 0},
@@ -31,13 +22,6 @@ export default {
         favorites: [],
     },
     getters: {
-        getIndicatorType: state => {
-            if (state.measureType == 'PM25') {
-                return state.pm25IndicatorType;
-            }
-
-            return state.measureType;
-        },
         isInFavorite: state => (site) => {
             return state.favorites.filter(favorite => {
                 return favorite.uid === site.uid;
@@ -72,17 +56,6 @@ export default {
         },
         setActiveGroups(state, groups) {
             state.activeGroups = [].concat(groups);
-        },
-
-        setMeasureType(state, type) {
-            if (Object.keys(state.indicatorTypes).indexOf(type) > -1) {
-                state.measureType = type;
-            }
-        },
-        setPM25IndicatorType(state, type) {
-            if (state.indicatorTypes['PM25'].indexOf(type) > -1) {
-                state.pm25IndicatorType = type;
-            }
         },
 
         updateAnalysisTypeCount(state, analysis) {

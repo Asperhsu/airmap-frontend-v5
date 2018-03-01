@@ -38,7 +38,7 @@
 </template>
 
 <script>
-    import {fetch} from '@/services/siteLoader';
+    import {fetchSiteMap} from '@/services/resourceLoader';
     import Logo from '@/config/logo';
 
     import BasicToolbar from '@/components/BasicToolbar'
@@ -68,7 +68,7 @@
         },
 
         computed: {
-            indicatorType () { return this.store.getters['site/getIndicatorType']; },
+            indicatorType () { return this.store.getters['app/getIndicatorType']; },
         },
 
         watch: {
@@ -111,7 +111,7 @@
             fetchSites () {
                 this.isLoading = true;
 
-                fetch().then(({sites, groups, analysis}) => {
+                fetchSiteMap().then(({sites, groups, analysis}) => {
                     let groupSites = {};
 
                     sites.map(site => {

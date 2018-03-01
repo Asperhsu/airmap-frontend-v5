@@ -74,7 +74,7 @@
                 return this.$store.state.map.showIndicator;
             },
             type () {
-                return this.$store.getters['site/getIndicatorType'];
+                return this.$store.getters['app/getIndicatorType'];
             },
             unit () {
                 return service.getUnit(this.type);

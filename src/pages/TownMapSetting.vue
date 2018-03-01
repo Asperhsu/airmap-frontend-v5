@@ -1,10 +1,8 @@
 <template>
     <v-ons-page>
-        <BackToolbar>{{ lang('setting.siteTitle') }}</BackToolbar>
+        <BackToolbar>鄉鎮地圖設定</BackToolbar>
 
-        <SiteFilterSetting />
-
-        <IndicatorSetting />
+        <IndicatorSetting onlypm25 />
         <IndicatorBarSetting />
 
         <WindLayerSetting />
@@ -13,15 +11,13 @@
 
 <script>
     import BackToolbar from '@/components/BackToolbar'
-    import SiteFilterSetting from '@/components/setting/SiteFilterSetting'
     import IndicatorBarSetting from '@/components/setting/IndicatorBarSetting'
     import IndicatorSetting from '@/components/setting/IndicatorSetting'
     import WindLayerSetting from '@/components/setting/WindLayerSetting'
 
     export default {
         components: {
-            BackToolbar, SiteFilterSetting,
-            IndicatorBarSetting, IndicatorSetting, WindLayerSetting
+            BackToolbar, IndicatorBarSetting, IndicatorSetting, WindLayerSetting
         },
     };
 </script>

@@ -7,6 +7,8 @@ export default {
     'setting.group': 'Group',
     'setting.markerIcon': 'Marker Icon',
 
+    'site.notfound': 'Site not found',
+
     'analysisTypes.normal': 'General Site (no analysis data)',
     'analysisTypes.indoor': 'May be placed indoors or equipment malfunctioned',
     'analysisTypes.shortterm-pollution': 'Detected small sources of pollution or equipment malfunctioned',

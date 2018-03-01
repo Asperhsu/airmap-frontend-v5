@@ -8,7 +8,8 @@
             </div>
         </v-ons-toolbar>
 
-        <SiteMap />
+        <SiteMap v-if="mapType === 'site'" />
+        <TownMap v-if="mapType === 'town'" />
 
         <indicator />
     </v-ons-page>
@@ -16,17 +17,22 @@
 
 <script>
     import SiteMap from '@/pages/SiteMap'
+    import TownMap from '@/pages/TownMap'
     import Indicator from '@/components/Indicator'
 
     export default {
         name: 'map-page',
 
-        components: {Indicator, SiteMap},
+        components: {Indicator, SiteMap, TownMap},
 
         data() {
             return {
                 //
             }
+        },
+
+        computed: {
+            mapType () { return this.$store.state.app.mapType; }
         },
     }
 </script>

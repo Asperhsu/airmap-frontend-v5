@@ -21,8 +21,9 @@
     import SnazzyInfoWindow from 'snazzy-info-window';
     import {deletedDiff} from 'deep-object-diff';
 
-    import {fetch} from '@/services/siteLoader';
     import {getObjectValue, debounce, arrayIntersection, getInstanceName} from '@/services/helpers'
+    import {fetchSiteMap} from '@/services/resourceLoader';
+    import {addButton} from '@/services/map/mapService';
 
     import SiteMapSetting from '@/pages/SiteMapSetting'
     import GoogleMap from '@/components/GoogleMap'
@@ -56,8 +57,8 @@
             mapObject () { return this.$refs.map.mapObject; },
             markerInstances () { return this.$refs.map.markerInstances; },
 
-            indicatorType () { return this.$store.getters['site/getIndicatorType']; },
-            pm25IndicatorType () { return this.$store.state.site.pm25IndicatorType; },
+            indicatorType () { return this.$store.getters['app/getIndicatorType']; },
+            pm25IndicatorType () { return this.$store.state.app.pm25IndicatorType; },
 
             activeGroups () { return this.$store.state.site.activeGroups; },
             activeAnalysisTypes () { return this.$store.state.site.activeAnalysisTypes; },
@@ -94,27 +95,23 @@
                 this.openInfowindow(marker);
             },
             addSettingButton () {
-                var $element = $([
+                let html = [
                     "<div class='map-controls' style='margin-bottom:7px' title='地圖設定'>",
                     "<button>",
                     "<div class='fa fa-sliders'></div>",
                     "</button>",
                     "</div>"
-                ].join(''));
+                ].join('');
 
-                $element.find('button').click(() => {
+                addButton(this.mapObject, 'RIGHT_BOTTOM', html, () => {
                     this.$store.commit('navigator/push', SiteMapSetting);
                 });
-
-                var controlDiv = $element[0];
-                controlDiv.index = 1;
-                this.mapObject.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
             },
             fetchSites () {
                 this.isLoading = true;
                 this.loadingMsg = lang('loading.site');
 
-                fetch().then(({sites, groups, analysis}) => {
+                fetchSiteMap().then(({sites, groups, analysis}) => {
                     let markers = sites.map(site => {
                         let marker = site.marker(this.indicatorType);
                         marker.site = site;

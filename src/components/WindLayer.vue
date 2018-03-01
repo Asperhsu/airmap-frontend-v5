@@ -82,7 +82,7 @@
                 this.booted = true;
             },
             fetchGfs() {
-                axios.get('/static/gfs.json').then(response => {
+                axios.get('/json/gfs.json').then(response => {
                     this.overlay.gfs = response.data;
                     this.overlay.enable = this.show;
                 });
