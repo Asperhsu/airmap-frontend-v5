@@ -23,12 +23,12 @@
 
     import {getObjectValue, debounce, arrayIntersection, getInstanceName} from '@/services/helpers'
     import {fetchSiteMap} from '@/services/resourceLoader';
-    import {addButton} from '@/services/map/mapService';
+    import {addButton} from '@/services/maps/mapService';
 
-    import SiteMapSetting from '@/pages/SiteMapSetting'
-    import GoogleMap from '@/components/GoogleMap'
-    import SiteInfowindow from '@/components/SiteInfowindow'
-    import WindLayer from '@/components/WindLayer'
+    import SiteMapSetting from '@/pages/maps/SiteMapSetting'
+    import GoogleMap from '@/components/maps/GoogleMap'
+    import SiteInfowindow from '@/components/maps/SiteInfowindow'
+    import WindLayer from '@/components/maps/WindLayer'
 
     let config = {
         enableReloadSite: false,

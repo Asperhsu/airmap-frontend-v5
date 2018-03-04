@@ -43,7 +43,7 @@
 <script>
     import Meter from '@/components/Meter';
     import PM25Suggestion from '@/components/PM25Suggestion'
-    import ListSiteDetail from '@/pages/ListSiteDetail'
+    import ListSiteDetail from '@/pages/lists/ListSiteDetail'
 
     export default {
         components: {Meter, PM25Suggestion},

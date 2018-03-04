@@ -41,8 +41,8 @@
     import {fetchSiteMap} from '@/services/resourceLoader';
     import Logo from '@/config/logo';
 
-    import BasicToolbar from '@/components/BasicToolbar'
-    import ListGroupSites from '@/pages/ListGroupSites'
+    import BasicToolbar from '@/components/toolbars/BasicToolbar'
+    import ListGroupSites from '@/pages/lists/ListGroupSites'
 
     export default {
         name: 'list-page',

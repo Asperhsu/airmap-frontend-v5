@@ -1,9 +1,9 @@
 <template>
-    <div id="google-map"></div>
+    <div :id="mapElementId" class='google-map-element'></div>
 </template>
 
 <script>
-    import {findCurrentLocation, updateMarkers} from '@/services/map/mapService';
+    import {findCurrentLocation, updateMarkers} from '@/services/maps/mapService';
     import {debounce} from '@/services/helpers';
 
     let mapOption = {
@@ -34,9 +34,11 @@
         },
 
         data() {
+            let id = "id" + Math.random().toString(16).slice(2)
+
             return {
                 booted: false,
-                mapElementId: 'google-map',
+                mapElementId: 'google-map-'+id,
                 mapObject: null,
                 markerInstances: [],
                 circleInstances: [],
@@ -179,7 +181,7 @@
 </script>
 
 <style lang="scss">
-    #google-map { width: 100%; height: 100%; }
+    .google-map-element { width: 100%; height: 100%; }
 
     .map-controls {
         margin: 0 0 -5px 10px;

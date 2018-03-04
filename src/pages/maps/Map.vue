@@ -8,32 +8,52 @@
             </div>
         </v-ons-toolbar>
 
-        <SiteMap v-if="mapType === 'site'" />
-        <TownMap v-if="mapType === 'town'" />
+        <!-- <SiteMap v-if="mapType === 'site'" />
+        <TownMap v-if="mapType === 'town'" /> -->
+
+        <div class="mapContainer" v-show="mapType === 'site'">
+            <SiteMap v-if="mapType === 'site'" />
+        </div>
+        <div class="mapContainer" v-show="mapType === 'town'">
+            <TownMap v-if="mapType === 'town'" />
+        </div>
 
         <indicator />
     </v-ons-page>
 </template>
 
 <script>
-    import SiteMap from '@/pages/SiteMap'
-    import TownMap from '@/pages/TownMap'
-    import Indicator from '@/components/Indicator'
+    import SiteMap from '@/pages/maps/SiteMap'
+    import TownMap from '@/pages/maps/TownMap'
+    import Indicator from '@/components/maps/Indicator'
 
     export default {
         name: 'map-page',
 
         components: {Indicator, SiteMap, TownMap},
 
+        mounted () {
+            this.mapType = this.mapStateType;
+        },
+
         data() {
             return {
-                //
+                mapType: null,
             }
         },
 
         computed: {
-            mapType () { return this.$store.state.app.mapType; }
+            mapStateType () { return this.$store.state.app.mapType; }
         },
+
+        watch: {
+            '$route' (to, from) {
+                // change map when on view
+                if (to.name === 'map' && this.mapType !== this.mapStateType) {
+                    this.mapType = this.mapStateType;
+                }
+            }
+        }
     }
 </script>
 
@@ -54,6 +74,8 @@
 		    -webkit-filter: drop-shadow(0px 0px 3px #fff) drop-shadow(0px 0px 5px #fff);
         }
     }
+
+    .mapContainer {
+        width: 100%; height: 100%;
+    }
 </style>
-
-

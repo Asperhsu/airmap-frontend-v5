@@ -14,8 +14,8 @@
 
 <script>
     import Vue from 'vue';
-    import BackToolbar from '@/components/BackToolbar';
-    import ListSiteItem from '@/components/ListSiteItem';
+    import BackToolbar from '@/components/toolbars/BackToolbar';
+    import ListSiteItem from '@/components/lists/ListSiteItem';
 
     export default {
         components: {BackToolbar},

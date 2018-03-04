@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import BackToolbar from '@/components/BackToolbar'
+    import BackToolbar from '@/components/toolbars/BackToolbar'
     import SiteFilterSetting from '@/components/setting/SiteFilterSetting'
     import IndicatorBarSetting from '@/components/setting/IndicatorBarSetting'
     import IndicatorSetting from '@/components/setting/IndicatorSetting'

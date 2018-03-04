@@ -65,7 +65,7 @@
 </style>
 
 <script>
-    import * as service from '../services/indicator';
+    import * as service from '@/services/indicator';
 
     export default {
         name: 'indicator',

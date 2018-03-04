@@ -20,15 +20,15 @@
     import SnazzyInfoWindow from 'snazzy-info-window';
     import {deletedDiff} from 'deep-object-diff';
 
-    import {addButton} from '@/services/map/mapService';
+    import {addButton} from '@/services/maps/mapService';
     import {getTypeColor} from '@/services/indicator';
     import {getInstanceName} from '@/services/helpers'
     import {fetchTownMap} from '@/services/resourceLoader';
 
-    import TownMapSetting from '@/pages/TownMapSetting'
-    import GoogleMap from '@/components/GoogleMap'
-    import WindLayer from '@/components/WindLayer'
-    import TownInfowindow from '@/components/TownInfowindow'
+    import TownMapSetting from '@/pages/maps/TownMapSetting'
+    import GoogleMap from '@/components/maps/GoogleMap'
+    import WindLayer from '@/components/maps/WindLayer'
+    import TownInfowindow from '@/components/maps/TownInfowindow'
 
     export default {
         components: {GoogleMap, WindLayer},
@@ -87,7 +87,7 @@
             },
 
             loadGeoJson () {
-                this.mapObject.data.loadGeoJson('static/geojson/town.json');
+                this.mapObject.data.loadGeoJson('geojson/town.json');
             },
             getFeatureStyle (feature) {
                 let color = this.getRegionColor(feature);
@@ -110,9 +110,8 @@
 
                     mapData.revertStyle();
                     mapData.overrideStyle(event.feature, {
-                        strokeWeight: 10,
-                        strokeOpacity: 1,
-                        strokeColor: '#FFF',
+                        strokeWeight: 5,
+                        strokeOpacity: .6,
                     });
 
                     this.openInfoWindow(feature, event.latLng.toJSON());
@@ -139,21 +138,25 @@
                 });
             },
 
+            infowindowNoData(info) {
+                let townName = info.COUNTYNAME + info.TOWNNAME;
+                this.$ons.notification.toast(townName + ' ' + lang('town.notfound'), {timeout: 2000});
+
+                this.mapObject.data.revertStyle();
+                return;
+            },
             openInfoWindow(feature, latlng) {
+                this.infowindow && this.infowindow.destroy();
+
                 let town = this.getRegion(feature.f.COUNTYNAME, feature.f.TOWNNAME);
                 if (!town) {
-                    this.$ons.notification.toast(lang('town.notfound'), {timeout: 2000});
-                    return;
+                    return this.infowindowNoData(feature.f);
                 }
 
+                // prepare component
                 let info = Object.assign({}, town, {
                     publishedAt: moment(this.$store.getters['town/getPublished'])
                 });
-
-
-                if (this.infowindow) {
-                    this.infowindow.destroy();
-                }
 
                 this.infowindow = new SnazzyInfoWindow({
                     map: this.mapObject,

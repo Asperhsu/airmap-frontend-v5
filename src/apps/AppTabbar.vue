@@ -17,9 +17,9 @@
 </template>
 
 <script>
-    import Map from '@/pages/Map.vue';
-    import List from '@/pages/List.vue';
-    import Resource from '@/pages/Resource.vue';
+    import Map from '@/pages/maps/Map.vue';
+    import List from '@/pages/lists/List.vue';
+    import Resource from '@/pages/resources/Resource.vue';
     import AppSetting from '@/pages/AppSetting.vue';
 
     export default {

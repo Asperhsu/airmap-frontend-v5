@@ -1,3 +1,4 @@
+import {diff} from 'deep-object-diff'
 import store from '@/store';
 import {getObjectValue} from '@/services/helpers';
 
@@ -43,6 +44,11 @@ class SettingStorage {
         save && this.save();
     }
 
+    clear () {
+        this.settings = {};
+        window.localStorage.removeItem(this.storageKey);
+    }
+
     emitCommit () {
         Object.keys(this.settings).map(commit => {
             store.commit(commit, this.settings[commit]);
@@ -60,7 +66,8 @@ class SettingStorage {
                     return getObjectValue(state, config.stateKey);
                 },
                 (newValue, oldValue) => {
-                    this.set(config.commit, newValue);
+                    let isEqual = Object.keys(diff(oldValue, newValue)).length === 0;
+                    !isEqual && this.set(config.commit, newValue);
                 },
                 { deep: true }
             );

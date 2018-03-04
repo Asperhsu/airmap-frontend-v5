@@ -54,7 +54,7 @@
 <script>
     import Meter from '@/components/Meter';
     import PM25Suggestion from '@/components/PM25Suggestion'
-    import ListSiteDetail from '@/pages/ListSiteDetail'
+    import ListSiteDetail from '@/pages/lists/ListSiteDetail'
     import {fetchSiteMap} from '@/services/resourceLoader';
 
     export default {
@@ -121,6 +121,8 @@
             padding: 1px 6px;
             margin-right: .3em;
             margin-bottom: .2em;
+
+            cursor: pointer;
         }
 
         .info {

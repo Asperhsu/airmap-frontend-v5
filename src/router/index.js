@@ -3,10 +3,10 @@ import VueRouter from 'vue-router'
 import store from '@/store';
 
 import AppTabbar from '@/apps/AppTabbar.vue';
-import Map from '@/pages/Map'
-import List from '@/pages/List'
-import FavoriteList from '@/pages/FavoriteList'
-import Resource from '@/pages/Resource'
+import Map from '@/pages/maps/Map'
+import List from '@/pages/lists/List'
+import FavoriteList from '@/pages/lists/FavoriteList'
+import Resource from '@/pages/resources/Resource'
 import AppSetting from '@/pages/AppSetting'
 
 Vue.use(VueRouter)

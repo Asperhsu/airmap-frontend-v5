@@ -33,7 +33,7 @@
                     return this.$store.state.app.mapType;
                 },
                 set (type) {
-                    this.$store.commit('map/setMapType', type);
+                    this.$store.commit('app/setMapType', type);
                 }
             },
         },

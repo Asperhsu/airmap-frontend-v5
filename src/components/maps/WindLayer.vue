@@ -4,7 +4,7 @@
 
 <script>
     import axios from 'axios';
-    import WindLayer from '@/services/map/windLayer';
+    import WindLayer from '@/services/maps/windLayer';
 
     export default {
         beforeDestroy () {

@@ -55,7 +55,7 @@
 </template>
 
 <script>
-    import * as MarkerIcon from '@/services/map/markerIconService'
+    import * as MarkerIcon from '@/services/maps/markerIconService'
     import Logo from '@/config/logo';
 
     export default {

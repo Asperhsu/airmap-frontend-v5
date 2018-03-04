@@ -12,7 +12,7 @@ import site from './site'
 import town from './town'
 import windLayer from './windLayer'
 
-export default new Vuex.Store({
+let store = new Vuex.Store({
     modules: {
         app,
         navigator,
@@ -24,3 +24,16 @@ export default new Vuex.Store({
         windLayer,
     }
 });
+export default store;
+
+
+let initialStateCopy = JSON.parse(JSON.stringify(store.state));
+export function getInitialState () {
+    return initialStateCopy;
+}
+
+export function resetState () {
+    let state = JSON.parse(JSON.stringify(initialStateCopy));
+    state.navigator = store.state.navigator;
+    store.replaceState(state);
+  }

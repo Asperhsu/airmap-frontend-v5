@@ -95,7 +95,7 @@
 
 <script>
     import * as MarkerIcon from '@/services/map/markerIconService'
-    import ListSiteDetail from '@/pages/ListSiteDetail'
+    import ListSiteDetail from '@/pages/lists/ListSiteDetail'
 
     export default {
         props: {

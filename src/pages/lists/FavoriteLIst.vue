@@ -31,9 +31,9 @@
 <script>
     import Vue from 'vue';
     import {fetchSiteMap} from '@/services/resourceLoader';
-    import BasicToolbar from '@/components/BasicToolbar'
-    import ListSiteItem from '@/components/ListSiteItem';
-    import ListSiteItemNoData from '@/components/ListSiteItemNoData';
+    import BasicToolbar from '@/components/toolbars/BasicToolbar'
+    import ListSiteItem from '@/components/lists/ListSiteItem';
+    import ListSiteItemNoData from '@/components/lists/ListSiteItemNoData';
 
     export default {
         components: {BasicToolbar},

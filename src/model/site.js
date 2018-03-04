@@ -2,7 +2,7 @@ import axios from 'axios';
 import moment from 'moment';
 import {getObjectValue} from '@/services/helpers';
 import {getTypeColor} from '@/services/indicator';
-import * as MarkerIcon from '@/services/map/markerIconService'
+import * as MarkerIcon from '@/services/maps/markerIconService'
 
 let historyUrlTemplate = "/json/query-history?group={{group}}&id={{id}}&start={{start}}&end={{end}}";
 
