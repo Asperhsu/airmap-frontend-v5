@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import SettingStorage from '@/services/settingStorage';
+    import {registerSettingWatcher, emitSettingCommit} from '@/services/store';
     import { init as langInit } from '@/services/i18n'
     import AppTabbar from '@/apps/AppTabbar.vue';
 
@@ -17,21 +17,9 @@
 
         created () {
             langInit();
-            SettingStorage.registerWatcher([
-                {commit: 'app/setLang', stateKey: 'app.lang'},
-                {commit: 'app/setMapType', stateKey: 'app.mapType'},
-                {commit: 'app/setMeasureType', stateKey: 'app.measureType'},
-                {commit: 'app/setPM25IndicatorType', stateKey: 'app.pm25IndicatorType'},
 
-                {commit: 'map/setCenter', stateKey: 'map.center'},
-                {commit: 'map/setZoom', stateKey: 'map.zoom'},
-                {commit: 'map/setShowIndicator', stateKey: 'map.showIndicator'},
-                {commit: 'map/setStartupUseMyLocation', stateKey: 'map.startupUseMyLocation'},
-
-                {commit: 'site/setActiveAnalysisTypes', stateKey: 'site.activeAnalysisTypes'},
-                {commit: 'site/setFavorites', stateKey: 'site.favorites'},
-                {commit: 'site/setOnlyShowFavorite', stateKey: 'site.onlyShowFavorite'},
-            ]);
+            registerSettingWatcher();
+            emitSettingCommit();
         },
 
         computed: {

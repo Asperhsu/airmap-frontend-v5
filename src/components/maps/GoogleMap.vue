@@ -28,6 +28,13 @@
     };
 
     export default {
+        props: {
+            loadMarker: {
+                type: Boolean,
+                default: false,
+            }
+        },
+
         mounted () {
             // google.maps.event.addDomListener(window, "load", this.init);
             this.init();
@@ -59,7 +66,7 @@
                 return this.$store.state.map.zoom;
             },
             markers () {
-                return this.$store.state.map.markers;
+                return this.loadMarker ? this.$store.state.map.markers : [];
             },
         },
 

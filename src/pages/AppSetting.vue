@@ -39,7 +39,7 @@
     import IndicatorSetting from '@/components/setting/IndicatorSetting'
 
     import SettingStorage from '@/services/settingStorage';
-    import {resetState} from '@/store';
+    import {resetState} from '@/services/store';
 
     export default {
         components: {

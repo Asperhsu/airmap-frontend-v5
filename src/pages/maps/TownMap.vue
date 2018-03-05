@@ -157,6 +157,7 @@
                     position: latlng,
                     content: "<div id='town-infowindow'></div>",
                     closeOnMapClick: true,
+                    edgeOffset: {top: 50},
                     callbacks: {
                         open: () => {
                             new Vue({

@@ -31,19 +31,3 @@ let initialStateCopy = JSON.parse(JSON.stringify(store.state));
 export function getInitialState () {
     return initialStateCopy;
 }
-
-export function resetState () {
-    let initState = JSON.parse(JSON.stringify(initialStateCopy));
-    let currentState = $.extend({}, store.state);
-
-    // state to be reset
-    currentState.app = initState.app;
-    currentState.map.center = initState.map.center;
-    currentState.map.zoom = initState.map.zoom;
-    currentState.map.showIndicator = initState.map.showIndicator;
-    currentState.site.favorites = initState.site.favorites;
-    currentState.site.onlyShowFavorite = initState.site.onlyShowFavorite;
-    currentState.windLayer = initState.windLayer;
-
-    store.replaceState(currentState);
-  }

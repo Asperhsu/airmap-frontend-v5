@@ -1,6 +1,5 @@
 import {diff} from 'deep-object-diff'
 import store from '@/store';
-import {getObjectValue} from '@/services/helpers';
 
 class SettingStorage {
     constructor() {
@@ -9,7 +8,6 @@ class SettingStorage {
         this.watchers = [];
 
         this.load();
-        this.emitCommit();
     }
 
     load () {
@@ -25,6 +23,8 @@ class SettingStorage {
     }
 
     get (key) {
+        if (!key) { return this.settings; }
+
         return this.settings.hasOwnProperty(key)
                 ? this.settings[key]
                 : null;
@@ -47,40 +47,6 @@ class SettingStorage {
     clear () {
         this.settings = {};
         window.localStorage.removeItem(this.storageKey);
-    }
-
-    emitCommit () {
-        Object.keys(this.settings).map(commit => {
-            store.commit(commit, this.settings[commit]);
-        });
-    }
-
-    registerWatcher (configs = []) {
-        configs.map(config => {
-            let watcher = store.watch(
-                (state) => {
-                    if (config.hasOwnProperty('getter')) {
-                        return store.getters[config.getter];
-                    }
-
-                    return getObjectValue(state, config.stateKey);
-                },
-                (newValue, oldValue) => {
-                    let isEqual = false;
-
-                    if (typeof newValue === "object" && typeof oldValue === "object") {
-                        isEqual = Object.keys(diff(oldValue, newValue)).length === 0;
-                    } else {
-                        isEqual = oldValue === newValue;
-                    }
-
-                    !isEqual && this.set(config.commit, newValue);
-                },
-                { deep: true }
-            );
-
-            this.watchers.push(watcher);
-        });
     }
 }
 

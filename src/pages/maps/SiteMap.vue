@@ -1,6 +1,6 @@
 <template>
     <div style="width: 100%; height: 100%;">
-        <GoogleMap ref="map" @markerClicked="markerClicked" @mapBooted="mapBooted" @markersUpdated="markersUpdated" />
+        <GoogleMap ref="map" :loadMarker="true" @markerClicked="markerClicked" @mapBooted="mapBooted" @markersUpdated="markersUpdated" />
 
         <div id="sites-count">{{ siteCount }}</div>
 
@@ -143,9 +143,8 @@
                     position: marker.getPosition(),
                     content: "<div id='site-infowindow'></div>",
                     closeOnMapClick: true,
-                    offset: {
-                        top: '-25px',
-                    },
+                    offset: {top: '-25px'},
+                    edgeOffset: {top: 50},
                     callbacks: {
                         open: () => {
                             new Vue({
