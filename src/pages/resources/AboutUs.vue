@@ -20,10 +20,10 @@
                     <i class="fa fa-link" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a target="_blank" href="https://github.com/Aspertw/Airmap_v4">Frontend 前端程式碼</a>
+                    <a target="_blank" href="https://github.com/Aspertw/airmap-frontend-v4">Frontend 前端程式碼</a>
                 </div>
                 <div class="right">
-                    TODO
+                    JS
                 </div>
             </v-ons-list-item>
             <v-ons-list-item>
