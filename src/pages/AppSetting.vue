@@ -4,7 +4,7 @@
 
         <AppLangSetting />
 
-        <MapSelectSetting />
+        <MapSetting />
 
         <IndicatorSetting />
 
@@ -35,7 +35,7 @@
 <script>
     import BasicToolbar from '@/components/toolbars/BasicToolbar'
     import AppLangSetting from '@/components/setting/AppLangSetting'
-    import MapSelectSetting from '@/components/setting/MapSelectSetting'
+    import MapSetting from '@/components/setting/MapSetting'
     import IndicatorSetting from '@/components/setting/IndicatorSetting'
 
     import SettingStorage from '@/services/settingStorage';
@@ -43,7 +43,7 @@
 
     export default {
         components: {
-            BasicToolbar, MapSelectSetting, AppLangSetting,
+            BasicToolbar, MapSetting, AppLangSetting,
             IndicatorSetting
         },
 
@@ -51,6 +51,7 @@
             resetSetting () {
                 resetState();
                 SettingStorage.clear();
+                this.$ons.notification.toast(lang('setting.reset.success'), {timeout: 2000})
             }
         }
     };

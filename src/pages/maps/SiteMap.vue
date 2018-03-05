@@ -1,6 +1,6 @@
 <template>
     <div style="width: 100%; height: 100%;">
-        <GoogleMap ref="map" @markerClicked="markerClicked" @mapBooted="mapBooted" @markersLoaded="markersLoaded" />
+        <GoogleMap ref="map" @markerClicked="markerClicked" @mapBooted="mapBooted" @markersUpdated="markersUpdated" />
 
         <div id="sites-count">{{ siteCount }}</div>
 
@@ -26,7 +26,7 @@
     import WindLayer from '@/components/maps/WindLayer'
 
     let config = {
-        enableReloadSite: false,
+        enableReloadSite: true,
         reloadSiteSeconds: 5 * 60,
     };
 
@@ -72,7 +72,7 @@
             activeAnalysisTypes () { this.applyMarkerFilter(); },
             navigatorStack (current, prev) {
                 let index = Object.keys(deletedDiff(prev, current)).pop();
-                if (index && getInstanceName(prev[index]) === 'SiteMapSetting') {
+                if (index && prev[index] && prev[index].name === 'site-map-setting') {
                     this.backFromSetting();
                 }
             }
@@ -87,9 +87,11 @@
                     debounce(() => this.countSitesInView(), 500)
                 );
             },
-            markersLoaded () {
+            markersUpdated () {
                 this.countSitesInView();
                 this.applyMarkerFilter();
+
+                this.isLoading = false;
             },
             markerClicked (marker) {
                 this.openInfowindow(marker);
@@ -115,14 +117,15 @@
                     let markers = sites.map(site => {
                         let marker = site.marker(this.indicatorType);
                         marker.site = site;
+                        marker.callbacks = {
+                            'icon': () => site.markerIcon(this.indicatorType),
+                        };
                         return marker;
                     });
 
                     this.$store.commit('map/setMarkers', markers);
                     this.$store.commit('site/setGroups', groups);
                     this.$store.commit('site/updateAnalysisTypeCount', analysis);
-
-                    this.isLoading = false;
                 });
 
                 // set interval
@@ -161,12 +164,9 @@
             },
             countSitesInView() {
                 let count = 0;
-                let bounds = this.mapObject.getBounds();
 
                 this.markerInstances.map(marker => {
-                    if (marker.getVisible() && bounds && bounds.contains(marker.getPosition())) {
-                        count++;
-                    }
+                    marker.getVisible() && count++;
                 })
 
                 this.siteCount = count;
@@ -215,6 +215,7 @@
         width: 2.3em;
         line-height: 2.3em;
         font-size: .75em;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
     }
 </style>
 

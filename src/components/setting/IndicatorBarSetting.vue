@@ -1,7 +1,6 @@
 <template>
     <v-ons-list modifier="inset">
         <v-ons-list-item tappable>
-            <div class="center"></div>
             <label class="center" for="showIndicator">
                 {{ lang('setting.showIndicator') }}
             </label>

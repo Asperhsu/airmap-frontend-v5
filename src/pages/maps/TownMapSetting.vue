@@ -16,6 +16,7 @@
     import WindLayerSetting from '@/components/setting/WindLayerSetting'
 
     export default {
+        name: 'town-map-setting',
         components: {
             BackToolbar, IndicatorBarSetting, IndicatorSetting, WindLayerSetting
         },

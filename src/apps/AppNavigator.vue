@@ -26,6 +26,7 @@
                 {commit: 'map/setCenter', stateKey: 'map.center'},
                 {commit: 'map/setZoom', stateKey: 'map.zoom'},
                 {commit: 'map/setShowIndicator', stateKey: 'map.showIndicator'},
+                {commit: 'map/setStartupUseMyLocation', stateKey: 'map.startupUseMyLocation'},
 
                 {commit: 'site/setActiveAnalysisTypes', stateKey: 'site.activeAnalysisTypes'},
                 {commit: 'site/setFavorites', stateKey: 'site.favorites'},

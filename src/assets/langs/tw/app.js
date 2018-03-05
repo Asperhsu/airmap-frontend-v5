@@ -16,6 +16,7 @@ export default {
     'setting.reset.title': '重設',
     'setting.reset.clearAll': '清除所有設定',
     'setting.reset.info': '更多關於設定詳細資訊，請參考其他資源中的關於設定值',
+    'setting.reset.success': '設定已清除',
 
     'suggestion.datasource': '資料來源'
 }

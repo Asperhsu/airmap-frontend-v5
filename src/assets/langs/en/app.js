@@ -16,6 +16,7 @@ export default {
     'setting.reset.title': 'Reset',
     'setting.reset.clearAll': 'Clear All Settings',
     'setting.reset.info': 'More detail infomation, please refer "About setting" in Resource Tab',
+    'setting.reset.success': 'Settings cleared',
 
     'suggestion.datasource': 'Datasource'
 }

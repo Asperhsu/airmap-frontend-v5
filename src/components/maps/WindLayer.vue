@@ -78,13 +78,13 @@
 
                 this.overlay = new WindLayer(opts);
                 this.show && this.fetchGfs();
-
-                this.booted = true;
             },
             fetchGfs() {
                 axios.get('/json/gfs.json').then(response => {
                     this.overlay.gfs = response.data;
                     this.overlay.enable = this.show;
+
+                    this.booted = true;
                 });
             }
         },

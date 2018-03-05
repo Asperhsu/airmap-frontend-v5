@@ -261,6 +261,11 @@
     .analysisRanking {
         text-align: center;
 
+        .ranking {
+            font-size: 2em;
+            text-shadow: 1px 1px #aaa;
+        }
+
         .datasource {
             font-size: .6em;
             margin-top: .5em;

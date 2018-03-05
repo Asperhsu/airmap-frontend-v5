@@ -6,6 +6,7 @@ export default {
         zoom: 7,
         markers: [],
         showIndicator: true,
+        startupUseMyLocation: true,
     },
     mutations: {
         setCenter(state, center) {
@@ -19,6 +20,9 @@ export default {
         },
         setShowIndicator(state, flag) {
             state.showIndicator = !!flag;
-        }
+        },
+        setStartupUseMyLocation(state, flag) {
+            state.startupUseMyLocation = !!flag;
+        },
     }
 };

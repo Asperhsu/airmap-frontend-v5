@@ -19,6 +19,7 @@
     import WindLayerSetting from '@/components/setting/WindLayerSetting'
 
     export default {
+        name: 'site-map-setting',
         components: {
             BackToolbar, SiteFilterSetting,
             IndicatorBarSetting, IndicatorSetting, WindLayerSetting

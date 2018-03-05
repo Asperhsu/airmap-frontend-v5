@@ -52,7 +52,7 @@
             pm25IndicatorType () { this.updateRegionColor(); },
             navigatorStack (current, prev) {
                 let index = Object.keys(deletedDiff(prev, current)).pop();
-                if (index && getInstanceName(prev[index]) === 'TownMapSetting') {
+                if (index && prev[index] && prev[index].name === 'town-map-setting') {
                     this.backFromSetting();
                 }
             }

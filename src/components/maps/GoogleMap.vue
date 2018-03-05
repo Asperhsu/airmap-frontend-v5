@@ -33,11 +33,16 @@
             this.init();
         },
 
+        beforeDestroy () {
+            this.listeners.map(listener => listener.remove());
+        },
+
         data() {
             let id = "id" + Math.random().toString(16).slice(2)
 
             return {
                 booted: false,
+                listeners: [],
                 mapElementId: 'google-map-'+id,
                 mapObject: null,
                 markerInstances: [],
@@ -69,8 +74,8 @@
                 if (zoom === this.mapObject.getZoom()) { return; }
                 this.mapObject.setZoom(zoom);
             },
-            markers (newMarkers, oldMarkers) {
-                this.updateMarkers(oldMarkers, newMarkers);
+            markers () {
+                this.updateMarkers();
             },
         },
 
@@ -85,23 +90,33 @@
                     })
                 );
 
-                // location button
                 this.addUserLocationButton();
+                this.bindEvents();
 
-                // event map booted
-                google.maps.event.addListenerOnce(this.mapObject, 'idle', () => {
+                if (this.$store.state.map.startupUseMyLocation) {
+                    this.fetchCurrentLocation();
+                }
+            },
+            bindEvents () {
+                this.listeners.push(google.maps.event.addListenerOnce(this.mapObject, 'idle', () => {
                     this.$emit('mapBooted');
-                });
-                google.maps.event.addListener(this.mapObject, 'center_changed', debounce(() => {
+                }));
+
+                this.listeners.push(google.maps.event.addListener(this.mapObject, 'center_changed', debounce(() => {
                     this.$store.commit('map/setCenter', this.mapObject.getCenter().toJSON());
-                }, 500));
-                google.maps.event.addListener(this.mapObject, 'zoom_changed', debounce(() => {
+                }, 500)));
+
+                this.listeners.push(google.maps.event.addListener(this.mapObject, 'zoom_changed', debounce(() => {
                     this.$store.commit('map/setZoom', this.mapObject.getZoom());
-                }, 500));
+                }, 500)));
+
+                this.listeners.push(google.maps.event.addListener(this.mapObject, 'bounds_changed', debounce(() => {
+                    this.updateMarkers();
+                }, 500)));
             },
             addUserLocationButton () {
                 var $element = $([
-                    "<div class='map-controls' title='定位'>",
+                    "<div class='map-controls' id='gps-locate-control'>",
                     "<button>",
                     "<div class='icon-gps'></div>",
                     "</button>",
@@ -112,7 +127,8 @@
                     $element.find('.icon-gps').removeClass('gps-located gps-unlocate');
                 });
 
-                $element.find('button').click(() => {
+                let btn = $element.find('button')
+                btn.click(() => {
                     let info = $element.data('info');
                     if (info) {
                         this.$store.commit('map/setCenter', info.position);
@@ -120,62 +136,80 @@
                         return;
                     }
 
-                    findCurrentLocation().then((info) => {
-                        if (!info) { return; }
-
-                        this.currentLocaton.marker = new google.maps.Marker({
-                            position: info.position,
-                            map: this.mapObject,
-                            icon: {
-                                path: google.maps.SymbolPath.CIRCLE,
-                                fillColor: "#4285F4",
-                                fillOpacity: 1,
-                                scale: 8,
-                                strokeColor: "#FFFFFF",
-                                strokeWeight: 1,
-                            }
-                        });
-                        this.currentLocaton.circle = new google.maps.Circle({
-                            center: info.position,
-                            radius: info.accuracy,
-                            map: this.mapObject,
-                            options: {
-                                fillColor: "#4285F4",
-                                fillOpacity: 0.1,
-                                strokeColor: "#4285F4",
-                                strokeOpacity: 0.2
-                            }
-                        });
-
-                        if (info.zoom > 14) { info.zoom = 14; }
-
-                        this.$store.commit('map/setCenter', info.position);
-                        this.$store.commit('map/setZoom', info.zoom);
-
-                        $element.data('info', info);
-                    });
+                    this.fetchCurrentLocation();
                 });
 
                 var controlDiv = $element[0];
                 controlDiv.index = 1;
                 this.mapObject.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
             },
-            updateMarkers (oldMarkers, newMarkers) {
-                let markerInstances = [].concat(this.markerInstances);
-                this.markerInstances = updateMarkers(oldMarkers, newMarkers, markerInstances, (option) => {
-                    let marker = new google.maps.Marker($.extend({}, {
+            fetchCurrentLocation() {
+                return findCurrentLocation().then((info) => {
+                    if (!info) { return; }
+
+                    this.currentLocaton.marker = new google.maps.Marker({
+                        position: info.position,
                         map: this.mapObject,
-                    }, option));
-
-                    google.maps.event.addListener(marker, 'click', () => {
-                        this.$emit('markerClicked', marker);
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            fillColor: "#4285F4",
+                            fillOpacity: 1,
+                            scale: 8,
+                            strokeColor: "#FFFFFF",
+                            strokeWeight: 1,
+                        }
                     });
+                    // this.currentLocaton.circle = new google.maps.Circle({
+                    //     center: info.position,
+                    //     radius: info.accuracy,
+                    //     map: this.mapObject,
+                    //     options: {
+                    //         fillColor: "#4285F4",
+                    //         fillOpacity: 0.1,
+                    //         strokeColor: "#4285F4",
+                    //         strokeOpacity: 0.2
+                    //     }
+                    // });
 
-                    return marker;
+                    if (info.zoom > 14) { info.zoom = 14; }
+
+                    this.$store.commit('map/setCenter', info.position);
+                    this.$store.commit('map/setZoom', info.zoom);
+
+                    $("#gps-locate-control").data('info', info);
+                });
+            },
+            positionInMap(position) {
+                let bounds = this.mapObject.getBounds();
+                return bounds && bounds.contains(position);
+            },
+            updateMarkers () {
+                // remove all markers
+                this.markerInstances.map(marker =>  marker.setMap(null));
+                this.markerInstances.length = [];
+
+                // add markers
+                this.markers && this.markers.map(markerOption => {
+                    if (!markerOption.hasOwnProperty('position') || !this.positionInMap(markerOption.position)) {
+                        return;
+                    }
+
+                    let option = $.extend({}, {
+                        map: this.mapObject,
+                    }, markerOption);
+
+                    if (markerOption.hasOwnProperty('callbacks')) {
+                        for (let index in markerOption.callbacks) {
+                            option[index] = markerOption.callbacks[index]();
+                        }
+                    }
+
+                    let marker = new google.maps.Marker(option);
+                    this.markerInstances.push(marker);
                 });
 
-                this.$emit('markersLoaded');
-            }
+                this.$emit('markersUpdated');
+            },
         }
     }
 </script>

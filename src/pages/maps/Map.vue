@@ -46,10 +46,12 @@
             mapStateType () { return this.$store.state.app.mapType; }
         },
 
+
         watch: {
             '$route' (to, from) {
                 // change map when on view
                 if (to.name === 'map' && this.mapType !== this.mapStateType) {
+                    this.$store.commit('windLayer/setEnable', false);
                     this.mapType = this.mapStateType;
                 }
             }

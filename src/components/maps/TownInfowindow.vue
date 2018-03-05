@@ -16,7 +16,7 @@
             <hr>
 
             <div class="sites">
-                <div class="valids" v-if="town.valids.length">
+                <div class="valids" v-show="town.valids.length">
                     <div class="title">{{ lang('infowindow.townInfowindow.valids') }} ({{ town.valids.length }})</div>
                     <div class="labels">
                         <div v-for="site in town.valids" :key="site.uid"
@@ -24,7 +24,7 @@
                     </div>
                 </div>
 
-                <div class="outliners" v-if="town.outliners.length">
+                <div class="outliners" v-show="town.outliners.length">
                     <div class="title">{{ lang('infowindow.townInfowindow.outliners') }} ({{ town.outliners.length }})</div>
                     <div class="labels">
                         <div v-for="site in town.outliners" :key="site.uid"
