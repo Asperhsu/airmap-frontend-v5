@@ -205,6 +205,11 @@
                     }
 
                     let marker = new google.maps.Marker(option);
+
+                    google.maps.event.addListener(marker, 'click', () => {
+                        this.$emit('markerClicked', marker);
+                    });
+
                     this.markerInstances.push(marker);
                 });
 
