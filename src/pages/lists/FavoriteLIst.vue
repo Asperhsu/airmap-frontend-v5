@@ -7,6 +7,7 @@
                 ref="lazyRepeat"
                 :render-item="renderItem"
                 :length="favorites.length"
+                :calculateItemHeight="calculateItemHeight"
             >
             </v-ons-lazy-repeat>
         </v-ons-list>
@@ -72,6 +73,9 @@
 
                     this.$refs.lazyRepeat && this.$refs.lazyRepeat.refresh();
                 });
+            },
+            calculateItemHeight(index) {
+                return 70;
             },
             renderItem (index) {
                 let favorite = this.favorites[index];

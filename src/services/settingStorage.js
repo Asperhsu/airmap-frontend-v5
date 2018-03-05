@@ -66,7 +66,14 @@ class SettingStorage {
                     return getObjectValue(state, config.stateKey);
                 },
                 (newValue, oldValue) => {
-                    let isEqual = Object.keys(diff(oldValue, newValue)).length === 0;
+                    let isEqual = false;
+
+                    if (typeof newValue === "object" && typeof oldValue === "object") {
+                        isEqual = Object.keys(diff(oldValue, newValue)).length === 0;
+                    } else {
+                        isEqual = oldValue === newValue;
+                    }
+
                     !isEqual && this.set(config.commit, newValue);
                 },
                 { deep: true }

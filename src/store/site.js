@@ -18,7 +18,7 @@ export default {
         ],
         activeAnalysisTypes: ['normal', 'indoor', 'shortterm-pollution', 'longterm-pollution'],
 
-        onlyShowFavoriteSwitch: false,
+        onlyShowFavorite: false,
         favorites: [],
     },
     getters: {
@@ -73,8 +73,8 @@ export default {
             state.activeAnalysisTypes = [].concat(types);
         },
 
-        setOnlyShowFavoriteSwitch(state, flag) {
-            state.onlyShowFavoriteSwitch = !!flag;
+        setOnlyShowFavorite(state, flag) {
+            state.onlyShowFavorite = !!flag;
         },
         setFavorites(state, favorites) {
             state.favorites = favorites;

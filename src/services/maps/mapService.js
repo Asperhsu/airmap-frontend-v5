@@ -95,7 +95,7 @@ export const updateMarkers = (oldMarkers, newMarkers, markerInstances, createCb)
             }
         });
     } catch(err) {
-        console.log(err);
+        // console.log(err);
     }
 
     // deleted
@@ -119,7 +119,7 @@ export const updateMarkers = (oldMarkers, newMarkers, markerInstances, createCb)
             return marker !== null;
         });
     } catch(err) {
-        console.log(err);
+        // console.log(err);
     }
 
     return markerInstances;

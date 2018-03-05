@@ -91,7 +91,7 @@
 
             setTimeout(() => {
                 this.loadLocation();
-            }, 2000);
+            }, 2500);
         },
 
         props: {
@@ -202,8 +202,13 @@
             },
             loadLocation() {
                 let position = this.site.position;
+                let element = this.$refs.location;
 
-                let map = new google.maps.Map(this.$refs.location, {
+                if (!element) {
+                    return;
+                }
+
+                let map = new google.maps.Map(element, {
                     center: position,
                     zoom: 16
                 });

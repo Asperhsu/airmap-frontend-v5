@@ -4,13 +4,7 @@
 
         <div id="sites-count">{{ siteCount }}</div>
 
-        <v-ons-modal :visible="isLoading">
-            <p style="text-align: center">
-                <v-ons-progress-circular indeterminate></v-ons-progress-circular>
-                <br><br>
-                {{ loadingMsg }}
-            </p>
-        </v-ons-modal>
+        <Loading :show="isLoading" :msg="loadingMsg" />
 
         <WindLayer :map="$refs.map && $refs.map.mapObject" :show="showWindLayer" />
     </div>
@@ -26,6 +20,7 @@
     import {addButton} from '@/services/maps/mapService';
 
     import SiteMapSetting from '@/pages/maps/SiteMapSetting'
+    import Loading from '@/components/Loading'
     import GoogleMap from '@/components/maps/GoogleMap'
     import SiteInfowindow from '@/components/maps/SiteInfowindow'
     import WindLayer from '@/components/maps/WindLayer'
@@ -36,7 +31,7 @@
     };
 
     export default {
-        components: {GoogleMap, WindLayer},
+        components: {GoogleMap, Loading, WindLayer},
 
         mounted () {
             this.loadingMsg = lang('loading.map');
@@ -57,6 +52,9 @@
             mapObject () { return this.$refs.map.mapObject; },
             markerInstances () { return this.$refs.map.markerInstances; },
 
+            onlyShowFavorite () { return this.$store.state.site.onlyShowFavorite; },
+            favorites () { return this.$store.state.site.favorites; },
+
             indicatorType () { return this.$store.getters['app/getIndicatorType']; },
             pm25IndicatorType () { return this.$store.state.app.pm25IndicatorType; },
 
@@ -67,6 +65,8 @@
         },
 
         watch: {
+            onlyShowFavorite () { this.applyMarkerFilter(); },
+            favorites () { this.applyMarkerFilter(); },
             indicatorType () { this.updateMarkerIcon(); },
             activeGroups () { this.applyMarkerFilter(); },
             activeAnalysisTypes () { this.applyMarkerFilter(); },
@@ -151,7 +151,9 @@
                                 render: h => h(SiteInfowindow, {
                                     props: {site: marker.site, pm25IndicatorType: this.pm25IndicatorType}
                                 })
-                            })
+                            });
+
+                            $(".si-content").trigger('click');
                         },
                     }
                 });
@@ -180,10 +182,14 @@
                 this.markerInstances.map(marker => {
                     let site = marker.site;
 
-                    let inGroup = this.activeGroups.indexOf(site.group) > -1;
-                    let inAnalysisType = arrayIntersection(this.activeAnalysisTypes,site.analysisStatus).length > 0;
-
-                    marker.setVisible(inGroup && inAnalysisType);
+                    if (this.onlyShowFavorite) {
+                        let isInfavorite = this.$store.getters['site/isInFavorite'](site);
+                        marker.setVisible(isInfavorite);
+                    } else {
+                        let inGroup = this.activeGroups.indexOf(site.group) > -1;
+                        let inAnalysisType = arrayIntersection(this.activeAnalysisTypes,site.analysisStatus).length > 0;
+                        marker.setVisible(inGroup && inAnalysisType);
+                    }
                 });
 
                 this.countSitesInView();

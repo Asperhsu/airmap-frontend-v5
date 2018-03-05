@@ -33,7 +33,17 @@ export function getInitialState () {
 }
 
 export function resetState () {
-    let state = JSON.parse(JSON.stringify(initialStateCopy));
-    state.navigator = store.state.navigator;
-    store.replaceState(state);
+    let initState = JSON.parse(JSON.stringify(initialStateCopy));
+    let currentState = $.extend({}, store.state);
+
+    // state to be reset
+    currentState.app = initState.app;
+    currentState.map.center = initState.map.center;
+    currentState.map.zoom = initState.map.zoom;
+    currentState.map.showIndicator = initState.map.showIndicator;
+    currentState.site.favorites = initState.site.favorites;
+    currentState.site.onlyShowFavorite = initState.site.onlyShowFavorite;
+    currentState.windLayer = initState.windLayer;
+
+    store.replaceState(currentState);
   }

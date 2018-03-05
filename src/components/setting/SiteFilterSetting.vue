@@ -9,7 +9,7 @@
                     {{ lang('setting.onlyShowFavorite') }}
                 </label>
                 <div class="right">
-                    <v-ons-switch input-id="onlyShowFavoriteSwitch" v-model="onlyShowFavoriteSwitch" />
+                    <v-ons-switch input-id="onlyShowFavoriteSwitch" v-model="onlyShowFavorite" />
                 </div>
             </v-ons-list-item>
 
@@ -26,7 +26,7 @@
                     <v-ons-checkbox
                         :input-id="'groupcheckbox-' + name"
                         :value="name"
-                        :disabled="onlyShowFavoriteSwitch"
+                        :disabled="onlyShowFavorite"
                         v-model="activeGroups"
                     >
                     </v-ons-checkbox>
@@ -45,7 +45,7 @@
                     <v-ons-checkbox
                         :input-id="'statcheckbox-' + index"
                         :value="stat.name"
-                        :disabled="onlyShowFavoriteSwitch"
+                        :disabled="onlyShowFavorite"
                         v-model="activeAnalysisTypes"
                     ></v-ons-checkbox>
                 </label>
@@ -80,12 +80,12 @@
                 }
             },
 
-            onlyShowFavoriteSwitch: {
+            onlyShowFavorite: {
                 get: function () {
-                    return this.$store.state.site.onlyShowFavoriteSwitch;
+                    return this.$store.state.site.onlyShowFavorite;
                 },
                 set: function (value) {
-                    this.$store.commit('site/setOnlyShowFavoriteSwitch', value);
+                    this.$store.commit('site/setOnlyShowFavorite', value);
                 }
             }
         },

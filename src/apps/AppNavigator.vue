@@ -29,7 +29,7 @@
 
                 {commit: 'site/setActiveAnalysisTypes', stateKey: 'site.activeAnalysisTypes'},
                 {commit: 'site/setFavorites', stateKey: 'site.favorites'},
-                {commit: 'site/setOnlyShowFavoriteSwitch', stateKey: 'site.onlyShowFavoriteSwitch'},
+                {commit: 'site/setOnlyShowFavorite', stateKey: 'site.onlyShowFavorite'},
             ]);
         },
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="suggestion">
+    <div class="suggestion" v-if="suggestion">
         <div class="normal-human">
             <div class="label-suggestion">{{ suggestion.meta.normalHumanTitle }}</div>
             <ul>

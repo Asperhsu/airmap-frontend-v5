@@ -19,16 +19,16 @@
                 <div class="valids" v-if="town.valids.length">
                     <div class="title">{{ lang('infowindow.townInfowindow.valids') }} ({{ town.valids.length }})</div>
                     <div class="labels">
-                        <span v-for="site in town.valids" :key="site.uid"
-                            class="label" @click="openSiteDetail(site.uid)">{{ site.name }}</span>
+                        <div v-for="site in town.valids" :key="site.uid"
+                            class="label" @click="openSiteDetail(site.uid)">{{ site.name }}</div>
                     </div>
                 </div>
 
                 <div class="outliners" v-if="town.outliners.length">
                     <div class="title">{{ lang('infowindow.townInfowindow.outliners') }} ({{ town.outliners.length }})</div>
                     <div class="labels">
-                        <span v-for="site in town.outliners" :key="site.uid"
-                            class="label" @click="openSiteDetail(site.uid)">{{ site.name }}</span>
+                        <div v-for="site in town.outliners" :key="site.uid"
+                            class="label" @click="openSiteDetail(site.uid)">{{ site.name }}</div>
                     </div>
                 </div>
 
@@ -48,17 +48,20 @@
 
             <div class="buttons"></div>
         </div>
+
+        <Loading :show="isLoading" />
     </div>
 </template>
 
 <script>
+    import Loading from '@/components/Loading'
     import Meter from '@/components/Meter';
     import PM25Suggestion from '@/components/PM25Suggestion'
     import ListSiteDetail from '@/pages/lists/ListSiteDetail'
     import {fetchSiteMap} from '@/services/resourceLoader';
 
     export default {
-        components: {Meter, PM25Suggestion},
+        components: {Loading, Meter, PM25Suggestion},
 
         props: {
             town: {
@@ -70,13 +73,23 @@
             }
         },
 
+        data () {
+            return {
+                isLoading: false,
+            };
+        },
+
         methods: {
             openSiteDetail (uid) {
+                this.isLoading = true;
+
                 fetchSiteMap().then(({sites, groups, analysis}) => {
                     return sites.find(site => {
                         return site.uid == uid;
                     });
                 }).then(site => {
+                    this.isLoading = false;
+
                     if (!site) {
                         this.$ons.notification.toast(lang('site.notfound'), {timeout: 2000});
                         return;
@@ -114,13 +127,13 @@
 
         .label {
             display: inline-block;
-            border-radius: 8px;
+            border-radius: 3px;
             border: 1px solid #aaa;
             font-size: .8em;
 
             padding: 1px 6px;
             margin-right: .3em;
-            margin-bottom: .2em;
+            margin-bottom: .5em;
 
             cursor: pointer;
         }

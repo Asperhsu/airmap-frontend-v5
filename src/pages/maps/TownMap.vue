@@ -2,13 +2,7 @@
     <div style="width: 100%; height: 100%;">
         <GoogleMap ref="map" @mapBooted="mapBooted" />
 
-        <v-ons-modal :visible="isLoading">
-            <p style="text-align: center">
-                <v-ons-progress-circular indeterminate></v-ons-progress-circular>
-                <br><br>
-                {{ loadingMsg }}
-            </p>
-        </v-ons-modal>
+        <Loading :show="isLoading" :msg="loadingMsg" />
 
         <WindLayer :map="$refs.map && $refs.map.mapObject" :show="showWindLayer" />
     </div>
@@ -26,12 +20,13 @@
     import {fetchTownMap} from '@/services/resourceLoader';
 
     import TownMapSetting from '@/pages/maps/TownMapSetting'
+    import Loading from '@/components/Loading'
     import GoogleMap from '@/components/maps/GoogleMap'
     import WindLayer from '@/components/maps/WindLayer'
     import TownInfowindow from '@/components/maps/TownInfowindow'
 
     export default {
-        components: {GoogleMap, WindLayer},
+        components: {GoogleMap, Loading, WindLayer},
 
         mounted () {
             this.loadingMsg = lang('loading.map');
@@ -48,14 +43,13 @@
 
         computed: {
             mapObject () { return this.$refs.map.mapObject; },
-            indicatorType () { return this.$store.getters['app/getIndicatorType']; },
             pm25IndicatorType () { return this.$store.state.app.pm25IndicatorType; },
 
             navigatorStack () { return [].concat(this.$store.state.navigator.stack); },
         },
 
         watch: {
-            indicatorType () { this.updateRegionColor(); },
+            pm25IndicatorType () { this.updateRegionColor(); },
             navigatorStack (current, prev) {
                 let index = Object.keys(deletedDiff(prev, current)).pop();
                 if (index && getInstanceName(prev[index]) === 'TownMapSetting') {
@@ -123,7 +117,7 @@
             },
             getRegionColor (feature) {
                 let town = this.getRegion(feature.f.COUNTYNAME, feature.f.TOWNNAME);
-                return town ? getTypeColor(this.indicatorType, Math.round(town.pm25)) : 'transparent';
+                return town ? getTypeColor(this.pm25IndicatorType, Math.round(town.pm25)) : 'transparent';
             },
             updateRegionColor () {
                 this.mapObject.data.setStyle((feature) => this.getFeatureStyle(feature));
@@ -171,7 +165,9 @@
                                 render: h => h(TownInfowindow, {
                                     props: {town: info, pm25IndicatorType: this.pm25IndicatorType}
                                 })
-                            })
+                            });
+
+                            $(".si-content").trigger('click');
                         },
                     }
                 });
