@@ -36,7 +36,7 @@
     };
 
     export default {
-        components: {SiteMapSetting, GoogleMap, WindLayer},
+        components: {GoogleMap, WindLayer},
 
         mounted () {
             this.loadingMsg = lang('loading.map');

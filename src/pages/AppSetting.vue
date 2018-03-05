@@ -8,8 +8,6 @@
 
         <IndicatorSetting />
 
-        <SpecialThanks />
-
         <div class="reset-conf">
             <v-ons-list-title>
                 {{ lang('setting.reset.title') }}
@@ -39,7 +37,6 @@
     import AppLangSetting from '@/components/setting/AppLangSetting'
     import MapSelectSetting from '@/components/setting/MapSelectSetting'
     import IndicatorSetting from '@/components/setting/IndicatorSetting'
-    import SpecialThanks from '@/components/setting/SpecialThanks'
 
     import SettingStorage from '@/services/settingStorage';
     import {resetState} from '@/store';
@@ -47,7 +44,7 @@
     export default {
         components: {
             BasicToolbar, MapSelectSetting, AppLangSetting,
-            IndicatorSetting, SpecialThanks
+            IndicatorSetting
         },
 
         methods: {

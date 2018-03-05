@@ -31,7 +31,7 @@
 
         <v-ons-list-title>相關連結</v-ons-list-title>
         <v-ons-list>
-            <v-ons-list-item tappable modifier="chevron">
+            <v-ons-list-item tappable modifier="chevron" @click="openRecruit">
                 <div class="left">
                     <i class="fa fa-sign-in" aria-hidden="true"></i>
                 </div>
@@ -115,34 +115,36 @@
 
         <v-ons-list-title>說明文件</v-ons-list-title>
         <v-ons-list>
-            <v-ons-list-item tappable modifier="chevron">
+            <v-ons-list-item tappable modifier="chevron" @click="openAboutus">
                 <div class="left">
                     <i class="fa fa-sitemap" aria-hidden="true"></i>
                 </div>
                 <div class="center">關於 g0v 零時空汙觀測網</div>
             </v-ons-list-item>
-            <v-ons-list-item tappable modifier="chevron">
+            <v-ons-list-item tappable modifier="chevron" @click="openAboutsettings">
                 <div class="left">
                     <i class="fa fa-cog" aria-hidden="true"></i>
                 </div>
                 <div class="center">關於 設定值</div>
             </v-ons-list-item>
         </v-ons-list>
+
+
+        <SpecialThanks />
     </v-ons-page>
 </template>
 
 <script>
     import Logo from '@/config/logo';
     import BasicToolbar from '@/components/toolbars/BasicToolbar'
+    import SpecialThanks from '@/components/setting/SpecialThanks'
+
+    import Recruit from './Recruit';
+    import AboutUs from './AboutUs';
+    import AboutSettings from './AboutSettings';
 
     export default {
-        components: {BasicToolbar},
-
-        data() {
-            return {
-                //
-            };
-        },
+        components: {BasicToolbar, SpecialThanks},
 
         methods: {
             getLogo (name) {
@@ -153,6 +155,9 @@
 
                 return Logo.nologo;
             },
+            openRecruit () {this.$store.commit('navigator/push', Recruit); },
+            openAboutus () {this.$store.commit('navigator/push', AboutUs); },
+            openAboutsettings () {this.$store.commit('navigator/push', AboutSettings); },
         },
     };
 </script>

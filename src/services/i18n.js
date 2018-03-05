@@ -4,8 +4,8 @@ import store from '@/store';
 import translations from '@/assets/langs';
 
 const supportLangs = {
-    en: 'English',
     tw: 'Traditional Chinese',
+    en: 'English',
 };
 
 export const isLangExist = (lang) => {
