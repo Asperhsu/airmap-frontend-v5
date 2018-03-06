@@ -19,7 +19,7 @@
                 <div class="valids" v-show="town.valids.length">
                     <div class="title">{{ lang('infowindow.townInfowindow.valids') }} ({{ town.valids.length }})</div>
                     <div class="labels">
-                        <div v-for="site in town.valids" :key="site.uid"
+                        <div v-for="site in sortSites(town.valids)" :key="site.uid"
                             class="label" @click="openSiteDetail(site.uid)">{{ site.name }}</div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                 <div class="outliners" v-show="town.outliners.length">
                     <div class="title">{{ lang('infowindow.townInfowindow.outliners') }} ({{ town.outliners.length }})</div>
                     <div class="labels">
-                        <div v-for="site in town.outliners" :key="site.uid"
+                        <div v-for="site in sortSites(town.outliners)" :key="site.uid"
                             class="label" @click="openSiteDetail(site.uid)">{{ site.name }}</div>
                     </div>
                 </div>
@@ -67,16 +67,16 @@
             town: {
                 required: true,
             },
-            pm25IndicatorType: {
-                type: String,
-                required: true,
-            }
         },
 
         data () {
             return {
                 isLoading: false,
             };
+        },
+
+        computed: {
+            pm25IndicatorType () { return this.$store.state.app.pm25IndicatorType; },
         },
 
         methods: {
@@ -104,6 +104,11 @@
                     });
                 });
             },
+            sortSites (sites) {
+                return [].concat(sites).sort((a, b) => {
+                    return a.name.localeCompare(b.name);
+                })
+            }
         },
     }
 </script>
@@ -125,17 +130,23 @@
             padding: 3px 8px 3px 0;
         }
 
-        .label {
-            display: inline-block;
-            border-radius: 3px;
-            border: 1px solid #aaa;
-            font-size: .8em;
+        .labels {
+            display: flex;
+            flex-wrap: wrap;
 
-            padding: 1px 6px;
-            margin-right: .3em;
-            margin-bottom: .5em;
+            .label {
+                border-radius: 3px;
+                border: 1px solid #aaa;
+                font-size: .8em;
 
-            cursor: pointer;
+                padding: 1px 6px;
+                margin-right: .3em;
+                margin-bottom: .5em;
+
+                cursor: pointer;
+                flex-grow: 1;
+                text-align: center;
+            }
         }
 
         .info {

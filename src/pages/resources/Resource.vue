@@ -17,7 +17,7 @@
             </v-ons-list-item>
             <v-ons-list-item>
                 <div class="left">
-                    <img :src="require('@/assets/img/messenger.png')" alt="Facebook Messenger">
+                    <fa :icon="['fab', 'facebook-messenger']" style="color: #0099FD;"/>
                 </div>
                 <div class="center">
                     <a href="https://m.me/g0vairmap" target="_blank">Messenger 機器人</a>
@@ -41,7 +41,7 @@
             </v-ons-list-item>
             <v-ons-list-item>
                 <div class="left">
-                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                    <i class="fa fa-facebook-official" aria-hidden="true" style="color: #4267B2;"></i>
                 </div>
                 <div class="center">
                     <a href="https://www.facebook.com/g0vairmap" target="_blank">零時空汙觀測網開發日誌</a>
@@ -52,7 +52,7 @@
             </v-ons-list-item>
             <v-ons-list-item>
                 <div class="left">
-                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                    <i class="fa fa-facebook-official" aria-hidden="true" style="color: #4267B2;"></i>
                 </div>
                 <div class="center">
                     <a href="https://www.facebook.com/groups/pm25opendata/about/" target="_blank">PM2.5 開放資料：社群協同分析平台</a>
@@ -63,7 +63,7 @@
             </v-ons-list-item>
             <v-ons-list-item>
                 <div class="left">
-                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                    <i class="fa fa-facebook-official" aria-hidden="true" style="color: #4267B2;"></i>
                 </div>
                 <div class="center">
                     <a href="https://www.facebook.com/groups/1607718702812067/" target="_blank">LASS-開源公益環境感測網路</a>

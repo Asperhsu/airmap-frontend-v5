@@ -52,10 +52,10 @@
             site: {
                 required: true,
             },
-            pm25IndicatorType: {
-                type: String,
-                required: true,
-            }
+        },
+
+        computed: {
+            pm25IndicatorType () { return this.$store.state.app.pm25IndicatorType; },
         },
 
         methods: {

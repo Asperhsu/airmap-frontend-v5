@@ -9,21 +9,18 @@
 </template>
 
 <script>
-    import Vue from 'vue'
     import moment from 'moment'
-    import SnazzyInfoWindow from 'snazzy-info-window';
     import {deletedDiff} from 'deep-object-diff';
 
     import {addButton} from '@/services/maps/mapService';
     import {getTypeColor} from '@/services/indicator';
-    import {getInstanceName} from '@/services/helpers'
     import {fetchTownMap} from '@/services/resourceLoader';
+    import {createTownInfowindow} from '@/services/infowindow';
 
     import TownMapSetting from '@/pages/maps/TownMapSetting'
     import Loading from '@/components/Loading'
     import GoogleMap from '@/components/maps/GoogleMap'
     import WindLayer from '@/components/maps/WindLayer'
-    import TownInfowindow from '@/components/maps/TownInfowindow'
 
     export default {
         components: {GoogleMap, Loading, WindLayer},
@@ -152,26 +149,7 @@
                     publishedAt: moment(this.$store.getters['town/getPublished'])
                 });
 
-                this.infowindow = new SnazzyInfoWindow({
-                    map: this.mapObject,
-                    position: latlng,
-                    content: "<div id='town-infowindow'></div>",
-                    closeOnMapClick: true,
-                    edgeOffset: {top: 50},
-                    callbacks: {
-                        open: () => {
-                            new Vue({
-                                el: '#town-infowindow',
-                                store: this.$store,
-                                render: h => h(TownInfowindow, {
-                                    props: {town: info, pm25IndicatorType: this.pm25IndicatorType}
-                                })
-                            });
-
-                            $(".si-content").trigger('click');
-                        },
-                    }
-                });
+                this.infowindow = createTownInfowindow(this.mapObject, latlng, info);
                 this.infowindow.open();
             },
             backFromSetting () {

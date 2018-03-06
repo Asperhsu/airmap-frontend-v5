@@ -11,18 +11,16 @@
 </template>
 
 <script>
-    import Vue from 'vue'
-    import SnazzyInfoWindow from 'snazzy-info-window';
     import {deletedDiff} from 'deep-object-diff';
 
-    import {getObjectValue, debounce, arrayIntersection, getInstanceName} from '@/services/helpers'
+    import {debounce, arrayIntersection} from '@/services/helpers'
     import {fetchSiteMap} from '@/services/resourceLoader';
     import {addButton} from '@/services/maps/mapService';
+    import {createSiteInfowindow} from '@/services/infowindow';
 
     import SiteMapSetting from '@/pages/maps/SiteMapSetting'
     import Loading from '@/components/Loading'
     import GoogleMap from '@/components/maps/GoogleMap'
-    import SiteInfowindow from '@/components/maps/SiteInfowindow'
     import WindLayer from '@/components/maps/WindLayer'
 
     let config = {
@@ -138,27 +136,7 @@
                     this.infowindow.destroy();
                 }
 
-                this.infowindow = new SnazzyInfoWindow({
-                    map: this.mapObject,
-                    position: marker.getPosition(),
-                    content: "<div id='site-infowindow'></div>",
-                    closeOnMapClick: true,
-                    offset: {top: '-25px'},
-                    edgeOffset: {top: 50},
-                    callbacks: {
-                        open: () => {
-                            new Vue({
-                                el: '#site-infowindow',
-                                store: this.$store,
-                                render: h => h(SiteInfowindow, {
-                                    props: {site: marker.site, pm25IndicatorType: this.pm25IndicatorType}
-                                })
-                            });
-
-                            $(".si-content").trigger('click');
-                        },
-                    }
-                });
+                this.infowindow = createSiteInfowindow(this.mapObject, marker.getPosition(), marker.site);
                 this.infowindow.open();
             },
             countSitesInView() {
