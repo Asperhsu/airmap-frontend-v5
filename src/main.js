@@ -39,6 +39,18 @@ Vue.component('fa', FontAwesomeIcon);
 Vue.use(VueAnalytics, {
     id: process.env.GA_ID,
     router,
+    autoTracking: {
+        pageviewTemplate (route) {
+            return {
+                page: 'v5' + route.path,
+                title: document.title,
+                location: window.location.href
+            }
+        }
+    },
+    debug: {
+        sendHitTask: process.env.NODE_ENV === 'production'
+    }
 });
 
 // helpers
