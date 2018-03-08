@@ -7,6 +7,8 @@
         <Loading :show="isLoading" :msg="loadingMsg" />
 
         <WindLayer :map="$refs.map && $refs.map.mapObject" :show="showWindLayer" />
+
+        <PublishWatermark :timestamp="dataFetchedAt" />
     </div>
 </template>
 
@@ -22,6 +24,7 @@
     import Loading from '@/components/Loading'
     import GoogleMap from '@/components/maps/GoogleMap'
     import WindLayer from '@/components/maps/WindLayer'
+    import PublishWatermark from '@/components/maps/PublishWatermark'
 
     let config = {
         enableReloadSite: true,
@@ -29,7 +32,7 @@
     };
 
     export default {
-        components: {GoogleMap, Loading, WindLayer},
+        components: {GoogleMap, Loading, WindLayer, PublishWatermark},
 
         mounted () {
             this.loadingMsg = lang('loading.map');
@@ -55,6 +58,7 @@
 
             indicatorType () { return this.$store.getters['app/getIndicatorType']; },
             pm25IndicatorType () { return this.$store.state.app.pm25IndicatorType; },
+            dataFetchedAt () { return this.$store.state.site.dataFetchedAt; },
 
             activeGroups () { return this.$store.state.site.activeGroups; },
             activeAnalysisTypes () { return this.$store.state.site.activeAnalysisTypes; },

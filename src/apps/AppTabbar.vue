@@ -1,6 +1,6 @@
 <template>
     <v-ons-page>
-        <v-ons-tabbar position="bottom" @postchange="postchange">
+        <v-ons-tabbar position="bottom" @postchange="postchange" :hide-tabs="hideTabbar">
             <keep-alive slot="pages" include="map-page">
                 <router-view></router-view>
             </keep-alive>
@@ -62,6 +62,9 @@
             },
             favoriteCount () {
                 return this.$store.state.site.favorites.length || null;
+            },
+            hideTabbar () {
+                return this.$store.state.app.hideTabbar;
             },
         },
 

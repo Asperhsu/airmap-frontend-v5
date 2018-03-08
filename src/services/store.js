@@ -7,12 +7,14 @@ import {getObjectValue} from '@/services/helpers';
 const stateWatchers = [
     {commit: 'app/setLang', stateKey: 'app.lang'},
     {commit: 'app/setMapType', stateKey: 'app.mapType'},
+    {commit: 'app/setHideTabbar', stateKey: 'app.hideTabbar'},
     {commit: 'app/setMeasureType', stateKey: 'app.measureType'},
     {commit: 'app/setPM25IndicatorType', stateKey: 'app.pm25IndicatorType'},
 
     {commit: 'map/setCenter', stateKey: 'map.center'},
     {commit: 'map/setZoom', stateKey: 'map.zoom'},
     {commit: 'map/setShowIndicator', stateKey: 'map.showIndicator'},
+    {commit: 'map/setShowPublishWatermark', stateKey: 'map.showPublishWatermark'},
     {commit: 'map/setStartupUseMyLocation', stateKey: 'map.startupUseMyLocation'},
 
     {commit: 'site/setActiveAnalysisTypes', stateKey: 'site.activeAnalysisTypes'},

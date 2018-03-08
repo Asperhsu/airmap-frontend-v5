@@ -26,6 +26,14 @@
                     <v-ons-switch input-id="startupUseMyLocation" v-model="startupUseMyLocation" />
                 </div>
             </v-ons-list-item>
+            <v-ons-list-item tappable>
+                <label class="center" for="showPublishWatermark">
+                    {{ lang('setting.showPublishWatermark') }}
+                </label>
+                <div class="right">
+                    <v-ons-switch input-id="showPublishWatermark" v-model="showPublishWatermark" />
+                </div>
+            </v-ons-list-item>
         </v-ons-list>
     </div>
 </template>
@@ -54,6 +62,10 @@
                 set (flag) {
                     this.$store.commit('map/setStartupUseMyLocation', flag);
                 }
+            },
+            showPublishWatermark: {
+                get () { return this.$store.state.app.showPublishWatermark; },
+                set (flag) { this.$store.commit('app/setShowPublishWatermark', flag); }
             },
         },
     };

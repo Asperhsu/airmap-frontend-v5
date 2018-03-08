@@ -1,5 +1,6 @@
 export default {
     'setting.showIndicator': 'Display indicator bar',
+    'setting.showPublishWatermark': 'Display data timestmp',
     'setting.measureType': 'Indicator Type',
     'setting.other': 'Other Types',
 

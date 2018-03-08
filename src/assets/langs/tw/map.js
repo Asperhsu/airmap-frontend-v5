@@ -1,5 +1,6 @@
 export default {
     'setting.showIndicator': '顯示指示條',
+    'setting.showPublishWatermark': '顯示資料時間戳記',
     'setting.measureType': '量測指標',
     'setting.other': '其他',
 
