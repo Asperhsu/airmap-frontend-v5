@@ -27,6 +27,7 @@ const stateCanReset = [
     'map.center',
     'map.zoom',
     'map.showIndicator',
+    'map.setShowPublishWatermark',
     'map.startupUseMyLocation',
     'site.favorites',
     'site.onlyShowFavorite',
