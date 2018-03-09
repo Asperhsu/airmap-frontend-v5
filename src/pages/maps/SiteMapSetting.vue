@@ -2,6 +2,11 @@
     <v-ons-page>
         <BackToolbar>{{ lang('setting.siteTitle') }}</BackToolbar>
 
+        <v-ons-list-title>{{ lang('setting.map.title') }}</v-ons-list-title>
+        <v-ons-list modifier="inset">
+            <PublishWatermaskSetting />
+        </v-ons-list>
+
         <SiteFilterSetting />
 
         <IndicatorSetting />
@@ -13,6 +18,7 @@
 
 <script>
     import BackToolbar from '@/components/toolbars/BackToolbar'
+    import PublishWatermaskSetting from '@/components/setting/PublishWatermaskSetting';
     import SiteFilterSetting from '@/components/setting/SiteFilterSetting'
     import IndicatorBarSetting from '@/components/setting/IndicatorBarSetting'
     import IndicatorSetting from '@/components/setting/IndicatorSetting'
@@ -21,7 +27,7 @@
     export default {
         name: 'site-map-setting',
         components: {
-            BackToolbar, SiteFilterSetting,
+            BackToolbar, PublishWatermaskSetting, SiteFilterSetting,
             IndicatorBarSetting, IndicatorSetting, WindLayerSetting
         },
     };

@@ -4,7 +4,7 @@ const units = {
     'PM2.5': 'μg/m3',
     'AQI': '',
     'PM2.5_NASA': 'μg/m3',
-    'Temperature': '&#8451;',
+    'Temperature': '℃',
     'Humidity': '%',
 };
 

@@ -8,9 +8,6 @@
             </div>
         </v-ons-toolbar>
 
-        <!-- <SiteMap v-if="mapType === 'site'" />
-        <TownMap v-if="mapType === 'town'" /> -->
-
         <div class="mapContainer" v-show="mapType === 'site'">
             <SiteMap v-if="mapType === 'site'" />
         </div>
@@ -18,19 +15,19 @@
             <TownMap v-if="mapType === 'town'" />
         </div>
 
-        <indicator />
+        <IndicatorVertical />
     </v-ons-page>
 </template>
 
 <script>
     import SiteMap from '@/pages/maps/SiteMap'
     import TownMap from '@/pages/maps/TownMap'
-    import Indicator from '@/components/maps/Indicator'
+    import IndicatorVertical from '@/components/maps/IndicatorVertical'
 
     export default {
         name: 'map-page',
 
-        components: {Indicator, SiteMap, TownMap},
+        components: {SiteMap, TownMap, IndicatorVertical},
 
         mounted () {
             this.mapType = this.mapStateType;

@@ -12,7 +12,7 @@
                     <a href="https://airmap.g0v.asper.tw/widget" target="_blank">Widget 小工具</a>
                 </div>
                 <div class="right">
-                    <i class="fa fa-external-link" aria-hidden="true"></i>todo
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
                 </div>
             </v-ons-list-item>
             <v-ons-list-item>

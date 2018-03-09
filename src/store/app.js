@@ -8,7 +8,6 @@ export default {
         lang: 'tw',
         mapType: 'town',
         hideTabbar: false,
-        showPublishWatermark: true,
 
         indicatorTypes: {
             'PM25': ['PM2.5', 'AQI', 'PM2.5_NASA'],
@@ -38,9 +37,6 @@ export default {
         },
         setHideTabbar(state, flag) {
             state.hideTabbar = !!flag;
-        },
-        setShowPublishWatermark(state, flag) {
-            state.showPublishWatermark = !!flag;
         },
 
         setMeasureType(state, type) {

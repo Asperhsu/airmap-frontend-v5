@@ -6,6 +6,7 @@ export default {
         zoom: 7,
         markers: [],
         showIndicator: true,
+        showPublishWatermark: false,
         startupUseMyLocation: true,
     },
     mutations: {
@@ -20,6 +21,9 @@ export default {
         },
         setShowIndicator(state, flag) {
             state.showIndicator = !!flag;
+        },
+        setShowPublishWatermark(state, flag) {
+            state.showPublishWatermark = !!flag;
         },
         setStartupUseMyLocation(state, flag) {
             state.startupUseMyLocation = !!flag;

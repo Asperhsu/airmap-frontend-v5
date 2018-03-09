@@ -1,6 +1,11 @@
 <template>
     <v-ons-page>
-        <BackToolbar>鄉鎮地圖設定</BackToolbar>
+        <BackToolbar>{{ lang('setting.townTitle') }}</BackToolbar>
+
+        <v-ons-list-title>{{ lang('setting.map.title') }}</v-ons-list-title>
+        <v-ons-list modifier="inset">
+            <PublishWatermaskSetting />
+        </v-ons-list>
 
         <IndicatorSetting onlypm25 />
         <IndicatorBarSetting />
@@ -11,6 +16,7 @@
 
 <script>
     import BackToolbar from '@/components/toolbars/BackToolbar'
+    import PublishWatermaskSetting from '@/components/setting/PublishWatermaskSetting';
     import IndicatorBarSetting from '@/components/setting/IndicatorBarSetting'
     import IndicatorSetting from '@/components/setting/IndicatorSetting'
     import WindLayerSetting from '@/components/setting/WindLayerSetting'
@@ -18,7 +24,7 @@
     export default {
         name: 'town-map-setting',
         components: {
-            BackToolbar, IndicatorBarSetting, IndicatorSetting, WindLayerSetting
+            BackToolbar, PublishWatermaskSetting, IndicatorBarSetting, IndicatorSetting, WindLayerSetting
         },
     };
 </script>

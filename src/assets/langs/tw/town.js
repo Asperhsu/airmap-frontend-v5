@@ -1,4 +1,6 @@
 export default {
+    'setting.townTitle': '鄉鎮地圖設定',
+
     'town.notfound': '無對應地區資料',
     'infowindow.townInfowindow.valids': '納入站點',
     'infowindow.townInfowindow.outliners': '離群站台',

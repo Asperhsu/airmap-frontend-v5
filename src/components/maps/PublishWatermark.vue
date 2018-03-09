@@ -20,7 +20,7 @@
 
         computed: {
             showPublishWatermark () {
-                return this.$store.state.app.showPublishWatermark;
+                return this.$store.state.map.showPublishWatermark;
             },
             timeString () {
                 return moment(this.timestamp).format(this.format);
@@ -32,15 +32,18 @@
 <style lang="scss" scoped>
     .publish-watermark {
         position: absolute;
-        top: 13px;
-        right: 48px;
+        top: 25px;
+        right: 15px;
         z-index: 2;
-        opacity: 1;
+        opacity: .8;
         cursor: default;
-        color: #000;
-        text-shadow: 0px 0px 3px #fff, 0px 0px 5px #fff;
+        color: #ccc;
+        text-shadow: 0px 0px 3px #000, 0px 0px 5px #000;
         font-family: monospace;
         font-weight: bold;
         font-size: 1.1em;
+
+        transform: rotate(-90deg);
+        transform-origin: right bottom;
     }
 </style>
