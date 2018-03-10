@@ -110,7 +110,7 @@ export const ColorBar = {
         return percent;
     },
 };
-export const generateColorBar = (type) => {
+export const generateColorBar = (type, maxValue) => {
     if (!isTypeExist(type)) {
         console.log(`${type} is not support`); return;
     }
@@ -118,14 +118,25 @@ export const generateColorBar = (type) => {
     let colors = getTypeColors(type);
     let {min, max} = ColorBar.getRange(colors);
 
+    // when give max value, only include level color when level value le maxvalue
+    if (maxValue) { max = maxValue; }
+
+    // prevent multiple 100 percent to be added
+    let reach100 = false;
+
     let colorbar = [];
     colors.map(level => {
         ['min', 'max'].map(index => {
             let percent = ColorBar.getPercent(min, max, level[index]);
-            colorbar.push({
-                percent: percent,
-                color: level.color,
-            });
+
+            if (!reach100) {
+                colorbar.push({
+                    percent: percent,
+                    color: level.color,
+                });
+            }
+
+            if (percent >= 100) { reach100 = true; }
         });
     });
 

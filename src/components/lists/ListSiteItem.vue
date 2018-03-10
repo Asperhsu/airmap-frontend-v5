@@ -1,7 +1,10 @@
 <template>
     <v-ons-list-item modifier="chevron longdivider" tappable @click="showSiteDetail">
         <div class="left">
-            <img :src="getIcon()" />
+            <img v-if="site.pm25 !== null" :src="getIcon()" />
+            <div v-else style="width: 42.5px; text-align: center;">
+                <i class="fa fa-2x fa-ban" aria-hidden="true"></i>
+            </div>
         </div>
 
         <div class="center">
@@ -16,17 +19,20 @@
 
             <div class="measures">
                 <div class="pm25">
-                    <span class="value">{{ Math.round(site.pm25) }}</span>
+                    <span class="value" v-if="site.pm25 !== null">{{ Math.round(site.pm25) }}</span>
+                    <span class="value" v-else><i class="fa fa-ban" aria-hidden="true"></i></span>
                     <span class="unit">μg<br/>/m3</span>
                 </div>
 
                 <div class="temp">
-                    <span class="value">{{ Math.round(site.temp) }}</span>
+                    <span class="value" v-if="site.temp !== null">{{ Math.round(site.temp) }}</span>
+                    <span class="value" v-else><i class="fa fa-ban" aria-hidden="true"></i></span>
                     <span class="unit">&#8451;</span>
                 </div>
 
                 <div class="humidity">
-                    <span class="value">{{ Math.round(site.humidity) }}</span>
+                    <span class="value" v-if="site.humidity !== null">{{ Math.round(site.humidity) }}</span>
+                    <span class="value" v-else><i class="fa fa-ban" aria-hidden="true"></i></span>
                     <span class="unit">%</span>
                 </div>
             </div>
@@ -44,6 +50,7 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
+        margin-right: .5em;
     }
 
     .ranking {
@@ -64,10 +71,13 @@
     .measures {
         display: flex;
         flex-direction: row;
+        align-items: flex-end;
 
         > div {
             border-right: 1px solid #ccc;
             padding: 0 5px;
+            text-align: center;
+            white-space: nowrap;
 
             &:last-child {
                 border-right: 0px;
@@ -75,7 +85,7 @@
             }
 
             .unit {
-                font-size: 0.6em;
+                font-size: 0.3em;
                 display: inline-block;
                 max-width: 2em;
                 line-height: 1em;

@@ -14,20 +14,23 @@
 
         <div class="measureContainer">
             <div class="measure">
-                <div class="title">{{ pm25IndicatorType }}</div>
-                <div class="value">{{ site.pm25 }}</div>
+                <div class="title">PM 2.5</div>
+                <div class="value" v-if="site.pm25 !== null">{{ site.pm25 }}</div>
+                <div class="value" v-else><i class="fa fa-ban" aria-hidden="true"></i></div>
                 <div class="unit">μg/m3</div>
             </div>
 
             <div class="measure">
                 <div class="title">{{ lang('temperature') }}</div>
-                <div class="value">{{ site.temp }}</div>
+                <div class="value" v-if="site.temp !== null">{{ site.temp }}</div>
+                <div class="value" v-else><i class="fa fa-ban" aria-hidden="true"></i></div>
                 <div class="unit">&#8451;</div>
             </div>
 
             <div class="measure">
                 <div class="title">{{ lang('humidity') }}</div>
-                <div class="value">{{ site.humidity }}</div>
+                <div class="value" v-if="site.humidity !== null">{{ site.humidity }}</div>
+                <div class="value" v-else><i class="fa fa-ban" aria-hidden="true"></i></div>
                 <div class="unit">%</div>
             </div>
         </div>
@@ -55,21 +58,21 @@
             <PM25Suggestion :indicatorType="pm25IndicatorType" :value="site.pm25" />
         </div>
 
-        <div class="charts" v-show="chartData.pm25 || chartData.temp || chartData.humidity">
+        <div class="charts" v-show="showChart.pm25 || showChart.temp || showChart.humidity">
             <hr>
-            <div class="chartContainer" v-if="chartData.pm25">
+            <div class="chartContainer" v-show="showChart.pm25">
                 <div class="title">{{ pm25IndicatorType }}</div>
-                <LineChart type="line" :data="chartData.pm25" :options="chartOptions" :gradientFillColor="generateColorBar(pm25IndicatorType)" />
+                <LineChart ref="chartPM25" />
             </div>
 
-            <div class="chartContainer" v-if="chartData.temp">
+            <div class="chartContainer" v-show="showChart.temp">
                 <div class="title">{{ lang('temperature') }}</div>
-                <LineChart type="line" :data="chartData.temp" :options="chartOptions" :gradientFillColor="generateColorBar('Temperature')" />
+                <LineChart ref="chartTemp" />
             </div>
 
-            <div class="chartContainer" v-if="chartData.humidity">
+            <div class="chartContainer" v-show="showChart.humidity">
                 <div class="title">{{ lang('humidity') }}</div>
-                <LineChart type="line" :data="chartData.humidity" :options="chartOptions" :gradientFillColor="generateColorBar('Humidity')" />
+                <LineChart ref="chartHumidity" />
             </div>
         </div>
 
@@ -91,7 +94,7 @@
 
             setTimeout(() => {
                 this.loadLocation();
-            }, 2500);
+            }, 2000);
         },
 
         props: {
@@ -102,47 +105,12 @@
 
         data () {
             return {
-                chartOptions: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                fontColor: "rgba(0,0,0,0.5)",
-                                fontStyle: "bold",
-                                beginAtZero: true,
-                                maxTicksLimit: 5,
-                                padding: 20
-                            },
-                            gridLines: {
-                                drawTicks: false,
-                                display: false
-                            }
-                        }],
-                        xAxes: [{
-                            gridLines: {
-                                zeroLineColor: "transparent"
-                            },
-                            ticks: {
-                                autoSkipPadding: 30,
-                                fontColor: "rgba(0,0,0,0.5)",
-                                fontStyle: "bold"
-                            }
-                        }]
-                    },
-                    tooltips: {
-                        displayColors: false,
-                    },
-                    elements: {
-                        point: {
-                            hitRadius: 3
-                        }
-                    }
-                },
-                chartData: {
-                    pm25: null,
-                    temp: null,
-                    humidity: null,
-                },
                 location: null,
+                showChart: {
+                    pm25: true,
+                    temp: true,
+                    humidity: true,
+                }
             };
         },
 
@@ -163,10 +131,8 @@
                 let notiWord = this.inFavorite ? 'list.favorite.added' : 'list.favorite.removed';
                 this.$ons.notification.toast(lang(notiWord), {timeout: 2000})
             },
-            generateColorBar (type) {
-                let colorbar = generateColorBar(type)
-
-                return generateColorBar(type).map(level => {
+            generateColorBar (type, maxValue) {
+                return generateColorBar(type, maxValue).map(level => {
                     let rgbcolor = hexToRgb(level.color);
                     return {
                         offset: level.percent / 100,
@@ -174,29 +140,47 @@
                     }
                 })
             },
+            processChartData (labels, values, indicatorType) {
+                values = [].concat(values).reverse();
+                let maxValue = Math.max.apply(null, values);
+
+                return {
+                    gradientFill: this.generateColorBar(indicatorType, maxValue),
+                    chartOptions:  {scales: {yAxes: [{ ticks: {max: maxValue} }]}},
+                    chartData: {
+                        labels: labels,
+                        datasets: [{ data: values }]
+                    }
+                };
+            },
+            isAllNull (values) {
+                let unique = [...new Set(values)];
+                return unique.length === 1 && unique[0] === null;
+            },
             fetchHistory (type) {
                 this.site.fetchHistory().then(chartData => {
                     let labels = [].concat(chartData.labels).reverse();
+                    let datasets = chartData.datasets;
 
                     setTimeout(() => {
-                        this.chartData.pm25 = {
-                            labels: labels,
-                            datasets: [{ data: [].concat(chartData.datasets.Dust2_5).reverse() }]
-                        }
-                    }, 0);
+                        if (!datasets.Dust2_5|| this.isAllNull(datasets.Dust2_5)) { this.showChart.pm25 = false; return; }
+
+                        let chartData = this.processChartData(labels, datasets.Dust2_5, this.pm25IndicatorType);
+                        this.$refs.chartPM25.start(chartData);
+                    }, 50);
 
                     setTimeout(() => {
-                        this.chartData.temp = {
-                            labels: labels,
-                            datasets: [{ data: [].concat(chartData.datasets.Temperature).reverse() }]
-                        }
+                        if (!datasets.Temperature || this.isAllNull(datasets.Temperature)) { this.showChart.temp = false; return; }
+
+                        let chartData = this.processChartData(labels, datasets.Temperature, 'Temperature');
+                        this.$refs.chartTemp.start(chartData);
                     }, 500);
 
                     setTimeout(() => {
-                        this.chartData.humidity = {
-                            labels: labels,
-                            datasets: [{ data: [].concat(chartData.datasets.Humidity).reverse() }]
-                        }
+                        if (!datasets.Humidity|| this.isAllNull(datasets.Humidity)) { this.showChart.humidity = false; return; }
+
+                        let chartData = this.processChartData(labels, datasets.Humidity, 'Humidity');
+                        this.$refs.chartHumidity.start(chartData);
                     }, 1000);
                 });
             },

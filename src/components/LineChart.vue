@@ -1,9 +1,47 @@
 <template>
-    <canvas ref="chart" :width="width" :height="height"></canvas>
+    <canvas ref="chart" :width="width" :height="height" v-show="show"></canvas>
 </template>
 
 <script>
     import Chart from 'chart.js'
+
+    let chartOptions = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    fontColor: "rgba(0,0,0,0.5)",
+                    fontStyle: "bold",
+                    beginAtZero: true,
+                    maxTicksLimit: 5,
+                    padding: 20
+                },
+                gridLines: {
+                    drawTicks: false,
+                    display: false
+                },
+            }],
+            xAxes: [{
+                gridLines: {
+                    zeroLineColor: "transparent",
+                },
+                ticks: {
+                    maxTicksLimit: 10,
+                    maxRotation: 45,
+                    autoSkipPadding: 30,
+                    fontColor: "rgba(0,0,0,0.5)",
+                    fontStyle: "bold"
+                }
+            }]
+        },
+        tooltips: {
+            displayColors: false,
+        },
+        elements: {
+            point: {
+                hitRadius: 3
+            }
+        }
+    };
 
     let elementDimention = {
         areaMargin: 8,
@@ -11,36 +49,14 @@
     };
 
     export default {
-        mounted () {
-            this.chartData = $.extend({}, this.data);
-
-
-            this.chartOptions = $.extend({}, this.options, {
-                legend: { display: false }
-            });
-
-            this.createChart();
-
-            if (this.gradientFillColor) {
-                this.chartData.datasets[0].backgroundColor = this.generateGradientFill();
-                this.chart.update();
-            }
-        },
-
         props: {
-            data: {
-                required: true,
-                type: [Object, Array]
-            },
-            options: Object,
             width: Number,
             height: Number,
-
-            gradientFillColor: null,
         },
 
         data () {
             return {
+                show: false,
                 type: 'line',
                 chart: null,
                 chartData: [],
@@ -49,30 +65,47 @@
         },
 
         watch: {
-            'data.labels' () {
-                this.chart.update()
-            },
-            'data.datasets' () {
-                this.chart.update()
-            }
+            width () {this.chart.update(); },
+            height () {this.chart.update(); },
         },
 
         methods: {
+            start(data) {
+                this.chartData = data.chartData;
+                this.chartOptions = $.extend(true, {}, chartOptions, data.chartOptions || {}, {
+                    legend: { display: false }
+                });
+
+                this.createChart();
+
+                if (data.hasOwnProperty('gradientFill')) {
+                    this.chartData.datasets[0].backgroundColor = this.generateGradientFill(data['gradientFill']);
+                    this.chart.update();
+                }
+            },
+            update () {
+                this.chart.update();
+            },
+            remove () {
+                this.chart && this.chart.destroy();
+                this.show = false;
+            },
             createChart () {
+                this.show = true;
                 this.chart = new Chart(this.$refs.chart, {
                     type: this.type,
                     data: this.chartData,
                     options: this.chartOptions
                 })
             },
-            generateGradientFill () {
+            generateGradientFill (gradientFillColor) {
                 let canvas = this.$refs.chart;
                 let ctx = canvas.getContext("2d");
                 let areaHeight = parseInt(canvas.style.height ,10) - elementDimention.yLabel - elementDimention.areaMargin;
 
                 let gradientFill = ctx.createLinearGradient(0, areaHeight, 0, 0);
 
-                this.gradientFillColor.map(level => {
+                gradientFillColor.map(level => {
                     gradientFill.addColorStop(level.offset, level.color);
                 });
 
@@ -81,7 +114,7 @@
         },
 
         beforeDestroy () {
-            this.chart.destroy()
+            this.chart && this.chart.destroy()
         }
     }
 </script>

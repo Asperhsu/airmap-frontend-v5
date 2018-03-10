@@ -14,7 +14,7 @@
             },
             format: {
                 type: String,
-                default: 'YY-MM-DDTHH:mmZZ[Z]'
+                default: 'YYYY-MM-DD HH:mm ZZ'
             },
         },
 

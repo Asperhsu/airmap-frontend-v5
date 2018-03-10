@@ -32,8 +32,8 @@
             </div>
 
             <div class="buttons">
-                <v-ons-button modifier="light" class="btn btn-site-page" @click="openSiteDetail">
-                    <i class="fa fa-thumb-tack"></i>
+                <v-ons-button modifier="outline" class="btn btn-site-page" @click="openSiteDetail">
+                    <i class="fa fa-info-circle"></i> {{ lang('infowindow.siteInfowindow.detail') }}
                 </v-ons-button>
             </div>
         </div>
@@ -96,7 +96,6 @@
             padding: 5px 6px;
             font-size: 1em;
             line-height: 1em;
-            width: 2em;
             text-align: center;
         }
     }

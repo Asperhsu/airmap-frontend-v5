@@ -13,4 +13,6 @@ export default {
     'analysisTypes.indoor': 'May be placed indoors or equipment malfunctioned',
     'analysisTypes.shortterm-pollution': 'Detected small sources of pollution or equipment malfunctioned',
     'analysisTypes.longterm-pollution': 'Probably close to a long-term fixed contamination source or equipment failure',
+
+    'infowindow.siteInfowindow.detail': 'Detail',
 }

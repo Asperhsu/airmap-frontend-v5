@@ -13,4 +13,6 @@ export default {
     'analysisTypes.indoor': '可能放置於室內或設備故障',
     'analysisTypes.shortterm-pollution': '偵測到小型污染源',
     'analysisTypes.longterm-pollution': '可能接近長時間的固定污染源或設備故障',
+
+    'infowindow.siteInfowindow.detail': '詳細',
 }
