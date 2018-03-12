@@ -1,7 +1,7 @@
 <template>
-<div  v-show="show" class="chart-container" style="position: relative; width:100%">
-    <canvas ref="chart" ></canvas>
-</div>
+    <div v-show="show" class="chart-container" style="position: relative; width:100%">
+        <canvas ref="chart" ></canvas>
+    </div>
 </template>
 
 <script>
@@ -64,6 +64,7 @@
                 chart: null,
                 chartData: [],
                 chartOptions: [],
+                gradientFill: null,
             }
         },
 
@@ -78,13 +79,9 @@
                 this.chartOptions = $.extend(true, {}, chartOptions, data.chartOptions || {}, {
                     legend: { display: false }
                 });
+                this.gradientFill = data['gradientFill'] || null;
 
                 this.createChart();
-
-                if (data.hasOwnProperty('gradientFill')) {
-                    this.chartData.datasets[0].backgroundColor = this.generateGradientFill(data['gradientFill']);
-                    this.chart.update();
-                }
             },
             update () {
                 this.chart.update();
@@ -98,7 +95,16 @@
                 this.chart = new Chart(this.$refs.chart, {
                     type: this.type,
                     data: this.chartData,
-                    options: this.chartOptions
+                    options: this.chartOptions,
+                    plugins: [{
+                        afterRender: (chart, options) => {
+                            if (this.gradientFill) {
+                                this.chartData.datasets[0].backgroundColor = this.generateGradientFill(this.gradientFill);
+                                this.gradientFill = null;
+                                this.chart.update();
+                            }
+                        }
+                    }]
                 })
             },
             generateGradientFill (gradientFillColor) {
