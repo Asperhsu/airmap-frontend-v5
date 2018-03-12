@@ -262,13 +262,12 @@
     }
 
     .chartContainer {
-        margin: .5em;
         padding: .5em;
 
         .title {
             font-size: .8em;
             color: gray;
-            text-align: right;
+            text-align: center;
         }
     }
 

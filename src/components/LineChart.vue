@@ -1,23 +1,20 @@
 <template>
-    <canvas ref="chart" :width="width" :height="height" v-show="show"></canvas>
+<div  v-show="show" class="chart-container" style="position: relative; width:100%">
+    <canvas ref="chart" ></canvas>
+</div>
 </template>
 
 <script>
     import Chart from 'chart.js'
 
     let chartOptions = {
-        layout: {
-            padding: {
-                bottom: 20
-            }
-        },
         scales: {
             yAxes: [{
                 ticks: {
                     fontColor: "rgba(0,0,0,0.5)",
                     fontStyle: "bold",
                     beginAtZero: true,
-                    maxTicksLimit: 5,
+                    maxTicksLimit: 10,
                     padding: 5
                 },
                 gridLines: {
@@ -44,7 +41,7 @@
         },
         elements: {
             point: {
-                hitRadius: 3
+                hitRadius: 5
             }
         }
     };
