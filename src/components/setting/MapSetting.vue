@@ -26,17 +26,19 @@
                     <v-ons-switch input-id="startupUseMyLocation" v-model="startupUseMyLocation" />
                 </div>
             </v-ons-list-item>
-
             <PublishWatermaskSetting />
+
+            <GeolocationSetting />
         </v-ons-list>
     </div>
 </template>
 
 <script>
+    import GeolocationSetting from '@/components/setting/GeolocationSetting';
     import PublishWatermaskSetting from '@/components/setting/PublishWatermaskSetting';
 
     export default {
-        components: {PublishWatermaskSetting},
+        components: {GeolocationSetting, PublishWatermaskSetting},
 
         data () {
             return {

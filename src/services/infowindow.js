@@ -7,7 +7,8 @@ import TownInfowindow from '@/components/maps/TownInfowindow'
 
 const snazzyInfoWindowOptions = {
     closeOnMapClick: true,
-    edgeOffset: {top: 50, right: 50},
+    showCloseButton: false,
+    edgeOffset: {top: 55, right: 55, left: 55,},
 };
 
 export const createSiteInfowindow = (map, position, site) => {
@@ -40,16 +41,17 @@ export const createTownInfowindow = (map, position, town) => {
     return new SnazzyInfoWindow(options);
 }
 
-const openCallback = (el, component, props) => {
-    return () => {
+const openCallback = function (el, component, props) {
+    return function () {
+        let SnazzyInfoWindow = this;
+        let closeWindow = function () { SnazzyInfoWindow.close(); };
+
         new Vue({
             el,
             store,
             render: h => h(component, {
-                props: props
+                props: Object.assign({}, props, { closeWindow })
             })
         });
-
-        $(".si-content-wrapper").trigger('click');
     }
 }

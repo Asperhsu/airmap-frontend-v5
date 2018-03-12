@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <div @touchstart.stop="touchHandler">
+        <button type="button" class="si-close-button" @click.stop="closeWindow">×</button>
+
         <div class="header">
             <p class="title">{{ town.country }} {{ town.town }}</p>
         </div>
@@ -65,7 +67,12 @@
 
         props: {
             town: {
+                type: Object,
                 required: true,
+            },
+            closeWindow: {
+                type: Function,
+                default: () => {},
             },
         },
 
@@ -80,6 +87,13 @@
         },
 
         methods: {
+            touchHandler (e)  { // proxy to trigger click for mobile event it will trigger touchstart
+                try {
+                    e.target.dispatchEvent(new Event("mousedown"));
+                    e.target.dispatchEvent(new Event("mouseup"));
+                    e.target.dispatchEvent(new Event("click"));
+                } catch (err) {}
+            },
             openSiteDetail (uid) {
                 this.isLoading = true;
 
@@ -146,6 +160,11 @@
                 cursor: pointer;
                 flex-grow: 1;
                 text-align: center;
+
+                &:active {
+                    background: gray;
+                    color: #fff;
+                }
             }
         }
 

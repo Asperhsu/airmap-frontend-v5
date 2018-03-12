@@ -16,6 +16,8 @@ export default {
         },
         measureType: 'PM25',
         pm25IndicatorType: 'PM2.5',
+
+        geolocationMethod: 'google',
     },
 
     getters: {
@@ -48,6 +50,10 @@ export default {
             if (state.indicatorTypes['PM25'].indexOf(type) > -1) {
                 state.pm25IndicatorType = type;
             }
+        },
+
+        setGeolocationMethod(state, method) {
+            state.geolocationMethod = method;
         },
     }
 };

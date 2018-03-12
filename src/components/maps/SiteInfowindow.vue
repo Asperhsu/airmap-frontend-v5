@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <div @touchstart.stop="touchHandler">
+        <button type="button" class="si-close-button" @click.stop="closeWindow">×</button>
+
         <div class="header">
             <p class="title">{{ site.title }}</p>
         </div>
@@ -52,6 +54,10 @@
             site: {
                 required: true,
             },
+            closeWindow: {
+                type: Function,
+                default: () => {},
+            },
         },
 
         computed: {
@@ -59,6 +65,13 @@
         },
 
         methods: {
+            touchHandler (e)  { // proxy to trigger click for mobile event it will trigger touchstart
+                try {
+                    e.target.dispatchEvent(new Event("mousedown"));
+                    e.target.dispatchEvent(new Event("mouseup"));
+                    e.target.dispatchEvent(new Event("click"));
+                } catch (err) {}
+            },
             openSiteDetail () {
                 this.$store.commit('navigator/push', {
                     ...ListSiteDetail,

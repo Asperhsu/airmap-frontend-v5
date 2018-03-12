@@ -200,4 +200,4 @@
     }
 </style>
 
-<style lang="scss" src="@/assets/styles/sites-infowindow.scss"></style>
+<style lang="scss" src="@/assets/styles/infowindow.scss"></style>

@@ -1,68 +1,25 @@
 import {detailedDiff} from 'deep-object-diff';
 
-/* gps locate */
-
-let locateIconBlinkInterval;
-
-const setIconStatus = (status) => {
-    const $icon = $("#geoLocate .icon-gps");
-
-    if (locateIconBlinkInterval) {
-        $icon.removeClass('gps-located gps-unlocate');
-        clearInterval(locateIconBlinkInterval);
-    }
-
-    if (status == 'searching') {
-        locateIconBlinkInterval = setInterval(function () {
-            $icon.toggleClass('gps-unlocate');
-        }, 500);
-        return;
-    }
-
-    if (status == 'located') {
-        $icon.removeClass('gps-unlocate').addClass('gps-located');
-        return;
-    }
-
-    if (status == 'notFound') {
-        $icon.addClass('gps-unlocate');
-        return;
-    }
+export const mapOption = {
+    streetViewControl: true,
+    mapTypeControl: false,
+    mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.TOP_RIGHT,
+        mapTypeIds: [
+            google.maps.MapTypeId.ROADMAP,
+            google.maps.MapTypeId.SATELLITE,
+            google.maps.MapTypeId.HYBRID,
+            google.maps.MapTypeId.TERRAIN,
+        ]
+    },
+    zoomControl: true,
+    zoomControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_BOTTOM
+    },
+    scaleControl: true,
+    styles: [{ "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [{ "color": "#444444" }] }, { "featureType": "landscape", "elementType": "all", "stylers": [{ "color": "#f2f2f2" }] }, { "featureType": "poi", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "road", "elementType": "all", "stylers": [{ "saturation": -100 }, { "lightness": 45 }] }, { "featureType": "road.highway", "elementType": "all", "stylers": [{ "visibility": "simplified" }] }, { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#4f595d" }, { "visibility": "on" }] }]
 };
-
-export const findZoomLevelByAccuracy = (accuracy) => {
-    if (parseFloat(accuracy) <= 0) { return 12; }
-    //591657550.500000 / 2^(level-1)
-    var level = (Math.log(591657550.500000 / accuracy) / Math.log(2)) + 1;
-    return Math.floor(level);
-};
-
-export const findCurrentLocation = () => {
-    var url = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCDRRT8it4AZpwbORhHeqoi2qrWDmQqD48";
-    setIconStatus('searching');
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            dataType: 'json',
-            method: 'POST',
-            url: url,
-            success: (data) => {
-                if (!data.location.lat || !data.location.lng) {
-                    setIconStatus('notFound');
-                    return resolve(null);
-                }
-
-                setIconStatus('located');
-                resolve({
-                    accuracy: data.accuracy,
-                    position: data.location,
-                    zoom: findZoomLevelByAccuracy(data.accuracy),
-                });
-            },
-            error: reject,
-        });
-    });
-}
-
 
 /* marker diff */
 
@@ -134,7 +91,11 @@ export const addButton = (map, position, html, onClick=()=>{}) => {
     }
     if (!html || !html.length) { console.log('Need Pass button html'); return; }
 
-    let $element = $(html).click(onClick);
+    let $element = $(html);
+    $element.click(function () {
+        onClick($element);
+    });
+
     let controlDiv = $element[0];
     controlDiv.index = 1;
     map.controls[google.maps.ControlPosition[position]].push(controlDiv);

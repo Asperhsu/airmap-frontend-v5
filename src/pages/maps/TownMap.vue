@@ -135,7 +135,7 @@
 
             infowindowNoData(info) {
                 let townName = info.COUNTYNAME + info.TOWNNAME;
-                this.$ons.notification.toast(townName + ' ' + lang('town.notfound'), {timeout: 2000});
+                this.$ons.notification.toast(townName + ' ' + lang('town.notfound'), {timeout: 1500, force: true});
 
                 this.mapObject.data.revertStyle();
                 return;
@@ -163,4 +163,4 @@
     }
 </script>
 
-<style lang="scss" src="@/assets/styles/sites-infowindow.scss"></style>
+<style lang="scss" src="@/assets/styles/infowindow.scss"></style>

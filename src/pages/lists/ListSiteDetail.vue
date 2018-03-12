@@ -166,21 +166,21 @@
                         if (!datasets.Dust2_5|| this.isAllNull(datasets.Dust2_5)) { this.showChart.pm25 = false; return; }
 
                         let chartData = this.processChartData(labels, datasets.Dust2_5, this.pm25IndicatorType);
-                        this.$refs.chartPM25.start(chartData);
+                        this.$refs.chartPM25 && this.$refs.chartPM25.start(chartData);
                     }, 50);
 
                     setTimeout(() => {
                         if (!datasets.Temperature || this.isAllNull(datasets.Temperature)) { this.showChart.temp = false; return; }
 
                         let chartData = this.processChartData(labels, datasets.Temperature, 'Temperature');
-                        this.$refs.chartTemp.start(chartData);
+                        this.$refs.chartTemp && this.$refs.chartTemp.start(chartData);
                     }, 500);
 
                     setTimeout(() => {
                         if (!datasets.Humidity|| this.isAllNull(datasets.Humidity)) { this.showChart.humidity = false; return; }
 
                         let chartData = this.processChartData(labels, datasets.Humidity, 'Humidity');
-                        this.$refs.chartHumidity.start(chartData);
+                        this.$refs.chartHumidity && this.$refs.chartHumidity.start(chartData);
                     }, 1000);
                 });
             },

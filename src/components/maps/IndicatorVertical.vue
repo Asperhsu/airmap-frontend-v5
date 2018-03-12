@@ -21,7 +21,7 @@
     #indicator-vertical{
         position: absolute;
         bottom: 30px;
-        left: 5px;
+        left: 0px;
         z-index: 2;
         opacity: 1;
         cursor: default;
@@ -42,7 +42,7 @@
 
         .unit {
             font-style: italic;
-            font-size: 0.6em;
+            font-size: 0.4em;
             margin-bottom: .5em;
             text-shadow: 0px 0px 3px #000, 0px 0px 5px #000;
         }
@@ -59,7 +59,7 @@
             position: relative;
 
             .color {
-                width: 1.2rem;
+                width: .8rem;
                 height: 1.2rem;
                 box-shadow: 0px 0px 3px #ccc, 0px 0px 5px #ccc;
             }

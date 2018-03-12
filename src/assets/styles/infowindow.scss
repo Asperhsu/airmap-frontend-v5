@@ -6,12 +6,12 @@
 // the plugin's SCSS is imported. Check the /dist/_settings.scss
 // for the available variables.
 
-$si-content-padding:        10px;
-$si-border-width:           4px;
+$si-content-padding:        8px;
+$si-border-width:           3px;
 $si-border-color:           #2b3031;
 $si-font-size:	            18px;
-$si-shadow-h:           	10px;
-$si-shadow-v:           	-10px;
+$si-shadow-h:           	8px;
+$si-shadow-v:           	-8px;
 $si-shadow-blur:        	0;
 $si-shadow-spread:          0;
 $si-shadow-opacity:         0.4;
@@ -38,8 +38,8 @@ $si-close-hover-opacity:    1;
 // the full markup and available classes.
 
 .si-wrapper-top {
-    width: 75vw;
-    max-width: 350px;
+    min-width: 70vw;
+    // max-width: 350px;
 
     @media (min-width: 600px) {
         max-width: 400px;
