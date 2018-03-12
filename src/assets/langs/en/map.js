@@ -1,27 +1,49 @@
 export default {
-    'setting.showIndicator': 'Display indicator bar',
-    'setting.showPublishWatermark': 'Display data timestmp',
-    'setting.measureType': 'Indicator Type',
-    'setting.other': 'Other Types',
+    setting: {
+        showIndicator: 'Display indicator bar',
+        showPublishWatermark: 'Display data timestmp',
+        measureType: 'Indicator Type',
+        other: 'Other Types',
 
-    'setting.windLayer': 'Wind Layer',
-    'setting.windLayer.enable': 'Enable',
-    'setting.windLayer.fillOpacity': 'Line opacity',
-    'setting.windLayer.moveSpeed': 'Line move speed',
-    'setting.windLayer.information': 'Information',
-    'setting.windLayer.publishTime': 'Data Published time',
-    'setting.windLayer.waitForReturnMap': 'Load until return to map',
-    'setting.windLayer.notice': 'Notice',
-    'setting.windLayer.noticeText': 'Wind Layer is very resource-consuming, easy to cause the browser crashes, please use discretion. Wind data updated at 5, 11, 17, 23 (UTC +8)',
+        windLayer: {
+            title: 'Wind Layer',
+            enable: 'Enable',
+            fillOpacity: 'Line opacity',
+            moveSpeed: 'Line move speed',
+            information: 'Information',
+            publishTime: 'Data Published time',
+            waitForReturnMap: 'Load until return to map',
+            notice: 'Notice',
+            noticeText: 'Wind Layer is very resource-consuming, easy to cause the browser crashes, please use discretion. Wind data updated at 5, 11, 17, 23 (UTC +8)',
+        },
 
-    'setting.map.title': 'Map',
-    'setting.mapType.title': 'Map Type',
-    'setting.mapType.site': 'Site Map',
-    'setting.mapType.town': 'Taiwan Town Map',
-    'setting.mapStartupUseMyLocation.title': 'Use current location when startup',
-    'setting.mapStartupUseMyLocation.enable': 'Enable',
+        map: {
+            title: 'Map',
+        },
 
-    'loading.map': 'Loading Map Resource',
-    'loading.site': 'Loading Site Data',
-    'loading.town': '鄉鎮資料載入中',
+        mapType: {
+            title: 'Map Type',
+            site: 'Site Map',
+            town: 'Taiwan Town Map',
+        },
+
+        startupUseMyLocation: {
+            title: 'Use current location when startup',
+            enable: 'Enable',
+        },
+
+        geolocation: {
+            title: 'Position Locate Method',
+
+            google: {
+                title: 'Google API',
+                info: 'guess location by network address, may not be accurate.',
+            },
+
+            geo: {
+                title: 'Browser geolocation',
+                info: 'Use HTML5 positioning, if you have a GPS device, you need to authorize use.',
+            }
+        },
+    },
 }

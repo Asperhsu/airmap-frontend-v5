@@ -29,7 +29,7 @@
         components: {GoogleMap, Loading, WindLayer, PublishWatermark},
 
         mounted () {
-            this.loadingMsg = lang('loading.map');
+            this.loadingMsg = lang('town.loading.map');
         },
 
         data () {
@@ -126,7 +126,7 @@
 
             fetchSites () {
                 this.isLoading = true;
-                this.loadingMsg = lang('loading.town');
+                this.loadingMsg = lang('town.loading.data');
 
                 return fetchTownMap().then((data) => {
                     this.isLoading = false;

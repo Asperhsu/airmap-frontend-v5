@@ -21,14 +21,14 @@
             </div>
 
             <div class="measure">
-                <div class="title">{{ lang('temperature') }}</div>
+                <div class="title">{{ lang('list.temperature') }}</div>
                 <div class="value" v-if="site.temp !== null">{{ site.temp }}</div>
                 <div class="value" v-else><i class="fa fa-ban" aria-hidden="true"></i></div>
                 <div class="unit">&#8451;</div>
             </div>
 
             <div class="measure">
-                <div class="title">{{ lang('humidity') }}</div>
+                <div class="title">{{ lang('list.humidity') }}</div>
                 <div class="value" v-if="site.humidity !== null">{{ site.humidity }}</div>
                 <div class="value" v-else><i class="fa fa-ban" aria-hidden="true"></i></div>
                 <div class="unit">%</div>
@@ -66,12 +66,12 @@
             </div>
 
             <div class="chartContainer" v-show="showChart.temp">
-                <div class="title">{{ lang('temperature') }}</div>
+                <div class="title">{{ lang('list.temperature') }}</div>
                 <LineChart ref="chartTemp" />
             </div>
 
             <div class="chartContainer" v-show="showChart.humidity">
-                <div class="title">{{ lang('humidity') }}</div>
+                <div class="title">{{ lang('list.humidity') }}</div>
                 <LineChart ref="chartHumidity" />
             </div>
         </div>
@@ -142,7 +142,7 @@
             },
             processChartData (labels, values, indicatorType) {
                 values = [].concat(values).reverse();
-                let maxValue = Math.max.apply(null, values);
+                let maxValue = Math.round(Math.max.apply(null, values));
 
                 return {
                     gradientFill: this.generateColorBar(indicatorType, maxValue),

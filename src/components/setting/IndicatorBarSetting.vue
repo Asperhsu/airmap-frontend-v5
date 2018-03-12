@@ -2,7 +2,7 @@
     <v-ons-list modifier="inset">
         <v-ons-list-item tappable>
             <label class="center" for="showIndicator">
-                {{ lang('setting.showIndicator') }}
+                {{ lang('map.setting.showIndicator') }}
             </label>
             <div class="right">
                 <v-ons-switch input-id="showIndicator" v-model="showIndicator" />

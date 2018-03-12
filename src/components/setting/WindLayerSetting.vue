@@ -1,17 +1,17 @@
 <template>
     <div>
-        <v-ons-list-title>{{ lang('setting.windLayer') }}</v-ons-list-title>
+        <v-ons-list-title>{{ lang('map.setting.windLayer.title') }}</v-ons-list-title>
         <v-ons-list modifier="inset">
             <v-ons-list-item tappable>
                 <label class="center" for="enableWindySwitch">
-                    {{ lang('setting.windLayer.enable') }}
+                    {{ lang('map.setting.windLayer.enable') }}
                 </label>
                 <div class="right">
                     <v-ons-switch input-id="enableWindySwitch" v-model="enable" />
                 </div>
             </v-ons-list-item>
 
-            <v-ons-list-header>{{ lang('setting.windLayer.fillOpacity') }}</v-ons-list-header>
+            <v-ons-list-header>{{ lang('map.setting.windLayer.fillOpacity') }}</v-ons-list-header>
             <v-ons-list-item>
                 <div class="center">
                     <v-ons-range v-model="fillOpacity" style="width: 100%;" min="1" max="10" step="1"></v-ons-range>
@@ -19,7 +19,7 @@
                 <div class="right">{{ fillOpacity }}</div>
             </v-ons-list-item>
 
-            <v-ons-list-header>{{ lang('setting.windLayer.moveSpeed') }}</v-ons-list-header>
+            <v-ons-list-header>{{ lang('map.setting.windLayer.moveSpeed') }}</v-ons-list-header>
             <v-ons-list-item>
                 <div class="center">
                     <v-ons-range v-model="moveSpeed" style="width: 100%;" min="1" max="10" step="1"></v-ons-range>
@@ -27,19 +27,19 @@
                 <div class="right">{{ moveSpeed }}x</div>
             </v-ons-list-item>
 
-            <v-ons-list-header>{{ lang('setting.windLayer.information') }}</v-ons-list-header>
+            <v-ons-list-header>{{ lang('map.setting.windLayer.information') }}</v-ons-list-header>
             <v-ons-list-item>
-                <div class="center">{{ lang('setting.windLayer.publishTime') }}</div>
+                <div class="center">{{ lang('map.setting.windLayer.publishTime') }}</div>
                 <div class="right">
                     <span v-show="publishedAt">{{ publishedAt }}</span>
-                    <span v-show="!publishedAt" class="help-text">{{ lang('setting.windLayer.waitForReturnMap') }}</span>
+                    <span v-show="!publishedAt" class="help-text">{{ lang('map.setting.windLayer.waitForReturnMap') }}</span>
                 </div>
             </v-ons-list-item>
 
-            <v-ons-list-header>{{ lang('setting.windLayer.notice') }}</v-ons-list-header>
+            <v-ons-list-header>{{ lang('map.setting.windLayer.notice') }}</v-ons-list-header>
             <v-ons-list-item>
                 <div class="center">
-                    {{ lang('setting.windLayer.noticeText') }}
+                    {{ lang('map.setting.windLayer.noticeText') }}
                 </div>
             </v-ons-list-item>
         </v-ons-list>

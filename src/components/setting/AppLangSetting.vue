@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-ons-list-title>{{ lang('setting.displaylang') }}</v-ons-list-title>
+        <v-ons-list-title>{{ lang('app.setting.displaylang') }}</v-ons-list-title>
         <v-ons-list modifier="inset">
             <v-ons-list-item v-for="(text, name) in supportLangs" :key="name" tappable>
                 <label class="center" :for="'applangradio-' + name">

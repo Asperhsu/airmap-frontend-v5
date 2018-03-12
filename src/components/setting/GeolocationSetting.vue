@@ -1,14 +1,15 @@
 <template>
     <div>
-        <v-ons-list-header>{{ lang('setting.geolocation.title') }}</v-ons-list-header>
-        <v-ons-list-item v-for="method in supportMethods" :key="method.name" tappable :class="isDisabled(method) && 'disabled'">
-            <label class="center" :for="'appgeolocationradio-' + method.name">
-                {{ lang(method.lang) }}
+        <v-ons-list-header>{{ lang('map.setting.geolocation.title') }}</v-ons-list-header>
+        <v-ons-list-item v-for="method in supportMethods" :key="method" tappable :class="isDisabled(method) && 'disabled'">
+            <label class="center" :for="'appgeolocationradio-' + method">
+                <div class="title">{{ lang(`map.setting.geolocation.${method}.title`) }}</div>
+                <div class="text"><small>{{ lang(`map.setting.geolocation.${method}.info`) }}</small></div>
             </label>
             <label class="right">
                 <v-ons-radio
-                    :input-id="'appgeolocationradio-' + method.name"
-                    :value="method.name"
+                    :input-id="'appgeolocationradio-' + method"
+                    :value="method"
                     v-model="geolocationMethod"
                     :disabled="isDisabled(method)"
                 >
@@ -24,10 +25,7 @@
     export default {
         data () {
             return {
-                supportMethods: [
-                    {name: 'google', lang:'setting.geolocation.google.title' },
-                    {name: 'geo', lang:'setting.geolocation.geo.title' },
-                ],
+                supportMethods: ['google', 'geo'],
             };
         },
 
@@ -44,7 +42,7 @@
 
         methods: {
             isDisabled (method) {
-                if (method.name === 'geo') {
+                if (method === 'geo') {
                     return !navigator.geolocation;
                 }
 
@@ -57,6 +55,10 @@
 <style lang="scss" src="@/assets/styles/setting-page.scss" scoped></style>
 <style lang="scss" scoped>
     .disabled {
+        color: gray;
+    }
+    .text {
+        margin-top: .5em;
         color: gray;
     }
 </style>

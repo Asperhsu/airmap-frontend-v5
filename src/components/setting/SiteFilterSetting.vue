@@ -1,19 +1,19 @@
 <template>
     <div>
-        <v-ons-list-title>{{ lang('setting.siteFilter') }}</v-ons-list-title>
+        <v-ons-list-title>{{ lang('site.setting.filter') }}</v-ons-list-title>
         <v-ons-list modifier="inset">
-            <v-ons-list-header>{{ lang('setting.favorite') }}</v-ons-list-header>
+            <v-ons-list-header>{{ lang('site.setting.favorite') }}</v-ons-list-header>
             <v-ons-list-item tappable>
                 <div class="center"></div>
                 <label class="center" for="onlyShowFavoriteSwitch">
-                    {{ lang('setting.onlyShowFavorite') }}
+                    {{ lang('site.setting.onlyShowFavorite') }}
                 </label>
                 <div class="right">
                     <v-ons-switch input-id="onlyShowFavoriteSwitch" v-model="onlyShowFavorite" />
                 </div>
             </v-ons-list-item>
 
-            <v-ons-list-header>{{ lang('setting.group') }}</v-ons-list-header>
+            <v-ons-list-header>{{ lang('site.setting.group') }}</v-ons-list-header>
             <v-ons-list-item v-for="(count, name) in groups" :key="name" tappable>
                 <div class="left">
                     <img :src="getLogo(name)" style="width: 100%"/>
@@ -33,13 +33,13 @@
                 </label>
             </v-ons-list-item>
 
-            <v-ons-list-header>{{ lang('setting.markerIcon') }}</v-ons-list-header>
+            <v-ons-list-header>{{ lang('site.setting.markerIcon') }}</v-ons-list-header>
             <v-ons-list-item v-for="(stat, index) in analysisTypes" :key="stat.name" tappable>
                 <label class="left">
                     <img :src="getIcon(stat.method, stat.count)" />
                 </label>
                 <label class="center" :for="'statcheckbox-' + index">
-                    {{ lang(`analysisTypes.${stat.name}`) }}
+                    {{ lang(`site.analysisTypes.${stat.name}`) }}
                 </label>
                 <label class="right">
                     <v-ons-checkbox

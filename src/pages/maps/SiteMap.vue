@@ -35,7 +35,7 @@
         components: {GoogleMap, Loading, WindLayer, PublishWatermark},
 
         mounted () {
-            this.loadingMsg = lang('loading.map');
+            this.loadingMsg = lang('site.loading.map');
         },
 
         data () {
@@ -113,7 +113,7 @@
             },
             fetchSites () {
                 this.isLoading = true;
-                this.loadingMsg = lang('loading.site');
+                this.loadingMsg = lang('site.loading.data');
 
                 fetchSiteMap().then(({sites, groups, analysis}) => {
                     let markers = sites.map(site => {

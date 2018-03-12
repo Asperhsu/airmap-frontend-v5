@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-ons-list-title>{{ lang('setting.measureType') }}</v-ons-list-title>
+        <v-ons-list-title>{{ lang('map.setting.measureType') }}</v-ons-list-title>
         <v-ons-list modifier="inset">
             <v-ons-list-header>PM2.5</v-ons-list-header>
             <v-ons-list-item v-for="(name) in pm25Types" :key="name" tappable>
@@ -18,7 +18,7 @@
             </v-ons-list-item>
 
             <template v-if="!onlypm25">
-                <v-ons-list-header>{{ lang('setting.other') }}</v-ons-list-header>
+                <v-ons-list-header>{{ lang('map.setting.other') }}</v-ons-list-header>
                 <v-ons-list-item v-for="(name) in otherTypes" :key="name" tappable>
                     <label class="center" :for="'indicatorradio-' + name">
                         {{ name }}

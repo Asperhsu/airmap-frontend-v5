@@ -6,6 +6,11 @@
     import Chart from 'chart.js'
 
     let chartOptions = {
+        layout: {
+            padding: {
+                bottom: 20
+            }
+        },
         scales: {
             yAxes: [{
                 ticks: {
@@ -13,7 +18,7 @@
                     fontStyle: "bold",
                     beginAtZero: true,
                     maxTicksLimit: 5,
-                    padding: 20
+                    padding: 5
                 },
                 gridLines: {
                     drawTicks: false,
@@ -26,8 +31,9 @@
                 },
                 ticks: {
                     maxTicksLimit: 10,
-                    maxRotation: 45,
-                    autoSkipPadding: 30,
+                    maxRotation: 0,
+                    padding: 0,
+                    autoSkipPadding: 10,
                     fontColor: "rgba(0,0,0,0.5)",
                     fontStyle: "bold"
                 }
@@ -45,7 +51,7 @@
 
     let elementDimention = {
         areaMargin: 8,
-        yLabel: 28,
+        yLabel: 20,
     };
 
     export default {

@@ -1,6 +1,6 @@
 <template>
     <v-ons-page>
-        <BasicToolbar>{{ lang('menu.favorite') }}</BasicToolbar>
+        <BasicToolbar>{{ lang('list.favorite.title') }}</BasicToolbar>
 
         <v-ons-list v-if="favorites.length">
             <v-ons-lazy-repeat

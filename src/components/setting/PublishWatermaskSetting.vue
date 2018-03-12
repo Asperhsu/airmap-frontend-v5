@@ -1,7 +1,7 @@
 <template>
     <v-ons-list-item tappable>
         <label class="center" for="showPublishWatermark">
-            {{ lang('setting.showPublishWatermark') }}
+            {{ lang('map.setting.showPublishWatermark') }}
         </label>
         <div class="right">
             <v-ons-switch input-id="showPublishWatermark" v-model="showPublishWatermark" />

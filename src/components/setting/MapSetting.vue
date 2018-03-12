@@ -1,11 +1,11 @@
 <template>
     <div>
-        <v-ons-list-title>{{ lang('setting.map.title') }}</v-ons-list-title>
+        <v-ons-list-title>{{ lang('map.setting.map.title') }}</v-ons-list-title>
         <v-ons-list modifier="inset">
-            <v-ons-list-header>{{ lang('setting.mapType.title') }}</v-ons-list-header>
+            <v-ons-list-header>{{ lang('map.setting.mapType.title') }}</v-ons-list-header>
             <v-ons-list-item v-for="name in supportTypes" :key="name" tappable>
                 <label class="center" :for="'maptyperadio-' + name">
-                    {{ lang(`setting.mapType.${name}`) }}
+                    {{ lang(`map.setting.mapType.${name}`) }}
                 </label>
                 <label class="right">
                     <v-ons-radio
@@ -17,10 +17,10 @@
                 </label>
             </v-ons-list-item>
 
-            <v-ons-list-header>{{ lang('setting.other') }}</v-ons-list-header>
+            <v-ons-list-header>{{ lang('map.setting.other') }}</v-ons-list-header>
             <v-ons-list-item tappable>
                 <label class="center" for="startupUseMyLocation">
-                    {{ lang('setting.mapStartupUseMyLocation.title') }}
+                    {{ lang('map.setting.startupUseMyLocation.title') }}
                 </label>
                 <div class="right">
                     <v-ons-switch input-id="startupUseMyLocation" v-model="startupUseMyLocation" />

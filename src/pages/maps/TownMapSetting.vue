@@ -1,8 +1,8 @@
 <template>
     <v-ons-page>
-        <BackToolbar>{{ lang('setting.townTitle') }}</BackToolbar>
+        <BackToolbar>{{ lang('town.setting.title') }}</BackToolbar>
 
-        <v-ons-list-title>{{ lang('setting.map.title') }}</v-ons-list-title>
+        <v-ons-list-title>{{ lang('map.setting.map.title') }}</v-ons-list-title>
         <v-ons-list modifier="inset">
             <PublishWatermaskSetting />
         </v-ons-list>

@@ -1,18 +1,31 @@
 export default {
-    'setting.siteTitle': 'Site Map Setting',
+    temperature: 'Temperature',
+    humidity: 'Humidity',
+    notfound: 'Site not found',
 
-    'setting.siteFilter': 'Site Filter',
-    'setting.favorite': 'Favorite',
-    'setting.onlyShowFavorite': 'Only display Favorite',
-    'setting.group': 'Group',
-    'setting.markerIcon': 'Marker Icon',
+    setting: {
+        siteTitle: 'Site Map Setting',
 
-    'site.notfound': 'Site not found',
+        siteFilter: 'Site Filter',
+        favorite: 'Favorite',
+        onlyShowFavorite: 'Only display Favorite',
+        group: 'Group',
+        markerIcon: 'Marker Icon',
+    },
 
-    'analysisTypes.normal': 'General Site (no analysis data)',
-    'analysisTypes.indoor': 'May be placed indoors or equipment malfunctioned',
-    'analysisTypes.shortterm-pollution': 'Detected small sources of pollution or equipment malfunctioned',
-    'analysisTypes.longterm-pollution': 'Probably close to a long-term fixed contamination source or equipment failure',
+    analysisTypes: {
+        normal: 'General Site (no analysis data)',
+        indoor: 'May be placed indoors or equipment malfunctioned',
+        'shortterm-pollution': 'Detected small sources of pollution or equipment malfunctioned',
+        'longterm-pollution': 'Probably close to a long-term fixed contamination source or equipment failure',
+    },
 
-    'infowindow.siteInfowindow.detail': 'Detail',
+    infowindow: {
+        detail: 'Detail',
+    },
+
+    loading: {
+        map: 'Loading Map Resource',
+        data: 'Loading Site Data',
+    },
 }

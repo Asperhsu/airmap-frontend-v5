@@ -27,28 +27,28 @@
             return {
                 tabs: [
                     {
-                        label: 'menu.map',
+                        label: 'app.menu.map',
                         icon: 'fa-map',
                         name: 'map',
                     },
                     {
-                        label: 'menu.list',
+                        label: 'app.menu.list',
                         icon: 'fa-list',
                         name: 'list',
                     },
                     {
-                        label: 'menu.favorite',
+                        label: 'app.menu.favorite',
                         icon: 'fa-star',
                         name: 'favorite-list',
                         badge: 'favoriteCount'
                     },
                     {
-                        label: 'menu.resource',
+                        label: 'app.menu.resource',
                         icon: 'fa-bookmark',
                         name: 'resource',
                     },
                     {
-                        label: 'menu.setting',
+                        label: 'app.menu.setting',
                         icon: 'fa-cog',
                         name: 'setting',
                     },

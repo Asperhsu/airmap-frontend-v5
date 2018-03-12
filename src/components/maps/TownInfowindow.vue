@@ -1,6 +1,6 @@
 <template>
-    <div @touchstart.stop="touchHandler">
-        <button type="button" class="si-close-button" @click.stop="closeWindow">×</button>
+    <div>
+        <button type="button" class="si-close-button" @click.prevent.stop="closeWindow">×</button>
 
         <div class="header">
             <p class="title">{{ town.country }} {{ town.town }}</p>
@@ -19,7 +19,7 @@
 
             <div class="sites">
                 <div class="valids" v-show="town.valids.length">
-                    <div class="title">{{ lang('infowindow.townInfowindow.valids') }} ({{ town.valids.length }})</div>
+                    <div class="title">{{ lang('town.infowindow.valids') }} ({{ town.valids.length }})</div>
                     <div class="labels">
                         <div v-for="site in sortSites(town.valids)" :key="site.uid"
                             class="label" @click="openSiteDetail(site.uid)">{{ site.name }}</div>
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="outliners" v-show="town.outliners.length">
-                    <div class="title">{{ lang('infowindow.townInfowindow.outliners') }} ({{ town.outliners.length }})</div>
+                    <div class="title">{{ lang('town.infowindow.outliners') }} ({{ town.outliners.length }})</div>
                     <div class="labels">
                         <div v-for="site in sortSites(town.outliners)" :key="site.uid"
                             class="label" @click="openSiteDetail(site.uid)">{{ site.name }}</div>
@@ -36,7 +36,7 @@
 
                 <div class="info">
                     <i aria-hidden="true" class="fa fa-info-circle"></i>
-                    {{ lang('infowindow.townInfowindow.sitesInfo') }}
+                    {{ lang('town.infowindow.sitesInfo') }}
                 </div>
             </div>
 
@@ -87,13 +87,6 @@
         },
 
         methods: {
-            touchHandler (e)  { // proxy to trigger click for mobile event it will trigger touchstart
-                try {
-                    e.target.dispatchEvent(new Event("mousedown"));
-                    e.target.dispatchEvent(new Event("mouseup"));
-                    e.target.dispatchEvent(new Event("click"));
-                } catch (err) {}
-            },
             openSiteDetail (uid) {
                 this.isLoading = true;
 
@@ -105,7 +98,7 @@
                     this.isLoading = false;
 
                     if (!site) {
-                        this.$ons.notification.toast(lang('site.notfound'), {timeout: 2000});
+                        this.$ons.notification.toast(lang('town.notfound'), {timeout: 2000});
                         return;
                     }
 

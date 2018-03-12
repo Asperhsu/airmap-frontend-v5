@@ -1,6 +1,6 @@
 <template>
     <v-ons-page>
-        <BasicToolbar>{{ lang('setting.title') }}</BasicToolbar>
+        <BasicToolbar>{{ lang('app.setting.title') }}</BasicToolbar>
 
         <AppLangSetting />
 
@@ -10,19 +10,19 @@
 
         <div class="reset-conf">
             <v-ons-list-title>
-                {{ lang('setting.reset.title') }}
+                {{ lang('app.setting.reset.title') }}
             </v-ons-list-title>
             <v-ons-list modifier="inset">
                 <v-ons-list-item>
                     <div class="center">
                         <v-ons-button modifier="large" style="margin: 6px 0" @click="resetSetting">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
-                            {{ lang('setting.reset.clearAll') }}
+                            {{ lang('app.setting.reset.clearAll') }}
                         </v-ons-button>
 
                         <div>
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
-                            {{ lang('setting.reset.info') }}
+                            {{ lang('app.setting.reset.info') }}
                         </div>
                     </div>
                 </v-ons-list-item>
@@ -51,7 +51,7 @@
             resetSetting () {
                 resetState();
                 SettingStorage.clear();
-                this.$ons.notification.toast(lang('setting.reset.success'), {timeout: 2000})
+                this.$ons.notification.toast(lang('app.setting.reset.success'), {timeout: 2000})
             }
         }
     };

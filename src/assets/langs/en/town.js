@@ -1,8 +1,18 @@
 export default {
-    'setting.townTitle': 'Town Map Setting',
+    notfound: 'Town not found',
 
-    'town.notfound': 'Town not found',
-    'infowindow.townInfowindow.valids': 'Valids',
-    'infowindow.townInfowindow.outliners': 'Outliners',
-    'infowindow.townInfowindow.sitesInfo': 'Valids/Outliners calculate by Boxplot',
+    setting: {
+        title: 'Town Map Setting',
+    },
+
+    infowindow: {
+        valids: 'Valids',
+        outliners: 'Outliners',
+        sitesInfo: 'Valids/Outliners calculate by Boxplot',
+    },
+
+    loading: {
+        map: 'Loading Map Resource',
+        data: 'Loading Town Data',
+    },
 }

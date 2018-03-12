@@ -1,6 +1,6 @@
 <template>
-    <div @touchstart.stop="touchHandler">
-        <button type="button" class="si-close-button" @click.stop="closeWindow">×</button>
+    <div>
+        <button type="button" class="si-close-button" @click.prevent.stop="closeWindow">×</button>
 
         <div class="header">
             <p class="title">{{ site.title }}</p>
@@ -16,10 +16,10 @@
                 :showDatasource="false"
                 :indicatorType="pm25IndicatorType" :value="site.pm25" />
 
-            <Meter v-if="site.temp" :title="lang('temperature')"
+            <Meter v-if="site.temp" :title="lang('site.temperature')"
                 indicatorType="Temperature" :value="site.temp" />
 
-            <Meter v-if="site.humidity" :title="lang('humidity')"
+            <Meter v-if="site.humidity" :title="lang('site.humidity')"
                 indicatorType="Humidity" :value="site.humidity" />
         </div>
 
@@ -35,7 +35,7 @@
 
             <div class="buttons">
                 <v-ons-button modifier="outline" class="btn btn-site-page" @click="openSiteDetail">
-                    <i class="fa fa-info-circle"></i> {{ lang('infowindow.siteInfowindow.detail') }}
+                    <i class="fa fa-info-circle"></i> {{ lang('site.infowindow.detail') }}
                 </v-ons-button>
             </div>
         </div>
@@ -65,13 +65,6 @@
         },
 
         methods: {
-            touchHandler (e)  { // proxy to trigger click for mobile event it will trigger touchstart
-                try {
-                    e.target.dispatchEvent(new Event("mousedown"));
-                    e.target.dispatchEvent(new Event("mouseup"));
-                    e.target.dispatchEvent(new Event("click"));
-                } catch (err) {}
-            },
             openSiteDetail () {
                 this.$store.commit('navigator/push', {
                     ...ListSiteDetail,

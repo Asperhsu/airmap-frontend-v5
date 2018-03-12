@@ -2,6 +2,7 @@ import moment from 'moment';
 import "moment/locale/zh-tw";
 import store from '@/store';
 import translations from '@/assets/langs';
+import {getObjectValue} from '@/services/helpers';
 
 const supportLangs = {
     tw: 'Traditional Chinese',
@@ -32,11 +33,12 @@ export const setLang = (lang) => {
 export const lang = (index) => {
     let currentLang = getLang();
 
-    if (!translations.hasOwnProperty(currentLang) || !translations[currentLang].hasOwnProperty(index)) {
-        return '!!'+index+'!!';
+    if (translations.hasOwnProperty(currentLang)) {
+        return getObjectValue(translations[currentLang], index) || '!!'+index+'!!';
     }
 
-    return translations[currentLang][index];
+    console.log(index);
+    return '!!'+index+'!!';
 }
 
 export const init = () => {

@@ -1,15 +1,20 @@
 export default {
-    'list.favorite': 'Favorite',
-    'list.site': 'Site List',
-    'list.searchPlaceholder': 'Search site name',
+    site: 'Site List',
+    searchPlaceholder: 'Search site name',
+    loading: 'Loading Site Data',
+    temperature: 'Temperature',
+    humidity: 'Humidity',
 
-    'list.analysis.datasource': 'Analysis source',
-    'list.analysis.datasourceText': 'Taiwan Central Research Institute of Information Science Network Research Laboratory',
+    analysis: {
+        datasource: 'Analysis source',
+        datasourceText: 'Taiwan Central Research Institute of Information Science Network Research Laboratory',
+    },
 
-    'list.favorite.noneSites': 'favorite sites is empty',
-    'list.favorite.added': 'Added to favorites',
-    'list.favorite.removed': 'Removed from favorite site',
-    'list.favorite.noData': 'Current data not found',
-
-    'list.loading': 'Loading Site Data',
+    favorite: {
+        title: 'Favorite',
+        noneSites: 'favorite sites is empty',
+        added: 'Added to favorites',
+        removed: 'Removed from favorite site',
+        noData: 'Current data not found',
+    },
 }

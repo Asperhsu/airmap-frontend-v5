@@ -19,7 +19,7 @@
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
             </div>
             <div class="info">
-                {{ lang('suggestion.datasource') }}<br/>
+                {{ lang('app.suggestion.datasource') }}<br/>
                 <a class="datasource-link" target="_blank" :href="suggestion.meta.datasource.link">
                     {{ suggestion.meta.datasource.text }}
                 </a>
