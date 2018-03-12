@@ -46,4 +46,8 @@ export default {
             },
         }
     },
+
+    geolocation: {
+        notFound: '無法取得目前位置',
+    },
 }

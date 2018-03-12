@@ -46,4 +46,8 @@ export default {
             }
         },
     },
+
+    geolocation: {
+        notFound: 'Can not retrive current position.',
+    },
 }

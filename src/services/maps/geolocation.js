@@ -66,7 +66,7 @@ const findCurrentLocation = (method) => {
     setIconStatus(LOCATION_SEARCHING);
     return handler.then(result => {
         setIconStatus(result.status || LOCATION_NOTFOUND);
-        return result.hasOwnProperty('data') ? result.data : null;
+        return result;
     }, () => {
         console.warn('location can not retrive.');
         setIconStatus(LOCATION_NOTFOUND);
@@ -74,16 +74,22 @@ const findCurrentLocation = (method) => {
 };
 
 const googleLocation = () => {
+    let notFoundResult = {
+        status: LOCATION_NOTFOUND,
+        data: null,
+        msg: null,
+    };
+
     return $.ajax({
-        dataType: 'json',
-        method: 'POST',
         url: "https://www.googleapis.com/geolocation/v1/geolocate?key=" + process.env.GOOGLE_MAP_KEY,
+        method: 'POST',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            considerIp: true,
+        })
     }).then((data) => {
         if (!data.location.lat || !data.location.lng) {
-            return {
-                status: LOCATION_NOTFOUND,
-                data: null,
-            };
+            return notFoundResult;
         }
 
         return {
@@ -94,6 +100,15 @@ const googleLocation = () => {
                 zoom: findZoomLevelByAccuracy(data.accuracy),
             }
         };
+    }, (error) => {
+        if (error.responseJSON && error.responseJSON.error) {
+            let result = Object.assign({}, notFoundResult, {
+                msg: error.responseJSON.error.message,
+            });
+            return result;
+        }
+
+        return notFoundResult;
     });
 };
 
@@ -101,6 +116,7 @@ const geolocation = () => {
     let notFoundResult = {
         status: LOCATION_NOTFOUND,
         data: null,
+        msg: null,
     };
 
     if (!navigator.geolocation) {
@@ -121,10 +137,14 @@ const geolocation = () => {
                         lng: position.coords.longitude,
                     },
                     zoom: findZoomLevelByAccuracy(0),
-                }
+                },
+                msg: null,
             });
-        }, () => {
-            resolve(notFoundResult);
+        }, (error) => {
+            let result = Object.assign({}, notFoundResult, {
+                msg: error.message,
+            });
+            resolve(result);
         })
     });
 };

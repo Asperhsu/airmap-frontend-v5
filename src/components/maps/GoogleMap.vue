@@ -121,20 +121,23 @@
                 });
             },
             fetchCurrentLocation() {
-                return GeoLocation.findCurrentLocation(this.geolocationMethod).then((info) => {
-                    if (!info) { return; }
-
+                return GeoLocation.findCurrentLocation(this.geolocationMethod).then((result) => {
                     if (this.currentLocaton.marker) { this.currentLocaton.marker.setMap(null); }
-                    this.currentLocaton.marker = GeoLocation.createCurrentLocationMarker(this.mapObject, info);
                     // if (this.currentLocaton.circle) { this.currentLocaton.circle.setMap(null); }
+
+                    if (!result.data) {
+                        let msg = result.msg || lang('map.geolocation.notfound');
+                        this.$ons.notification.toast(`${this.geolocationMethod} Error: ` + msg, {timeout: 2000});
+                        return;
+                    }
+
+                    this.currentLocaton.marker = GeoLocation.createCurrentLocationMarker(this.mapObject, result.data);
                     // this.currentLocaton.circle = GeoLocation.createCurrentLocationCircle(this.mapObject, info);
 
-                    if (info.zoom > 14) { info.zoom = 14; }
+                    if (result.data.zoom > 14) { result.data.zoom = 14; }
 
-                    this.$store.commit('map/setCenter', info.position);
-                    this.$store.commit('map/setZoom', info.zoom);
-
-                    $("#gps-locate-control").data('info', info);
+                    this.$store.commit('map/setCenter', result.data.position);
+                    this.$store.commit('map/setZoom', result.data.zoom);
                 });
             },
             positionInMap(position) {
