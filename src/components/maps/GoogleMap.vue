@@ -124,7 +124,9 @@
                 return GeoLocation.findCurrentLocation(this.geolocationMethod).then((info) => {
                     if (!info) { return; }
 
+                    if (this.currentLocaton.marker) { this.currentLocaton.marker.setMap(null); }
                     this.currentLocaton.marker = GeoLocation.createCurrentLocationMarker(this.mapObject, info);
+                    // if (this.currentLocaton.circle) { this.currentLocaton.circle.setMap(null); }
                     // this.currentLocaton.circle = GeoLocation.createCurrentLocationCircle(this.mapObject, info);
 
                     if (info.zoom > 14) { info.zoom = 14; }
