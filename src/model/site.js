@@ -54,6 +54,14 @@ export default class Site {
         let status = this.getProperty('Analysis.status');
         return status ? status.split('|') : ['normal'];
     }
+    get region() {
+        let geometry = this.getProperty('Geometry');
+        return geometry ? {
+            country: geometry.COUNTYNAME,
+            town: geometry.TOWNNAME,
+        } : null;
+    }
+
 
     measureValue(indicatorType) {
         if (['PM2.5', 'PM2.5_NASA', 'AQI'].indexOf(indicatorType) > -1) {

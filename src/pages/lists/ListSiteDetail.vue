@@ -15,21 +15,21 @@
         <div class="measureContainer">
             <div class="measure">
                 <div class="title">PM 2.5</div>
-                <div class="value" v-if="site.pm25 !== null">{{ site.pm25 }}</div>
+                <div class="value" v-if="site.pm25 !== null">{{ Math.round(site.pm25) }}</div>
                 <div class="value" v-else><i class="fa fa-ban" aria-hidden="true"></i></div>
                 <div class="unit">μg/m3</div>
             </div>
 
             <div class="measure">
                 <div class="title">{{ lang('list.temperature') }}</div>
-                <div class="value" v-if="site.temp !== null">{{ site.temp }}</div>
+                <div class="value" v-if="site.temp !== null">{{ Math.round(site.temp) }}</div>
                 <div class="value" v-else><i class="fa fa-ban" aria-hidden="true"></i></div>
                 <div class="unit">&#8451;</div>
             </div>
 
             <div class="measure">
                 <div class="title">{{ lang('list.humidity') }}</div>
-                <div class="value" v-if="site.humidity !== null">{{ site.humidity }}</div>
+                <div class="value" v-if="site.humidity !== null">{{ Math.round(site.humidity) }}</div>
                 <div class="value" v-else><i class="fa fa-ban" aria-hidden="true"></i></div>
                 <div class="unit">%</div>
             </div>
@@ -55,7 +55,7 @@
 
         <div class="suggestionContainer">
             <hr>
-            <PM25Suggestion :indicatorType="pm25IndicatorType" :value="site.pm25" />
+            <PM25Suggestion :indicatorType="pm25IndicatorType" :value="site.pm25" layout="complex" />
         </div>
 
         <div class="charts" v-show="showChart.pm25 || showChart.temp || showChart.humidity">
@@ -77,6 +77,10 @@
         </div>
 
         <hr>
+        <div class="position" v-if="site.region">
+            <i class="fa fa-map-marker" style="color: red" aria-hidden="true"></i>&nbsp;
+            {{ site.region.country }} {{ site.region.town }}
+        </div>
         <div ref="location" class="location"></div>
     </v-ons-page>
 </template>
@@ -269,6 +273,11 @@
             color: gray;
             text-align: center;
         }
+    }
+
+    .position {
+        margin: .3em .5em;
+        text-align: center;
     }
 
     .location {

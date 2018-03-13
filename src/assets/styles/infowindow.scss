@@ -6,7 +6,7 @@
 // the plugin's SCSS is imported. Check the /dist/_settings.scss
 // for the available variables.
 
-$si-content-padding:        8px;
+$si-content-padding:        0px;
 $si-border-width:           3px;
 $si-border-color:           #2b3031;
 $si-font-size:	            18px;
@@ -38,7 +38,7 @@ $si-close-hover-opacity:    1;
 // the full markup and available classes.
 
 .si-wrapper-top {
-    min-width: 70vw;
+    min-width: 65vw;
     // max-width: 350px;
 
     @media (min-width: 600px) {
@@ -64,5 +64,48 @@ $si-close-hover-opacity:    1;
 // Add styles to the content set in index.js.
 
 .si-content {
-    max-height: 60vh !important;
+    max-height: 50vh !important;
+}
+
+.infowindow {
+    .header {
+        padding: .5em;
+        box-shadow: 0 2px 5px grey;
+        background-color: #dcdcdc;
+        position: relative;
+
+        .title {
+            font-size: .9em;
+            font-weight: bold;
+            white-space: nowrap;
+            margin-right: 2em;
+            overflow: hidden;
+        }
+    }
+
+    .content {
+        padding: .5em .8em;
+    }
+
+    .footer {
+        padding: .5em;
+        border-top: 1px solid #999999;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: .8em;
+        background-color: #2B3031;
+        color: #fff;
+
+        .published-time {
+            font-size: .8em;
+        }
+        .btn {
+            padding: 5px 6px;
+            font-size: 1em;
+            line-height: 1em;
+            text-align: center;
+        }
+    }
+
 }

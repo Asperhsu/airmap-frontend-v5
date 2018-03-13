@@ -1,15 +1,18 @@
 <template>
-    <div>
-        <button type="button" class="si-close-button" @click.prevent.stop="closeWindow">×</button>
-
+    <div class="infowindow">
         <div class="header">
-            <p class="title">{{ town.country }} {{ town.town }}</p>
+            <div class="title">
+                <i class="fa fa-map-marker" style="color: red; font-size: 1.3em; margin-right: .2em;" aria-hidden="true"></i>
+                {{ town.country }} {{ town.town }}
+            </div>
+            <button type="button" class="si-close-button" @click.prevent.stop="closeWindow">×</button>
         </div>
 
         <div class="content">
-            <Meter v-if="town.pm25 !== null"
+            <Lamp v-if="town.pm25 !== null"
                 :title="pm25IndicatorType"
-                :indicatorType="pm25IndicatorType" :value="town.pm25" />
+                :indicatorType="pm25IndicatorType" :value="town.pm25"
+                class="color-right" />
 
             <PM25Suggestion v-if="town.pm25 !== null"
                 :showDatasource="false"
@@ -19,7 +22,11 @@
 
             <div class="sites">
                 <div class="valids" v-show="town.valids.length">
-                    <div class="title">{{ lang('town.infowindow.valids') }} ({{ town.valids.length }})</div>
+                    <div class="title">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                        {{ lang('town.infowindow.valids') }}
+                        ({{ town.valids.length }})
+                    </div>
                     <div class="labels">
                         <div v-for="site in sortSites(town.valids)" :key="site.uid"
                             class="label" @click="openSiteDetail(site.uid)">{{ site.name }}</div>
@@ -27,7 +34,11 @@
                 </div>
 
                 <div class="outliners" v-show="town.outliners.length">
-                    <div class="title">{{ lang('town.infowindow.outliners') }} ({{ town.outliners.length }})</div>
+                    <div class="title">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        {{ lang('town.infowindow.outliners') }}
+                        ({{ town.outliners.length }})
+                    </div>
                     <div class="labels">
                         <div v-for="site in sortSites(town.outliners)" :key="site.uid"
                             class="label" @click="openSiteDetail(site.uid)">{{ site.name }}</div>
@@ -47,8 +58,6 @@
                 <i class="fa fa-clock-o" aria-hidden="true" style="padding: 0 5px;"></i>
                 {{ town.publishedAt.toNow(true) }}
             </div>
-
-            <div class="buttons"></div>
         </div>
 
         <Loading :show="isLoading" />
@@ -57,13 +66,13 @@
 
 <script>
     import Loading from '@/components/Loading'
-    import Meter from '@/components/Meter';
+    import Lamp from '@/components/Lamp';
     import PM25Suggestion from '@/components/PM25Suggestion'
     import ListSiteDetail from '@/pages/lists/ListSiteDetail'
     import {fetchSiteMap} from '@/services/resourceLoader';
 
     export default {
-        components: {Loading, Meter, PM25Suggestion},
+        components: {Loading, Lamp, PM25Suggestion},
 
         props: {
             town: {
@@ -121,12 +130,6 @@
 </script>
 
 <style lang="scss" scoped>
-    .header .title {
-        margin-top: 0px;
-        margin-bottom: 8px;
-        font-size: .9em;
-    }
-
     .sites {
         font-size: .8em;
 
@@ -143,8 +146,9 @@
 
             .label {
                 border-radius: 3px;
-                border: 1px solid #aaa;
-                font-size: .8em;
+                border: 1px solid #0076FF;
+                color: #0076FF;
+                font-size: .9em;
 
                 padding: 1px 6px;
                 margin-right: .3em;
@@ -155,7 +159,7 @@
                 text-align: center;
 
                 &:active {
-                    background: gray;
+                    background: #0076FF;
                     color: #fff;
                 }
             }
@@ -167,25 +171,8 @@
         }
     }
 
-    .footer {
-        margin-top: 1em;
-        padding-top: .5em;
-        border-top: 1px solid #999999;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: .8em;
-
-        .published-time {
-            font-size: .8em;
-        }
-
-        .btn {
-            padding: 5px 6px;
-            font-size: 1em;
-            line-height: 1em;
-            width: 2em;
-            text-align: center;
-        }
+    .published-time {
+        text-align: right;
+        width: 100%;
     }
 </style>

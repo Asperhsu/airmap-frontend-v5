@@ -156,6 +156,8 @@ export const rgbToHex = function(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
+
+
 const suggestion = {
     meta: {
         normalHumanTitle: '一般民眾活動建議',
@@ -170,89 +172,115 @@ const suggestion = {
         }
     },
 
-    'PM2.5': [
-        {
-            humanType: 'normal',
-            levels: [
-                {min: 0, max: 53, words: ['正常戶外活動']},
-                {min: 54, max: 70, words: ['任何人如果有不適，如眼痛，咳嗽或喉嚨痛等，應該考慮減少戶外活動']},
-                {min: 71, max: 999, words: ['任何人如果有不適，如眼痛，咳嗽或喉嚨痛等，應減少體力消耗，特別是減少戶外活動']},
-            ],
-        },
-        {
-            humanType: 'sensitive',
-            levels: [
-                {min: 0, max: 35, words: ['正常戶外活動']},
-                {min: 36, max: 53, words: ['有心臟、呼吸道及心血管疾病的成人與孩童感受到癥狀時，應考慮減少體力消耗，特別是減少戶外活動']},
-                {min: 54, max: 70, words: [
-                    '有心臟、呼吸道及心血管疾病的成人與孩童，應減少體力消耗，特別是減少戶外活動',
-                    '老年人應減少體力消耗',
-                    '具有氣喘的人可能需增加使用吸入劑的頻率',
-                ]},
-                {min: 71, max: 999, words: [
-                    '有心臟、呼吸道及心血管疾病的成人與孩童，以及老年人應避免體力消耗，特別是避免戶外活動',
-                    '具有氣喘的人可能需增加使用吸入劑的頻率',
-                ]},
-            ]
-        }
-    ],
+    'PM2.5': {
+        healthEffect: [
+            { min: 0, max: 23, word: '良好 (Good)', bgColor: '#00E800', color: '#000' },
+            { min: 24, max: 41, word: '普通 (Moderate)', bgColor: '#FFFF00', color: '#000' },
+            { min: 42, max: 53, word: '對敏感族群不健康 (Unhealthy for Sensitive Groups)', bgColor: '#FF7E00', color: '#fff' },
+            { min: 54, max: 64, word: '對所有族群不健康 (Unhealthy)', bgColor: '#FF0000', color: '#fff' },
+            { min: 65, max: 999, word: '非常不健康 (Very Unhealthy)', bgColor: '#8F3F97', color: '#fff' },
+        ],
+        activity: [
+            {
+                humanType: 'normal',
+                levels: [
+                    {min: 0, max: 53, words: ['正常戶外活動']},
+                    {min: 54, max: 70, words: ['任何人如果有不適，如眼痛，咳嗽或喉嚨痛等，應該考慮減少戶外活動']},
+                    {min: 71, max: 999, words: ['任何人如果有不適，如眼痛，咳嗽或喉嚨痛等，應減少體力消耗，特別是減少戶外活動']},
+                ],
+            },
+            {
+                humanType: 'sensitive',
+                levels: [
+                    {min: 0, max: 35, words: ['正常戶外活動']},
+                    {min: 36, max: 53, words: ['有心臟、呼吸道及心血管疾病的成人與孩童感受到癥狀時，應考慮減少體力消耗，特別是減少戶外活動']},
+                    {min: 54, max: 70, words: [
+                        '有心臟、呼吸道及心血管疾病的成人與孩童，應減少體力消耗，特別是減少戶外活動',
+                        '老年人應減少體力消耗',
+                        '具有氣喘的人可能需增加使用吸入劑的頻率',
+                    ]},
+                    {min: 71, max: 999, words: [
+                        '有心臟、呼吸道及心血管疾病的成人與孩童，以及老年人應避免體力消耗，特別是避免戶外活動',
+                        '具有氣喘的人可能需增加使用吸入劑的頻率',
+                    ]},
+                ]
+            }
+        ],
+    },
 
-    'AQI': [
-        {
-            humanType: 'normal',
-            levels: [
-                {min: 0, max: 100, words: ['正常戶外活動']},
-                {min: 101, max: 150, words: [
-                    '一般民眾如果有不適，如眼痛，咳嗽或喉嚨痛等，應該考慮減少戶外活動',
-                    '學生仍可進行戶外活動，但建議減少長時間劇烈運動'
-                ]},
-                {min: 151, max: 200, words: [
-                    '一般民眾如果有不適，如眼痛，咳嗽或喉嚨痛等，應減少體力消耗，特別是減少戶外活動',
-                    '學生應避免長時間劇烈運動，進行其他戶外活動時應增加休息時間',
-                ]},
-                {min: 201, max: 300, words: [
-                    '一般民眾應減少戶外活動',
-                    '學生應立即停止戶外活動，並將課程調整於室內進行',
-                ]},
-                {min: 301, max: 500, words: [
-                    '一般民眾應避免戶外活動，室內應緊閉門窗，必要外出應配戴口罩等防護用具',
-                    '學生應立即停止戶外活動，並將課程調整於室內進行',
-                ]},
-            ]
-        },
-        {
-            humanType: 'sensitive',
-            levels: [
-                {min: 0, max: 50, words: ['正常戶外活動']},
-                {min: 51, max: 100, words: ['極特殊敏感族群建議注意可能產生的咳嗽或呼吸急促症狀，但仍可正常戶外活動']},
-                {min: 101, max: 150, words: [
-                    '有心臟、呼吸道及心血管疾病患者、孩童及老年人，建議減少體力消耗活動及戶外活動，必要外出應配戴口罩',
-                    '具有氣喘的人可能需增加使用吸入劑的頻率'
-                ]},
-                {min: 151, max: 200, words: [
-                    '有心臟、呼吸道及心血管疾病患者、孩童及老年人，建議留在室內並減少體力消耗活動，必要外出應配戴口罩',
-                    '具有氣喘的人可能需增加使用吸入劑的頻率'
-                ]},
-                {min: 201, max: 500, words: [
-                    '有心臟、呼吸道及心血管疾病患者、孩童及老年人應留在室內並減少體力消耗活動，必要外出應配戴口罩',
-                    '具有氣喘的人應增加使用吸入劑的頻率'
-                ]},
-            ]
-        }
-    ],
+    'AQI': {
+        healthEffect: [
+            { min: 0, max: 50, word: '良好 (Good)', bgColor: '#00E800', color: '#000'},
+            { min: 51, max: 100, word: '普通 (Moderate)', bgColor: '#FFFF00', color: '#000' },
+            { min: 101, max: 150, word: '對敏感族群不健康 (Unhealthy for Sensitive Groups)', bgColor: '#FF7E00', color: '#000' },
+            { min: 151, max: 200, word: '對所有族群不健康 (Unhealthy)', bgColor: '#FF0000', color: '#fff' },
+            { min: 201, max: 300, word: '非常不健康 (Very Unhealthy)', bgColor: '#8F3F97', color: '#fff' },
+            { min: 301, max: 500, word: '危害 (Hazardous)', bgColor: '#7E0023', color: '#fff' },
+        ],
+        activity: [
+            {
+                humanType: 'normal',
+                levels: [
+                    {min: 0, max: 100, words: ['正常戶外活動']},
+                    {min: 101, max: 150, words: [
+                        '一般民眾如果有不適，如眼痛，咳嗽或喉嚨痛等，應該考慮減少戶外活動',
+                        '學生仍可進行戶外活動，但建議減少長時間劇烈運動'
+                    ]},
+                    {min: 151, max: 200, words: [
+                        '一般民眾如果有不適，如眼痛，咳嗽或喉嚨痛等，應減少體力消耗，特別是減少戶外活動',
+                        '學生應避免長時間劇烈運動，進行其他戶外活動時應增加休息時間',
+                    ]},
+                    {min: 201, max: 300, words: [
+                        '一般民眾應減少戶外活動',
+                        '學生應立即停止戶外活動，並將課程調整於室內進行',
+                    ]},
+                    {min: 301, max: 500, words: [
+                        '一般民眾應避免戶外活動，室內應緊閉門窗，必要外出應配戴口罩等防護用具',
+                        '學生應立即停止戶外活動，並將課程調整於室內進行',
+                    ]},
+                ]
+            },
+            {
+                humanType: 'sensitive',
+                levels: [
+                    {min: 0, max: 50, words: ['正常戶外活動']},
+                    {min: 51, max: 100, words: ['極特殊敏感族群建議注意可能產生的咳嗽或呼吸急促症狀，但仍可正常戶外活動']},
+                    {min: 101, max: 150, words: [
+                        '有心臟、呼吸道及心血管疾病患者、孩童及老年人，建議減少體力消耗活動及戶外活動，必要外出應配戴口罩',
+                        '具有氣喘的人可能需增加使用吸入劑的頻率'
+                    ]},
+                    {min: 151, max: 200, words: [
+                        '有心臟、呼吸道及心血管疾病患者、孩童及老年人，建議留在室內並減少體力消耗活動，必要外出應配戴口罩',
+                        '具有氣喘的人可能需增加使用吸入劑的頻率'
+                    ]},
+                    {min: 201, max: 500, words: [
+                        '有心臟、呼吸道及心血管疾病患者、孩童及老年人應留在室內並減少體力消耗活動，必要外出應配戴口罩',
+                        '具有氣喘的人應增加使用吸入劑的頻率'
+                    ]},
+                ]
+            },
+        ],
+    },
 }
 
 export const getSuggestion = function (type, value) {
     if (!suggestion.hasOwnProperty(type)) {
         console.log(`${type} suggestion not defined`); return;
     }
+    value = Math.round(value);
 
-    let words = {};
+    let healthEffect = {};
+    suggestion[type]['healthEffect'].map(item => {
+        if (value >= item.min && value <= item.max) {
+            healthEffect = item;
+        }
+    });
 
-    suggestion[type].map(item => {
+    let activity = {};
+    suggestion[type]['activity'].map(item => {
         item.levels.map(level => {
             if (value >= level.min && value <= level.max) {
-                words[item.humanType] = level.words;
+                activity[item.humanType] = level.words;
             }
         })
     });
@@ -263,6 +291,7 @@ export const getSuggestion = function (type, value) {
             sensitiveHumanTitle: suggestion.meta.sensitiveHumanTitle,
             datasource: suggestion.meta[`${type}-Datasource`],
         },
-        words: words
+        activity,
+        healthEffect,
     };
 }

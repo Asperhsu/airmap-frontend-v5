@@ -1,20 +1,25 @@
 <template>
     <div class="suggestion" v-if="suggestion">
-        <div class="normal-human">
+        <div class="health-effects"
+            :style="{'background-color': suggestion.healthEffect.bgColor, 'color': suggestion.healthEffect.color}">
+            {{ suggestion.healthEffect.word }}
+        </div>
+
+        <div class="normal-human" v-show="layout === 'complex'">
             <div class="label-suggestion">{{ suggestion.meta.normalHumanTitle }}</div>
             <ul>
-                <li v-for="word in suggestion.words.normal" :key="word">{{ word }}</li>
+                <li v-for="word in suggestion.activity.normal" :key="word">{{ word }}</li>
             </ul>
         </div>
 
-        <div class="sensitive-human">
+        <div class="sensitive-human" v-show="layout === 'complex'">
             <div class="label-suggestion">{{ suggestion.meta.sensitiveHumanTitle }}</div>
             <ul>
-                <li v-for="word in suggestion.words.sensitive" :key="word">{{ word }}</li>
+                <li v-for="word in suggestion.activity.sensitive" :key="word">{{ word }}</li>
             </ul>
         </div>
 
-        <div class="datasource">
+        <div class="datasource" v-show="showDatasource">
             <div class="icon">
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
             </div>
@@ -41,6 +46,10 @@
                 type: String,
                 required: true,
             },
+            layout: {
+                type: String,
+                default: 'simple',
+            },
             showDatasource: {
                 type: Boolean,
                 default: true,
@@ -56,6 +65,11 @@
 </script>
 
 <style lang="scss">
+    .health-effects {
+        padding: .5em;
+        border-radius: .3em;
+    }
+
     .suggestion {
         font-size: .8em;
 
