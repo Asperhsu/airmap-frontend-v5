@@ -12,10 +12,10 @@
                 style="font-size: 1.2em;"
                 class="color-right" />
 
-            <PM25Suggestion
+            <PM25Healthy
                 v-if="site.pm25 !== null"
                 :showDatasource="false"
-                :indicatorType="pm25IndicatorType" :value="site.pm25" />
+                :indicatorType="pm25IndicatorType" :value="site.pm25" :useBorder="false" />
 
             <div class="lamp-container">
                 <Lamp v-if="site.temp" :title="lang('site.temperature')"
@@ -52,11 +52,11 @@
 
 <script>
     import Lamp from '@/components/Lamp';
-    import PM25Suggestion from '@/components/PM25Suggestion'
+    import PM25Healthy from '@/components/PM25Healthy'
     import ListSiteDetail from '@/pages/lists/ListSiteDetail'
 
     export default {
-        components: {Lamp, PM25Suggestion},
+        components: {Lamp, PM25Healthy},
 
         props: {
             site: {

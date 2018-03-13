@@ -7,7 +7,6 @@
 
 <script>
     import {registerSettingWatcher, emitSettingCommit} from '@/services/store';
-    import { init as langInit } from '@/services/i18n'
     import AppTabbar from '@/apps/AppTabbar.vue';
 
     export default {
@@ -16,8 +15,6 @@
         },
 
         created () {
-            langInit();
-
             registerSettingWatcher();
             emitSettingCommit();
         },

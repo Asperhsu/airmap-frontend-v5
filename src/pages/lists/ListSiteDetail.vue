@@ -43,19 +43,22 @@
             </div>
 
             <div class="datasource">
-                <i class="fa fa-info-circle" aria-hidden="true"></i>
-                <span class="info">
+                <div class="icon">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </div>
+                <div class="info">
                     {{ lang('list.analysis.datasource') }}:
                     <a href="https://pm25.lass-net.org/zh_tw/#api" target="_blank">
                         {{ lang('list.analysis.datasourceText') }}
                     </a>
-                </span>
+                </div>
             </div>
         </div>
 
-        <div class="suggestionContainer">
+        <div class="suggestionContainer" v-if="pm25IndicatorType !== 'PM2.5_NASA'">
             <hr>
-            <PM25Suggestion :indicatorType="pm25IndicatorType" :value="site.pm25" layout="complex" />
+            <PM25Healthy :indicatorType="pm25IndicatorType" :value="site.pm25" />
+            <PM25Suggestion :indicatorType="pm25IndicatorType" :value="site.pm25" />
         </div>
 
         <div class="charts" v-show="showChart.pm25 || showChart.temp || showChart.humidity">
@@ -88,10 +91,11 @@
 <script>
     import {generateColorBar, hexToRgb} from '@/services/indicator'
     import LineChart from '@/components/LineChart'
+    import PM25Healthy from '@/components/PM25Healthy'
     import PM25Suggestion from '@/components/PM25Suggestion'
 
     export default {
-        components: {LineChart, PM25Suggestion},
+        components: {LineChart, PM25Healthy, PM25Suggestion},
 
         mounted () {
             this.fetchHistory();
@@ -247,21 +251,26 @@
     }
 
     .analysisRanking {
-        text-align: center;
+        margin: 1.5em;
 
         .ranking {
             font-size: 2em;
             text-shadow: 1px 1px #aaa;
+            text-align: center;
         }
 
         .datasource {
             font-size: .6em;
             margin-top: .5em;
+            display: flex;
+
+            .icon {
+                margin-right: .5em;
+            }
         }
     }
 
-
-    .suggestion {
+    .suggestionContainer {
         margin: 1.5em;
     }
 

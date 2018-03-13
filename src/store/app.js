@@ -1,11 +1,12 @@
 import {isTypeExist, getSupportTypes} from '@/services/indicator';
+import {detectLang, setLang} from '@/services/i18n'
 
 export default {
     strict: true,
     namespaced: true,
 
     state: {
-        lang: 'tw',
+        lang: detectLang(),
         mapType: 'town',
         hideTabbar: false,
 
@@ -33,6 +34,7 @@ export default {
     mutations: {
         setLang(state, lang) {
             state.lang = lang;
+            setLang(lang);
         },
         setMapType(state, type) {
             state.mapType = type;

@@ -20,16 +20,16 @@
 </template>
 
 <script>
-    import {getSupportLangs, getLang, setLang} from '@/services/i18n';
+    import {getSupportLangs} from '@/services/i18n';
 
     export default {
         computed: {
             language: {
                 get () {
-                    return getLang();
+                    return this.$store.state.app.lang;
                 },
                 set (lang) {
-                    setLang(lang);
+                    this.$store.commit('app/setLang', lang);
                 }
             },
             supportLangs () {

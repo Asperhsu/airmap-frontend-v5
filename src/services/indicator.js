@@ -174,11 +174,11 @@ const suggestion = {
 
     'PM2.5': {
         healthEffect: [
-            { min: 0, max: 23, word: '良好 (Good)', bgColor: '#00E800', color: '#000' },
-            { min: 24, max: 41, word: '普通 (Moderate)', bgColor: '#FFFF00', color: '#000' },
-            { min: 42, max: 53, word: '對敏感族群不健康 (Unhealthy for Sensitive Groups)', bgColor: '#FF7E00', color: '#fff' },
-            { min: 54, max: 64, word: '對所有族群不健康 (Unhealthy)', bgColor: '#FF0000', color: '#fff' },
-            { min: 65, max: 999, word: '非常不健康 (Very Unhealthy)', bgColor: '#8F3F97', color: '#fff' },
+            { min: 0, max: 23, lang: 'app.suggestion.healthEffect.good', bgColor: '#00E800', color: '#000' },
+            { min: 24, max: 41, lang: 'app.suggestion.healthEffect.moderate', bgColor: '#FFFF00', color: '#000' },
+            { min: 42, max: 53, lang: 'app.suggestion.healthEffect.unhealthy-sensitive', bgColor: '#FF7E00', color: '#fff' },
+            { min: 54, max: 64, lang: 'app.suggestion.healthEffect.unhealthy', bgColor: '#FF0000', color: '#fff' },
+            { min: 65, max: 999, lang: 'app.suggestion.healthEffect.very-unhealthy', bgColor: '#8F3F97', color: '#fff' },
         ],
         activity: [
             {
@@ -210,12 +210,12 @@ const suggestion = {
 
     'AQI': {
         healthEffect: [
-            { min: 0, max: 50, word: '良好 (Good)', bgColor: '#00E800', color: '#000'},
-            { min: 51, max: 100, word: '普通 (Moderate)', bgColor: '#FFFF00', color: '#000' },
-            { min: 101, max: 150, word: '對敏感族群不健康 (Unhealthy for Sensitive Groups)', bgColor: '#FF7E00', color: '#000' },
-            { min: 151, max: 200, word: '對所有族群不健康 (Unhealthy)', bgColor: '#FF0000', color: '#fff' },
-            { min: 201, max: 300, word: '非常不健康 (Very Unhealthy)', bgColor: '#8F3F97', color: '#fff' },
-            { min: 301, max: 500, word: '危害 (Hazardous)', bgColor: '#7E0023', color: '#fff' },
+            { min: 0, max: 50, lang: 'app.suggestion.healthEffect.good', bgColor: '#00E800', color: '#000'},
+            { min: 51, max: 100, lang: 'app.suggestion.healthEffect.moderate', bgColor: '#FFFF00', color: '#000' },
+            { min: 101, max: 150, lang: 'app.suggestion.healthEffect.unhealthy-sensitive', bgColor: '#FF7E00', color: '#000' },
+            { min: 151, max: 200, lang: 'app.suggestion.healthEffect.unhealthy', bgColor: '#FF0000', color: '#fff' },
+            { min: 201, max: 300, lang: 'app.suggestion.healthEffect.very-unhealthy', bgColor: '#8F3F97', color: '#fff' },
+            { min: 301, max: 500, lang: 'app.suggestion.healthEffect.hazardous', bgColor: '#7E0023', color: '#fff' },
         ],
         activity: [
             {

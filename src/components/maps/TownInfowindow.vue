@@ -14,9 +14,8 @@
                 :indicatorType="pm25IndicatorType" :value="town.pm25"
                 class="color-right" />
 
-            <PM25Suggestion v-if="town.pm25 !== null"
-                :showDatasource="false"
-                :indicatorType="pm25IndicatorType" :value="town.pm25" />
+            <PM25Healthy v-if="town.pm25 !== null"
+                :indicatorType="pm25IndicatorType" :value="town.pm25" :useBorder="false" />
 
             <hr>
 
@@ -67,12 +66,12 @@
 <script>
     import Loading from '@/components/Loading'
     import Lamp from '@/components/Lamp';
-    import PM25Suggestion from '@/components/PM25Suggestion'
+    import PM25Healthy from '@/components/PM25Healthy'
     import ListSiteDetail from '@/pages/lists/ListSiteDetail'
     import {fetchSiteMap} from '@/services/resourceLoader';
 
     export default {
-        components: {Loading, Lamp, PM25Suggestion},
+        components: {Loading, Lamp, PM25Healthy},
 
         props: {
             town: {

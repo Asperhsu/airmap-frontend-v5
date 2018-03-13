@@ -4,6 +4,14 @@ export default {
 
     suggestion: {
         datasource: '資料來源',
+        healthEffect: {
+            good: '良好',
+            moderate: '普通',
+            'unhealthy-sensitive': '對敏感族群不健康',
+            unhealthy: '對所有族群不健康',
+            'very-unhealthy': '非常不健康',
+            hazardous: '危害',
+        },
     },
 
     menu: {

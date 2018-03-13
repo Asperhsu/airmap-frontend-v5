@@ -4,6 +4,14 @@ export default {
 
     suggestion: {
         datasource: 'Datasource',
+        healthEffect: {
+            good: 'Good',
+            moderate: 'Moderate',
+            'unhealthy-sensitive': 'Unhealthy for Sensitive Groups',
+            unhealthy: 'Unhealthy',
+            'very-unhealthy': 'Very Unhealthy',
+            hazardous: 'Hazardous',
+        },
     },
 
     menu: {

@@ -1,7 +1,7 @@
 <template>
     <div class="lamp">
         <div class="left">
-            <div class="color" :style="{'background-color': color}"></div>
+            <div class="color" :style="{'background-color': color}"><slot></slot></div>
         </div>
         <div class="right">
             <div class="title">{{ title }}</div>
@@ -60,6 +60,9 @@
                 border-radius: .3em;
                 box-shadow: -2px 2px 8px #666;
                 margin-left: 5px;
+
+                display: flex;
+                align-items: center;
             }
         }
 

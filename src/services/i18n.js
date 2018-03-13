@@ -26,7 +26,6 @@ export const setLang = (lang) => {
 
     moment.locale(lang == 'tw' ? 'zh-tw' : 'en');
 
-    store.commit('app/setLang', lang);
     return true;
 }
 
@@ -37,12 +36,10 @@ export const lang = (index) => {
         return getObjectValue(translations[currentLang], index) || '!!'+index+'!!';
     }
 
-    console.log(index);
     return '!!'+index+'!!';
 }
 
-export const init = () => {
-    var userLang = getLang() || navigator.language || navigator.userLanguage;
-    var lang = isLangExist(userLang) ? userLang : 'tw';
-    setLang(lang);
+export const detectLang = () => {
+    var userLang = navigator.language || navigator.userLanguage;
+    return isLangExist(userLang) ? userLang : 'tw';
 }
