@@ -5,6 +5,8 @@ import {getTypeColor} from '@/services/indicator';
 import * as MarkerIcon from '@/services/maps/markerIconService'
 
 let historyUrlTemplate = "/json/query-history?group={{group}}&id={{id}}&start={{start}}&end={{end}}";
+let lassPredictionTemplateUrl = "/json/query-prediction?id={{id}}";
+
 
 export default class Site {
     constructor(data) {
@@ -119,7 +121,6 @@ export default class Site {
             url = url.replace(`{{${name}}}`, params[name]);
         });
 
-
         return axios.get(url).then(response => {
             let labels = [];
             let datasets = {};
@@ -138,6 +139,26 @@ export default class Site {
             });
 
             return {labels, datasets};
+        });
+    }
+
+    fetchLassPrediction() {
+        let url = lassPredictionTemplateUrl.replace('{{id}}', this.uniqKey);
+
+        return axios.get(url).then(response => {
+            if (!response.data.labels || !response.data.data) return null;
+
+            let datasets = [];
+            Object.keys(response.data.data).map(index => {
+                datasets.push({
+                    label: index,
+                    data: response.data.data[index],
+                });
+            });
+
+            return {labels: response.data.labels, datasets};
+        }, (error) => {
+            return null;
         });
     }
 }
