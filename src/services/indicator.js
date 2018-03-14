@@ -24,10 +24,10 @@ const colors = {
         { min:36, max: 41, color:'#FFFF00' },
         { min:42, max: 47, color:'#FFCF00' },
         { min:48, max: 53, color:'#FF9A00' },
-        { min:54, max: 58, color:'#FF6464' },
-        { min:59, max: 64, color:'#990000' },
+        { min:54, max: 58, color:'#FF6363' },
+        { min:59, max: 64, color:'#FF0000' },
         { min:65, max: 70, color:'#990000' },
-        { min:71, max: Infinity, color:'#CE30FF' },
+        { min:71, max: Infinity, color:'#CD2FFE' },
     ],
     'PM2.5_NASA': [
         { min:0, max: 3, color:'#0000CC' },
