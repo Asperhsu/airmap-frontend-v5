@@ -10,6 +10,10 @@ export default {
         datasourceText: 'Taiwan Central Research Institute of Information Science Network Research Laboratory',
     },
 
+    prediction: {
+        title: 'PM 2.5 Forecast Service',
+    },
+
     favorite: {
         title: 'Favorite',
         noneSites: 'favorite sites is empty',

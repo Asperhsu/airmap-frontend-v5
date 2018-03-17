@@ -52,11 +52,8 @@
     };
 </script>
 
-<style lang="scss" src="@/assets/styles/setting-page.scss" scoped></style>
+<style lang="scss" src="@/assets/styles/list.scss" scoped></style>
 <style lang="scss" scoped>
-    .disabled {
-        color: gray;
-    }
     .text {
         margin-top: .5em;
         color: gray;

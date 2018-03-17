@@ -115,12 +115,12 @@
             formatLabels (labels) {
                 if (Array.isArray(labels)) {
                     return labels.map((iso8601) => {
-                        return moment(iso8601).format('kk:mm');
+                        return moment(iso8601).format('HH:mm');
                     });
                 }
 
                 if (typeof labels === "string") {
-                    return moment(labels).format('kk:mm');
+                    return moment(labels).format('HH:mm');
                 }
             },
             setDatasetsDefaultColor (datasets) {

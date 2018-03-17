@@ -69,7 +69,7 @@
             </div>
 
             <div class="chartContainer" v-show="showChart.prediction">
-                <div class="title">PM 2.5 Forecast Service</div>
+                <div class="title">{{ lang('list.prediction.title') }}</div>
                 <PredictionLineChart ref="chartPrediction" />
 
                 <div class="datasource" style="justify-content: center;">
@@ -97,11 +97,14 @@
         </div>
 
         <hr>
-        <div class="position" v-if="site.region">
-            <i class="fa fa-map-marker" style="color: red" aria-hidden="true"></i>&nbsp;
-            {{ site.region.country }} {{ site.region.town }}
+        <div class="positionContainer">
+            <div ref="map" class="map"></div>
+
+            <div class="position" v-if="site.region">
+                <i class="fa fa-map-marker" style="color: red" aria-hidden="true"></i>&nbsp;
+                {{ site.region.country }} {{ site.region.town }}
+            </div>
         </div>
-        <div ref="location" class="location"></div>
     </v-ons-page>
 </template>
 
@@ -120,7 +123,7 @@
             this.fetchPrediction();
 
             setTimeout(() => {
-                this.loadLocation();
+                this.loadPositionMap();
             }, 2000);
         },
 
@@ -132,7 +135,7 @@
 
         data () {
             return {
-                location: null,
+                map: null,
                 showChart: {
                     pm25: true,
                     prediction: true,
@@ -221,9 +224,9 @@
                     });
                 });
             },
-            loadLocation() {
+            loadPositionMap() {
                 let position = this.site.position;
-                let element = this.$refs.location;
+                let element = this.$refs.map;
 
                 if (!element) {
                     return;
@@ -239,7 +242,7 @@
                     map: map,
                 });
 
-                this.location = {map, marker};
+                this.map = {map, marker};
             }
         },
     }
@@ -313,12 +316,15 @@
         }
     }
 
-    .position {
-        margin: .3em .5em;
-        text-align: center;
-    }
+    .positionContainer {
+        margin: 1em;
 
-    .location {
-        min-height: 300px;
+        .position {
+            text-align: left;
+        }
+
+        .map {
+            min-height: 300px;
+        }
     }
 </style>

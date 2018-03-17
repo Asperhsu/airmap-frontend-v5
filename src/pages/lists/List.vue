@@ -14,7 +14,7 @@
         </div>
 
         <v-ons-list>
-            <v-ons-list-item v-for="(count, name) in filterGroups" :key="name" modifier="chevron" tappable @click="showSites(name)">
+            <v-ons-list-item v-for="(count, name) in filterGroups" :key="name" modifier="chevron" tappable @click="showSites(name)" :class="{'disabled': !count}">
                 <div class="left">
                     <img :src="getLogo(name)" style="width: 100%"/>
                 </div>
@@ -22,7 +22,7 @@
                     {{ name }}
                 </label>
                 <div class="right">
-                    <div class="badge badge-fill badge-primary">{{ count }}</div>
+                    <div v-show="count > 0" class="badge badge-fill badge-primary">{{ count }}</div>
                 </div>
             </v-ons-list-item>
         </v-ons-list>
@@ -128,6 +128,9 @@
                 });
             },
             showSites(group) {
+                let count = this.filterGroups[group];
+                if (!count) { return false; }
+
                 this.$store.commit('navigator/push', {
                     ...ListGroupSites,
                     store: this.$store,
@@ -162,4 +165,4 @@
     }
 </style>
 
-<style lang="scss" src="@/assets/styles/setting-page.scss" scoped></style>
+<style lang="scss" src="@/assets/styles/list.scss" scoped></style>

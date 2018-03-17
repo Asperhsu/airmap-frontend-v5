@@ -57,4 +57,4 @@
     };
 </script>
 
-<style lang="scss" src="@/assets/styles/setting-page.scss" scoped></style>
+<style lang="scss" src="@/assets/styles/list.scss" scoped></style>
