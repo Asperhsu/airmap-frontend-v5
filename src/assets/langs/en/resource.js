@@ -4,7 +4,10 @@ export default {
     tools: {
         title: 'Tools',
         widget: 'Widget',
-        messenger: 'Messenger Bot',
+        screenshot: {
+            hourly: 'Hourly Screenshot',
+            daily: 'Daily Screenshot'
+        },
     },
 
     links: {

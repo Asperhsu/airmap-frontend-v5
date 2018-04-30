@@ -4,7 +4,10 @@ export default {
     tools: {
         title: '工具',
         widget: 'Widget 小工具',
-        messenger: 'Messenger 機器人',
+        screenshot: {
+            hourly: '整點截圖',
+            daily: '歷史動畫'
+        },
     },
 
     links: {

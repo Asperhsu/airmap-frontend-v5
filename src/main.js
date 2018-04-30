@@ -12,11 +12,6 @@ import VueAnalytics from 'vue-analytics'
 import $ons from 'vue-onsenui/esm'
 import * as VOns from './vue-onsen-components'
 
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import fontawesome from '@fortawesome/fontawesome'
-import faBrands from '@fortawesome/fontawesome-free-brands'
-import faSolid from '@fortawesome/fontawesome-free-solid'
-
 import store from './store'
 import router from './router'
 import { lang } from './services/i18n'
@@ -31,9 +26,6 @@ Vue.config.productionTip = false
 Vue.use($ons)
 Object.values(VOns).forEach(comp => Vue.component(comp.name, comp))
 
-// font awesome
-fontawesome.library.add(faBrands, faSolid);
-Vue.component('fa', FontAwesomeIcon);
 
 // ga
 Vue.use(VueAnalytics, {

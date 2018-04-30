@@ -17,10 +17,21 @@
             </v-ons-list-item>
             <v-ons-list-item>
                 <div class="left">
-                    <fa :icon="['fab', 'facebook-messenger']" style="color: #0099FD;"/>
+                    <i class="fa fa-picture-o" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a href="https://m.me/g0vairmap" target="_blank">{{ lang('resource.tools.messenger') }}</a>
+                    <a href="https://airmap.g0v.asper.tw/screenshot/hourly" target="_blank">{{ lang('resource.tools.screenshot.hourly') }}</a>
+                </div>
+                <div class="right">
+                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                </div>
+            </v-ons-list-item>
+            <v-ons-list-item>
+                <div class="left">
+                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                </div>
+                <div class="center">
+                    <a href="https://airmap.g0v.asper.tw/screenshot/gif" target="_blank">{{ lang('resource.tools.screenshot.daily') }}</a>
                 </div>
                 <div class="right">
                     <i class="fa fa-external-link" aria-hidden="true"></i>
