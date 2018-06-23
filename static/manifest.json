@@ -3,17 +3,17 @@
   "short_name": "G0V Airmap",
   "icons": [
     {
-      "src": "/img/icons/g0v_airmap-256x256.png",
+      "src": "/v5/img/icons/g0v_airmap-256x256.png",
       "sizes": "256x256",
       "type": "image/png"
     },
     {
-      "src": "/img/icons/g0v_airmap-512x512.png",
+      "src": "/v5/img/icons/g0v_airmap-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/v5/index.html",
   "display": "standalone",
   "background_color": "#FAFAFA",
   "theme_color": "#3077FA"
