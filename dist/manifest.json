@@ -1,20 +1,20 @@
 {
-  "name": "airmap-frontend",
-  "short_name": "airmap-frontend",
+  "name": "G0V Airmap",
+  "short_name": "G0V Airmap",
   "icons": [
     {
-      "src": "/static/img/icons/android-chrome-192x192.png",
-      "sizes": "192x192",
+      "src": "/img/icons/g0v_airmap-256x256.png",
+      "sizes": "256x256",
       "type": "image/png"
     },
     {
-      "src": "/static/img/icons/android-chrome-512x512.png",
+      "src": "/img/icons/g0v_airmap-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#FAFAFA",
+  "theme_color": "#3077FA"
 }

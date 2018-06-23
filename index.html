@@ -37,18 +37,7 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.GOOGLE_MAP_KEY %>&libraries=places"></script>
     <!-- Todo: only include in production -->
-    <!-- <%= htmlWebpackPlugin.options.serviceWorkerLoader %> -->
+    <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->
-
-    <script>
-      if(window.navigator && navigator.serviceWorker) {
-        navigator.serviceWorker.getRegistrations()
-        .then(function(registrations) {
-          for(let registration of registrations) {
-            registration.unregister();
-          }
-        });
-      }
-    </script>
   </body>
 </html>
