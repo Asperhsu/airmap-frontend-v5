@@ -174,6 +174,8 @@
             processChartData (labels, values, indicatorType) {
                 values = [].concat(values).reverse();
                 let maxValue = Math.round(Math.max.apply(null, values));
+                maxValue = Math.round(maxValue * 1.1); // add 10% value for margin top
+                if (maxValue % 5 >= 3) { maxValue += (5 - maxValue % 5); }   // let y-axis is 5n
 
                 return {
                     gradientFill: this.generateColorBar(indicatorType, maxValue),

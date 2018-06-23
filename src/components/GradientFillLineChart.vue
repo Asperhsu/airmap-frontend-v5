@@ -14,7 +14,7 @@
                     fontColor: "rgba(0,0,0,0.5)",
                     fontStyle: "bold",
                     beginAtZero: true,
-                    maxTicksLimit: 10,
+                    maxTicksLimit: 5,
                     padding: 5
                 },
                 gridLines: {
@@ -27,7 +27,7 @@
                     zeroLineColor: "transparent",
                 },
                 ticks: {
-                    maxTicksLimit: 10,
+                    maxTicksLimit: 7,
                     maxRotation: 0,
                     padding: 0,
                     autoSkipPadding: 10,
@@ -41,7 +41,11 @@
         },
         elements: {
             point: {
+                radius: 0,
                 hitRadius: 5
+            },
+            line: {
+                borderColor: 'rgba(0, 0, 0, 0)'
             }
         }
     };
