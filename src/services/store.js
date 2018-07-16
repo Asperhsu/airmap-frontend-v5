@@ -65,6 +65,11 @@ export const registerSettingWatcher = () => {
 export const emitSettingCommit = () => {
     let settings = SettingStorage.get();
 
+    if (settings['app/setGeolocationMethod']) {
+        settings['app/setGeolocationMethod'] = 'geo';
+        SettingStorage.set('app/setGeolocationMethod', 'geo');
+    }
+
     Object.keys(settings).map(commit => {
         store.commit(commit, settings[commit]);
     });

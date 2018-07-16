@@ -18,7 +18,7 @@ export default {
         measureType: 'PM25',
         pm25IndicatorType: 'PM2.5',
 
-        geolocationMethod: 'google',
+        geolocationMethod: 'geo',
     },
 
     getters: {

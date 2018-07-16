@@ -25,7 +25,7 @@
     export default {
         data () {
             return {
-                supportMethods: ['google', 'geo'],
+                supportMethods: ['geo'],
             };
         },
 
