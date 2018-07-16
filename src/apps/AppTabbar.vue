@@ -1,5 +1,7 @@
 <template>
     <v-ons-page>
+        <Bulletin />
+
         <v-ons-tabbar position="bottom" @postchange="postchange" :hide-tabs="hideTabbar">
             <keep-alive slot="pages" include="map-page">
                 <router-view></router-view>
@@ -21,8 +23,11 @@
     import List from '@/pages/lists/List.vue';
     import Resource from '@/pages/resources/Resource.vue';
     import AppSetting from '@/pages/AppSetting.vue';
+    import Bulletin from '@/components/Bulletin.vue';
 
     export default {
+        components: { Bulletin },
+
         data () {
             return {
                 tabs: [
