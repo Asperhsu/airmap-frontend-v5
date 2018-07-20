@@ -1,5 +1,5 @@
 <template>
-    <v-ons-toolbar modifier="bulletin transparent" v-if="true">
+    <v-ons-toolbar modifier="bulletin transparent" v-if="false">
         <div class="center">
             <a href="https://unihub.hfcc.com.tw/promote/lass2018/">7/21 LASS大會 @ 交大</a>
         </div>
