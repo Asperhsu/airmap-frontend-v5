@@ -15,4 +15,8 @@ export default {
         map: 'Loading Map Resource',
         data: 'Loading Town Data',
     },
+
+    errors: {
+        loadFailed: 'Loading Failed',
+    },
 }

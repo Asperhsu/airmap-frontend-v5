@@ -82,7 +82,7 @@
             },
 
             loadGeoJson () {
-                this.mapObject.data.loadGeoJson('geojson/town.json');
+                this.mapObject.data.addGeoJson(require('@/assets/geojson/town.json'));
             },
             getFeatureStyle (feature) {
                 let color = this.getRegionColor(feature);
@@ -130,6 +130,9 @@
 
                 return fetchTownMap().then((data) => {
                     this.isLoading = false;
+                }).catch(() => {
+                    this.isLoading = false;
+                    this.$ons.notification.toast(lang('town.errors.loadFailed'), {timeout: 2000})
                 });
             },
 

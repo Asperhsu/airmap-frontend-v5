@@ -128,6 +128,9 @@
                     this.$store.commit('map/setMarkers', markers);
                     this.$store.commit('site/setGroups', groups);
                     this.$store.commit('site/updateAnalysisTypeCount', analysis);
+                }).catch(() => {
+                    this.isLoading = false;
+                    this.$ons.notification.toast(lang('site.errors.loadFailed'), {timeout: 2000})
                 });
 
                 // set interval

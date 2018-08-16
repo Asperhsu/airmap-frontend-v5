@@ -56,7 +56,7 @@
         data() {
             return {
                 isLoading: false,
-                loadingMsg: 'Loading Data',
+                loadingMsg: lang('site.loading.data'),
                 search: '',
 
                 groups: {},
@@ -125,6 +125,9 @@
                     this.sites = this.filterSites = groupSites;
                     this.groups = this.filterGroups = groups;
                     this.isLoading = false;
+                }).catch(() => {
+                    this.isLoading = false;
+                    this.$ons.notification.toast(lang('site.errors.loadFailed'), {timeout: 2000})
                 });
             },
             showSites(group) {

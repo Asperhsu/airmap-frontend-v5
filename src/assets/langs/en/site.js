@@ -28,4 +28,8 @@ export default {
         map: 'Loading Map Resource',
         data: 'Loading Site Data',
     },
+
+    errors: {
+        loadFailed: 'Loading Failed',
+    },
 }

@@ -3,7 +3,7 @@
         <v-ons-toolbar modifier="transparent cover-content">
             <div class="left">
                 <a id="siteLogo" href="http://beta.hackfoldr.org/g0vairmap/g0v--riRTvbB0E5x">
-                    <img src="https://i.imgur.com/IWqy7yh.png">
+                    <img :src="require('@/assets/img/logo/g0v.png')">
                 </a>
             </div>
         </v-ons-toolbar>

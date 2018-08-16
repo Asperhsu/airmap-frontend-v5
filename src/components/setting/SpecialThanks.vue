@@ -7,7 +7,7 @@
         <v-ons-list modifier="inset">
             <v-ons-list-item>
                 <div class="left">
-                    <img src="https://i.imgur.com/z11DvN7.png" height="50px" />
+                    <img :src="require('@/assets/img/logo/probecube.png')" height="50px" />
                 </div>
                 <div class="center" style="text-align:left;">
                     {{ lang('resource.specialThanks.text') }}

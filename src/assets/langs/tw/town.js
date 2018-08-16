@@ -15,4 +15,8 @@ export default {
         map: '地圖資源載入中',
         data: '鄉鎮資料載入中',
     },
+
+    errors: {
+        loadFailed: '載入資料失敗',
+    },
 }

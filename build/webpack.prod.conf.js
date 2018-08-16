@@ -103,9 +103,23 @@ const webpackConfig = merge(baseWebpackConfig, {
     new SWPrecacheWebpackPlugin({
       cacheId: 'airmap-frontend',
       filename: 'service-worker.js',
-      staticFileGlobs: ['dist/**/*.{js,html,css}'],
-      minify: true,
-      stripPrefix: 'dist/'
+      staticFileGlobs: ['dist/**/*.{css,eot,svg,png,ttf,woff,woff2,js,html,json}'],
+      minify: false,
+      stripPrefix: 'dist/',
+      runtimeCaching: [
+        {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\//,
+            handler: 'cacheFirst'
+        },
+        {
+            urlPattern: /^https:\/\/maps\.googleapis\.com\//,
+            handler: 'cacheFirst'
+        },
+        {
+            urlPattern: /^https:\/\/i\.imgur\.com\//,
+            handler: 'cacheFirst'
+        },
+      ]
     })
   ]
 })
