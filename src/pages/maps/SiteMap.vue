@@ -3,8 +3,7 @@
         <GoogleMap ref="map" :loadMarker="true"
             @markerClicked="markerClicked"
             @mapBooted="mapBooted"
-            @markersUpdated="markersUpdated"
-            @allMarkersUpdated="allMarkersUpdated" />
+            @markersUpdated="markersUpdated" />
 
         <!-- <div id="sites-count">{{ siteCount }}</div> -->
 
@@ -88,14 +87,12 @@
             },
             markersUpdated () {
                 this.applyMarkerFilter();
+                this.countSitesInView();
 
                 this.isLoading = false;
             },
             markerClicked (marker) {
                 this.openInfowindow(marker);
-            },
-            allMarkersUpdated() {
-                this.countSitesInView();
             },
             addSettingButton () {
                 let html = [

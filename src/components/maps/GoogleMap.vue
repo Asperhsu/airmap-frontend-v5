@@ -1,8 +1,5 @@
 <template>
-    <div style="width: 100%; height: 100%">
-        <v-ons-toast :visible="updatingMarkers" style="bottom: 50px">{{ updatingMarkersMsg }}</v-ons-toast>
-        <div :id="mapElementId" class='google-map-element'></div>
-    </div>
+    <div :id="mapElementId" class='google-map-element'></div>
 </template>
 
 <script>
@@ -38,8 +35,7 @@
                 markerInstances: [],
                 circleInstances: [],
                 currentLocaton: {marker: null, circle: null},
-                updatingMarkers: false,
-                updatingMarkersMsg: '',
+                markerUpdatedAt: null,
             }
         },
 
@@ -55,6 +51,9 @@
             },
             geolocationMethod () {
                 return this.$store.state.app.geolocationMethod;
+            },
+            siteDataFetchedAt () {
+                return this.$store.state.site.dataFetchedAt;
             }
         },
 
@@ -155,12 +154,10 @@
                 if (this.updatingMarkers) {
                     return false;
                 }
-
                 this.updatingMarkers = true;
-                let delayms = 5;
 
                 // save markerInstances, remove markers not in map
-                let prevMarkerInstances = this.markerInstances;
+                let prevMarkerInstances = [...this.markerInstances];
                 this.markerInstances.length = [];
                 prevMarkerInstances.map(marker => {
                     if (!this.positionInMap(marker.getPosition())) {
@@ -169,56 +166,54 @@
                 });
 
                 // add markers
-                let processNum = 0;
+                let isDataUpdated = this.markerUpdatedAt === null || this.markerUpdatedAt < this.siteDataFetchedAt;
                 this.markers && this.markers.map((markerOption, i) => {
                     if (!markerOption.hasOwnProperty('position') || !this.positionInMap(markerOption.position)) {
                         return;
                     }
 
-                    // process map options
-                    let option = $.extend({}, {
-                        map: this.mapObject,
-                    }, markerOption);
+                    // check is already in map
+                    let index = prevMarkerInstances.findIndex(marker => {
+                        return markerOption.uid == marker.uid;
+                    });
+                    let isExist = index > -1;
+                    let options = null;
 
-                    if (markerOption.hasOwnProperty('callbacks')) {
-                        for (let index in markerOption.callbacks) {
-                            option[index] = markerOption.callbacks[index]();
+                    if (!isExist || isDataUpdated) {
+                        // process map options
+                        options = {
+                            map: this.mapObject,
+                            ...markerOption
+                        };
+
+                        if (markerOption.hasOwnProperty('callbacks')) {
+                            for (let index in markerOption.callbacks) {
+                                options[index] = markerOption.callbacks[index]();
+                            }
                         }
                     }
 
-                    // check is already in map
-                    let marker;
-                    let index = prevMarkerInstances.findIndex(marker => {
-                        return option.uid === marker.uid;
-                    });
-
-                    this.addOrUpdateMarker(option, (index > -1) ? prevMarkerInstances[index] : null,  processNum * delayms);
-                    processNum += 1;
-
-                    this.$emit('markersUpdated');
+                    this.addOrUpdateMarker(options, isExist ? prevMarkerInstances[index] : null);
                 });
 
-                this.updatingMarkersMsg = lang('site.loading.marker').replace('{num}', processNum);
-
-                setTimeout(() => {
-                    this.$emit('allMarkersUpdated');
-                    this.updatingMarkers = false;
-                }, processNum * delayms)
+                this.$emit('markersUpdated');
+                this.updatingMarkers = false;
+                this.markerUpdatedAt = (new Date).getTime();
             },
-            addOrUpdateMarker (options, marker = null, delayms) {
+            addOrUpdateMarker (options = null, marker = null) {
                 if (marker) {
-                    marker.setOptions(options);
+                    options && marker.setOptions(options);
                     this.markerInstances.push(marker);
                     return;
                 }
 
-                setTimeout(() => {
-                    marker = new google.maps.Marker(options);
-                    google.maps.event.addListener(marker, 'click', () => {
-                        this.$emit('markerClicked', marker);
-                    });
-                    this.markerInstances.push(marker);
-                }, delayms);
+                if (!options) { return; }
+
+                marker = new google.maps.Marker(options);
+                google.maps.event.addListener(marker, 'click', () => {
+                    this.$emit('markerClicked', marker);
+                });
+                this.markerInstances.push(marker);
             }
         }
     }
