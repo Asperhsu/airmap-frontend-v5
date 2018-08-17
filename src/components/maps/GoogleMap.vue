@@ -1,5 +1,8 @@
 <template>
-    <div :id="mapElementId" class='google-map-element'></div>
+    <div style="width: 100%; height: 100%">
+        <v-ons-toast :visible="updatingMarkers" style="bottom: 50px">{{ updatingMarkersMsg }}</v-ons-toast>
+        <div :id="mapElementId" class='google-map-element'></div>
+    </div>
 </template>
 
 <script>
@@ -35,6 +38,8 @@
                 markerInstances: [],
                 circleInstances: [],
                 currentLocaton: {marker: null, circle: null},
+                updatingMarkers: false,
+                updatingMarkersMsg: '',
             }
         },
 
@@ -101,7 +106,9 @@
                 }, 500)));
 
                 this.listeners.push(google.maps.event.addListener(this.mapObject, 'bounds_changed', debounce(() => {
-                    this.updateMarkers();
+                    setTimeout(() => {
+                        this.updateMarkers();
+                    }, 500);
                 }, 500)));
             },
             addUserLocationButton () {
@@ -145,18 +152,25 @@
                 return bounds && bounds.contains(position);
             },
             updateMarkers () {
+                if (this.updatingMarkers) {
+                    return false;
+                }
+
+                this.updatingMarkers = true;
+                let delayms = 5;
+
                 // save markerInstances, remove markers not in map
                 let prevMarkerInstances = this.markerInstances;
+                this.markerInstances.length = [];
                 prevMarkerInstances.map(marker => {
                     if (!this.positionInMap(marker.getPosition())) {
                         marker.setMap(null)
                     }
                 });
 
-                this.markerInstances.length = [];
-
                 // add markers
-                this.markers && this.markers.map(markerOption => {
+                let processNum = 0;
+                this.markers && this.markers.map((markerOption, i) => {
                     if (!markerOption.hasOwnProperty('position') || !this.positionInMap(markerOption.position)) {
                         return;
                     }
@@ -177,25 +191,35 @@
                     let index = prevMarkerInstances.findIndex(marker => {
                         return option.uid === marker.uid;
                     });
-                    let isExists = index > -1;
 
-                    if (isExists) {
-                        // find marker, update options
-                        marker = prevMarkerInstances[index];
-                        marker.setOptions(option);
-                    } else {
-                        // create new one
-                        marker = new google.maps.Marker(option);
-                        google.maps.event.addListener(marker, 'click', () => {
-                            this.$emit('markerClicked', marker);
-                        });
-                    }
+                    this.addOrUpdateMarker(option, (index > -1) ? prevMarkerInstances[index] : null,  processNum * delayms);
+                    processNum += 1;
 
-                    this.markerInstances.push(marker);
+                    this.$emit('markersUpdated');
                 });
 
-                this.$emit('markersUpdated');
+                this.updatingMarkersMsg = lang('site.loading.marker').replace('{num}', processNum);
+
+                setTimeout(() => {
+                    this.$emit('allMarkersUpdated');
+                    this.updatingMarkers = false;
+                }, processNum * delayms)
             },
+            addOrUpdateMarker (options, marker = null, delayms) {
+                if (marker) {
+                    marker.setOptions(options);
+                    this.markerInstances.push(marker);
+                    return;
+                }
+
+                setTimeout(() => {
+                    marker = new google.maps.Marker(options);
+                    google.maps.event.addListener(marker, 'click', () => {
+                        this.$emit('markerClicked', marker);
+                    });
+                    this.markerInstances.push(marker);
+                }, delayms);
+            }
         }
     }
 </script>

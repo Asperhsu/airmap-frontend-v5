@@ -27,6 +27,7 @@ export default {
     loading: {
         map: '地圖資源載入中',
         data: '站點資料載入中',
+        marker: '正在更新 {num} 站點 ...',
     },
 
     errors: {

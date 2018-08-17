@@ -27,6 +27,7 @@ export default {
     loading: {
         map: 'Loading Map Resource',
         data: 'Loading Site Data',
+        marker: 'Updating {num} Markers ...',
     },
 
     errors: {

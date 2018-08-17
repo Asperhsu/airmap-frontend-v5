@@ -1,6 +1,10 @@
 <template>
     <div style="width: 100%; height: 100%;">
-        <GoogleMap ref="map" :loadMarker="true" @markerClicked="markerClicked" @mapBooted="mapBooted" @markersUpdated="markersUpdated" />
+        <GoogleMap ref="map" :loadMarker="true"
+            @markerClicked="markerClicked"
+            @mapBooted="mapBooted"
+            @markersUpdated="markersUpdated"
+            @allMarkersUpdated="allMarkersUpdated" />
 
         <!-- <div id="sites-count">{{ siteCount }}</div> -->
 
@@ -81,23 +85,17 @@
                 this.addSettingButton();
                 this.fetchSites();
                 this.addSitesCountButton();
-
-                setTimeout(() => {
-                    $("#sites-count").text(this.siteCount);
-                }, 5000);
-
-                google.maps.event.addListener(this.mapObject, 'bounds_changed',
-                    debounce(() => this.countSitesInView(), 500)
-                );
             },
             markersUpdated () {
-                this.countSitesInView();
                 this.applyMarkerFilter();
 
                 this.isLoading = false;
             },
             markerClicked (marker) {
                 this.openInfowindow(marker);
+            },
+            allMarkersUpdated() {
+                this.countSitesInView();
             },
             addSettingButton () {
                 let html = [
