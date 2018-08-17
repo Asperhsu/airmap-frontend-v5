@@ -2,7 +2,7 @@
     <div style="width: 100%; height: 100%;">
         <GoogleMap ref="map" :loadMarker="true" @markerClicked="markerClicked" @mapBooted="mapBooted" @markersUpdated="markersUpdated" />
 
-        <div id="sites-count">{{ siteCount }}</div>
+        <!-- <div id="sites-count">{{ siteCount }}</div> -->
 
         <Loading :show="isLoading" :msg="loadingMsg" />
 
@@ -34,16 +34,12 @@
     export default {
         components: {GoogleMap, Loading, WindLayer, PublishWatermark},
 
-        mounted () {
-            this.loadingMsg = lang('site.loading.map');
-        },
-
         data () {
             return {
                 infowindow: null,
                 siteCount: 0,
                 isLoading: true,
-                loadingMsg: null,
+                loadingMsg: lang('site.loading.map'),
 
                 showWindLayer: false,
             };
@@ -84,6 +80,11 @@
             mapBooted () {
                 this.addSettingButton();
                 this.fetchSites();
+                this.addSitesCountButton();
+
+                setTimeout(() => {
+                    $("#sites-count").text(this.siteCount);
+                }, 5000);
 
                 google.maps.event.addListener(this.mapObject, 'bounds_changed',
                     debounce(() => this.countSitesInView(), 500)
@@ -111,6 +112,17 @@
                     this.$store.commit('navigator/push', SiteMapSetting);
                 });
             },
+            addSitesCountButton () {
+                let html = [
+                    "<div class='map-controls' style='margin-bottom:7px' title='站點數量'>",
+                    "<button>",
+                    "<span id='sites-count'>" + this.siteCount + "</span>",
+                    "</button>",
+                    "</div>"
+                ].join('');
+
+                addButton(this.mapObject, 'RIGHT_BOTTOM', html);
+            },
             fetchSites () {
                 this.isLoading = true;
                 this.loadingMsg = lang('site.loading.data');
@@ -118,6 +130,7 @@
                 fetchSiteMap().then(({sites, groups, analysis}) => {
                     let markers = sites.map(site => {
                         let marker = site.marker(this.indicatorType);
+                        marker.uid = site.uid;
                         marker.site = site;
                         marker.callbacks = {
                             'icon': () => site.markerIcon(this.indicatorType),
@@ -147,13 +160,8 @@
                 this.infowindow.open();
             },
             countSitesInView() {
-                let count = 0;
-
-                this.markerInstances.map(marker => {
-                    marker.getVisible() && count++;
-                })
-
-                this.siteCount = count;
+                this.siteCount = this.markerInstances.length;
+                $("#sites-count").text(this.siteCount);
             },
             updateMarkerIcon() {
                 this.markerInstances.map(marker => {
@@ -187,20 +195,20 @@
 
 <style lang="scss">
     .toolbar .mapSetting{ padding: 0; }
-    #sites-count {
-        position: absolute;
-        bottom: 195px;
-        right: 10px;
-        cursor: default;
-        border-radius: 2px;
-        background-color: #fff;
-        color: #000;
-        text-align: center;
-        width: 2.3em;
-        line-height: 2.3em;
-        font-size: .75em;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-    }
+    // #sites-count {
+    //     position: absolute;
+    //     bottom: 195px;
+    //     right: 10px;
+    //     cursor: default;
+    //     border-radius: 2px;
+    //     background-color: #fff;
+    //     color: #000;
+    //     text-align: center;
+    //     width: 2.3em;
+    //     line-height: 2.3em;
+    //     font-size: .75em;
+    //     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    // }
 </style>
 
 <style lang="scss" src="@/assets/styles/infowindow.scss"></style>

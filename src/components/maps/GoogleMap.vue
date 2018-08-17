@@ -145,8 +145,14 @@
                 return bounds && bounds.contains(position);
             },
             updateMarkers () {
-                // remove all markers
-                this.markerInstances.map(marker =>  marker.setMap(null));
+                // save markerInstances, remove markers not in map
+                let prevMarkerInstances = this.markerInstances;
+                prevMarkerInstances.map(marker => {
+                    if (!this.positionInMap(marker.getPosition())) {
+                        marker.setMap(null)
+                    }
+                });
+
                 this.markerInstances.length = [];
 
                 // add markers
@@ -155,6 +161,7 @@
                         return;
                     }
 
+                    // process map options
                     let option = $.extend({}, {
                         map: this.mapObject,
                     }, markerOption);
@@ -165,11 +172,24 @@
                         }
                     }
 
-                    let marker = new google.maps.Marker(option);
-
-                    google.maps.event.addListener(marker, 'click', () => {
-                        this.$emit('markerClicked', marker);
+                    // check is already in map
+                    let marker;
+                    let index = prevMarkerInstances.findIndex(marker => {
+                        return option.uid === marker.uid;
                     });
+                    let isExists = index > -1;
+
+                    if (isExists) {
+                        // find marker, update options
+                        marker = prevMarkerInstances[index];
+                        marker.setOptions(option);
+                    } else {
+                        // create new one
+                        marker = new google.maps.Marker(option);
+                        google.maps.event.addListener(marker, 'click', () => {
+                            this.$emit('markerClicked', marker);
+                        });
+                    }
 
                     this.markerInstances.push(marker);
                 });
@@ -192,11 +212,11 @@
             border-radius: 2px;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
             cursor: pointer;
-            height: 28px;
             margin-right: 10px;
             outline: medium none;
             padding: 0;
-            width: 28px;
+            width: 40px;
+            height: 40px;
         }
     }
 
@@ -206,7 +226,7 @@
         background-repeat: no-repeat;
         background-size: 180px 18px;
         height: 18px;
-        margin: 5px;
+        margin: 11px;
         width: 18px;
 
         &.gps-located{
