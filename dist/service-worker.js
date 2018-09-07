@@ -286,7 +286,7 @@ self.addEventListener('fetch', function(event) {
 // Runtime cache configuration, using the sw-toolbox library.
 
 toolbox.router.get(/^https:\/\/fonts\.googleapis\.com\//, toolbox.cacheFirst, {});
-toolbox.router.get(/^https:\/\/maps\.googleapis\.com\//, toolbox.fastest, {"cache":{"maxAgeSeconds":432000}});
+toolbox.router.get(/^https:\/\/maps\.googleapis\.com\//, toolbox.networkFirst, {"cache":{"maxAgeSeconds":432000}});
 toolbox.router.get(/^https:\/\/i\.imgur\.com\//, toolbox.cacheFirst, {});
 
 
