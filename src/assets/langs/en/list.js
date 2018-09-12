@@ -7,7 +7,7 @@ export default {
 
     analysis: {
         datasource: 'Analysis source',
-        datasourceText: 'Taiwan Central Research Institute of Information Science Network Research Laboratory',
+        datasourceText: 'Network Research Lab, Institute of Information Science, Academia Sinica',
     },
 
     prediction: {
