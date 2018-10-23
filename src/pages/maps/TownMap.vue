@@ -117,7 +117,7 @@
                 return this.$store.getters['town/findTown'](country, town);
             },
             getRegionColor (feature) {
-                let town = this.getRegion(feature.f.COUNTYNAME, feature.f.TOWNNAME);
+                let town = this.getRegion(feature.getProperty('COUNTYNAME'), feature.getProperty('TOWNNAME'));
                 return town ? getTypeColor(this.pm25IndicatorType, Math.round(town.pm25)) : 'transparent';
             },
             updateRegionColor () {
@@ -136,8 +136,8 @@
                 });
             },
 
-            infowindowNoData(info) {
-                let townName = info.COUNTYNAME + info.TOWNNAME;
+            infowindowNoData(feature) {
+                let townName = feature.getProperty('COUNTYNAME') + feature.getProperty('TOWNNAME');
                 this.$ons.notification.toast(townName + ' ' + lang('town.notfound'), {timeout: 1500, force: true});
 
                 this.mapObject.data.revertStyle();
@@ -146,9 +146,9 @@
             openInfoWindow(feature, latlng) {
                 this.infowindow && this.infowindow.destroy();
 
-                let town = this.getRegion(feature.f.COUNTYNAME, feature.f.TOWNNAME);
+                let town = this.getRegion(feature.getProperty('COUNTYNAME'), feature.getProperty('TOWNNAME'));
                 if (!town) {
-                    return this.infowindowNoData(feature.f);
+                    return this.infowindowNoData(feature);
                 }
 
                 // prepare component
