@@ -112,13 +112,8 @@ const webpackConfig = merge(baseWebpackConfig, {
             handler: 'cacheFirst'
         },
         {
-            urlPattern: /^https:\/\/maps\.googleapis\.com\//,
+            urlPattern: /^https:\/\/maps\.googleapis\.com\/maps-api/,
             handler: 'networkFirst',
-            options: {
-              cache: {
-                maxAgeSeconds:  5 * 60 * 60 * 24, // 5 days
-              }
-            }
         },
         {
             urlPattern: /^https:\/\/i\.imgur\.com\//,
