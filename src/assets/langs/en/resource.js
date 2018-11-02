@@ -36,6 +36,7 @@ export default {
 
     specialThanks: {
         title: 'Special Thanks',
-        text: 'Our hardware is enthusiastically supported by the ProbeCube team.',
+        text: 'Our hardware is kindly supported by the ProbeCube team.',
+        "ocf-text": 'The Google map API credit is kindly supported by the Open Cultural Foundation (OCF).',
     },
 }

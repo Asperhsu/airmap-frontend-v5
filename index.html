@@ -35,7 +35,7 @@
     </noscript>
     <div id="app"></div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.GOOGLE_MAP_KEY %>&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.GOOGLE_MAP_KEY %>"></script>
     <!-- Todo: only include in production -->
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->

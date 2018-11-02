@@ -37,5 +37,6 @@ export default {
     specialThanks: {
         title: '特別致謝',
         text: '本站硬體由 ProbeCube 團隊熱心支援',
+        "ocf-text": '本站地圖流量由開放文化基金會(OCF)熱心支援',
     },
 }
