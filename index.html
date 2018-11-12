@@ -35,6 +35,7 @@
     </noscript>
     <div id="app"></div>
 
+    <script>var mapEnable = true;</script>
     <script src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.GOOGLE_MAP_KEY %>"></script>
     <!-- Todo: only include in production -->
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>

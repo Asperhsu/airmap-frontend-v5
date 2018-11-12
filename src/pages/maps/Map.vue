@@ -14,6 +14,23 @@
         <div class="mapContainer" v-show="mapType === 'town'">
             <TownMap v-if="mapType === 'town'" />
         </div>
+        <div class="mapContainer" v-show="mapType === 'disabled'">
+            <div class="over-quota">
+                <div class="content">
+                    <h1>Map Over Free Quota</h1>
+                    <h2>地圖超過免費額度</h2>
+                    <hr>
+                    <h3>次月1號台灣時間15:00啟用</h3>
+                    <h3>Enable at 15:00 1st of next month (UTC+8) </h3>
+
+                    <div class="fb">
+                        <a href="https://www.facebook.com/g0vairmap" target="_blank">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <IndicatorVertical />
     </v-ons-page>
@@ -30,7 +47,7 @@
         components: {SiteMap, TownMap, IndicatorVertical},
 
         mounted () {
-            this.mapType = this.mapStateType;
+            this.mapType = window.mapEnable ? this.mapStateType : 'disabled';
         },
 
         data() {
@@ -76,5 +93,22 @@
 
     .mapContainer {
         width: 100%; height: 100%;
+    }
+
+    .over-quota{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+
+        .fb {
+            margin-top: 1em;
+            a {
+                padding: 2px 10px;
+                background: #0076ff;
+                color: #fff;
+                border-radius: 5px;
+            }
+        }
     }
 </style>
