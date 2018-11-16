@@ -62,7 +62,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 0 5rem;
+        padding: 0 5%;
         height: 100vh;
         background-color: #333;
     }
