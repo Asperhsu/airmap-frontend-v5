@@ -7,7 +7,7 @@
 export { default as VOnsBackButton } from 'vue-onsenui/esm/components/VOnsBackButton'
 // export { default as VOnsBottomToolbar } from 'vue-onsenui/esm/components/VOnsBottomToolbar'
 export { default as VOnsButton } from 'vue-onsenui/esm/components/VOnsButton'
-// export { default as VOnsCard } from 'vue-onsenui/esm/components/VOnsCard'
+export { default as VOnsCard } from 'vue-onsenui/esm/components/VOnsCard'
 // export { default as VOnsCarousel } from 'vue-onsenui/esm/components/VOnsCarousel'
 // export { default as VOnsCarouselItem } from 'vue-onsenui/esm/components/VOnsCarouselItem'
 export { default as VOnsCheckbox } from 'vue-onsenui/esm/components/VOnsCheckbox'

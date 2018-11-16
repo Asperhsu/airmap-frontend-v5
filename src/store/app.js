@@ -19,6 +19,7 @@ export default {
         pm25IndicatorType: 'PM2.5',
 
         geolocationMethod: 'geo',
+        lastShowWarning: null,
     },
 
     getters: {
@@ -56,6 +57,10 @@ export default {
 
         setGeolocationMethod(state, method) {
             state.geolocationMethod = method;
+        },
+
+        setLastShowWarning(state, value) {
+            state.lastShowWarning = value;
         },
     }
 };

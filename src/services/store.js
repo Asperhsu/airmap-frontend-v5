@@ -11,6 +11,7 @@ const stateWatchers = [
     {commit: 'app/setMeasureType', stateKey: 'app.measureType'},
     {commit: 'app/setPM25IndicatorType', stateKey: 'app.pm25IndicatorType'},
     {commit: 'app/setGeolocationMethod', stateKey: 'app.geolocationMethod'},
+    {commit: 'app/setLastShowWarning', stateKey: 'app.lastShowWarning'},
 
     {commit: 'map/setCenter', stateKey: 'map.center'},
     {commit: 'map/setZoom', stateKey: 'map.zoom'},
