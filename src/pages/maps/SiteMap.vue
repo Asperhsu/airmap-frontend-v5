@@ -1,7 +1,6 @@
 <template>
     <div style="width: 100%; height: 100%;">
         <GoogleMap ref="map" :loadMarker="true"
-            @markerClicked="markerClicked"
             @mapBooted="mapBooted"
             @markersUpdated="markersUpdated" />
 
@@ -50,7 +49,7 @@
 
         computed: {
             mapObject () { return this.$refs.map.mapObject; },
-            markerInstances () { return this.$refs.map.markerInstances; },
+            markers () { return this.$store.state.map.markers; },
 
             onlyShowFavorite () { return this.$store.state.site.onlyShowFavorite; },
             favorites () { return this.$store.state.site.favorites; },
@@ -124,18 +123,21 @@
 
                 fetchSiteMap().then(({sites, groups, analysis}) => {
                     let markers = sites.map(site => {
-                        let marker = site.marker(this.indicatorType);
-                        marker.uid = site.uid;
+                        let markerOptions = site.marker(this.indicatorType);
+                        let marker = new google.maps.Marker(markerOptions);
                         marker.site = site;
-                        marker.callbacks = {
-                            'icon': () => site.markerIcon(this.indicatorType),
-                        };
+                        google.maps.event.addListener(marker, 'click', () => {
+                            this.markerClicked(marker);
+                        });
+
                         return marker;
                     });
 
                     this.$store.commit('map/setMarkers', markers);
                     this.$store.commit('site/setGroups', groups);
                     this.$store.commit('site/updateAnalysisTypeCount', analysis);
+
+                    this.isLoading = false;
                 }).catch(() => {
                     this.isLoading = false;
                     this.$ons.notification.toast(lang('site.errors.loadFailed'), {timeout: 2000})
@@ -155,18 +157,18 @@
                 this.infowindow.open();
             },
             countSitesInView() {
-                this.siteCount = this.markerInstances.length;
+                this.siteCount = this.markers.length;
                 $("#sites-count").text(this.siteCount);
             },
             updateMarkerIcon() {
-                this.markerInstances.map(marker => {
+                this.markers.map(marker => {
                     let site = marker.site;
                     let icon = site.markerIcon(this.indicatorType);
                     marker.setIcon(icon);
                 });
             },
             applyMarkerFilter() {
-                this.markerInstances.map(marker => {
+                this.markers.map(marker => {
                     let site = marker.site;
 
                     if (this.onlyShowFavorite) {

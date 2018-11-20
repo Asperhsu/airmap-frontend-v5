@@ -5,7 +5,7 @@
 <script>
     import GeoLocation from '@/services/maps/geolocation';
     import {mapOption, addButton} from '@/services/maps/mapService';
-    import {debounce} from '@/services/helpers';
+    import {debounce} from 'lodash';
 
     export default {
         props: {
@@ -32,7 +32,6 @@
                 listeners: [],
                 mapElementId: 'google-map-'+id,
                 mapObject: null,
-                markerInstances: [],
                 circleInstances: [],
                 currentLocaton: {marker: null, circle: null},
                 markerUpdatedAt: null,
@@ -105,9 +104,7 @@
                 }, 500)));
 
                 this.listeners.push(google.maps.event.addListener(this.mapObject, 'bounds_changed', debounce(() => {
-                    setTimeout(() => {
-                        this.updateMarkers();
-                    }, 500);
+                    this.updateMarkers();
                 }, 500)));
             },
             addUserLocationButton () {
@@ -151,70 +148,15 @@
                 return bounds && bounds.contains(position);
             },
             updateMarkers () {
-                if (this.updatingMarkers) {
-                    return false;
-                }
-                this.updatingMarkers = true;
+                this.markers.map(marker => {
+                    let isInView = this.positionInMap(marker.getPosition());
+                    let isInMap = !!marker.getMap();
 
-                // save markerInstances, remove markers not in map
-                let prevMarkerInstances = [...this.markerInstances];
-                this.markerInstances.length = [];
-                prevMarkerInstances.map(marker => {
-                    if (!this.positionInMap(marker.getPosition())) {
-                        marker.setMap(null)
+                    if (isInView !== isInMap) {
+                        marker.setMap(isInView ? this.mapObject : null);
                     }
                 });
-
-                // add markers
-                let isDataUpdated = this.markerUpdatedAt === null || this.markerUpdatedAt < this.siteDataFetchedAt;
-                this.markers && this.markers.map((markerOption, i) => {
-                    if (!markerOption.hasOwnProperty('position') || !this.positionInMap(markerOption.position)) {
-                        return;
-                    }
-
-                    // check is already in map
-                    let index = prevMarkerInstances.findIndex(marker => {
-                        return markerOption.uid == marker.uid;
-                    });
-                    let isExist = index > -1;
-                    let options = null;
-
-                    if (!isExist || isDataUpdated) {
-                        // process map options
-                        options = {
-                            map: this.mapObject,
-                            ...markerOption
-                        };
-
-                        if (markerOption.hasOwnProperty('callbacks')) {
-                            for (let index in markerOption.callbacks) {
-                                options[index] = markerOption.callbacks[index]();
-                            }
-                        }
-                    }
-
-                    this.addOrUpdateMarker(options, isExist ? prevMarkerInstances[index] : null);
-                });
-
-                this.$emit('markersUpdated');
-                this.updatingMarkers = false;
-                this.markerUpdatedAt = (new Date).getTime();
             },
-            addOrUpdateMarker (options = null, marker = null) {
-                if (marker) {
-                    options && marker.setOptions(options);
-                    this.markerInstances.push(marker);
-                    return;
-                }
-
-                if (!options) { return; }
-
-                marker = new google.maps.Marker(options);
-                google.maps.event.addListener(marker, 'click', () => {
-                    this.$emit('markerClicked', marker);
-                });
-                this.markerInstances.push(marker);
-            }
         }
     }
 </script>
