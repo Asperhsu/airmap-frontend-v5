@@ -9,7 +9,7 @@ export default {
             title: '風力線',
             enable: '啟動',
             fillOpacity: '線條亮度',
-            moveSpeed: '線條亮度',
+            moveSpeed: '移動速度',
             information: '資訊',
             publishTime: '資料時間',
             waitForReturnMap: '待返回地圖後載入',
