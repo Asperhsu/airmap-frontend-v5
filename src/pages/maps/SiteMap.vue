@@ -157,7 +157,9 @@
                 this.infowindow.open();
             },
             countSitesInView() {
-                this.siteCount = this.markers.length;
+                this.siteCount = this.markers.filter(marker => {
+                    return this.$refs.map.positionInMap(marker.getPosition());
+                }).length;
                 $("#sites-count").text(this.siteCount);
             },
             updateMarkerIcon() {

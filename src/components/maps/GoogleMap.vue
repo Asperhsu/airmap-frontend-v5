@@ -156,6 +156,8 @@
                         marker.setMap(isInView ? this.mapObject : null);
                     }
                 });
+
+                this.$emit('markersUpdated');
             },
         }
     }
