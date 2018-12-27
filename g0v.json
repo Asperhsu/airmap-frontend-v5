@@ -1,0 +1,31 @@
+{
+  "repo": "Aspertw/airmap-frontend-v5",
+  "author": "Aspertw",
+  "status": "Released",
+  "name": "g0v airmap",
+  "name_zh": "零時空汙觀測網",
+  "description": "Real-time air quality visualization on map",
+  "description_zh": "整合各方空汙監測站的即時觀測資料以地圖視覺化呈現",
+  "homepage": "https://airmap.g0v.tw/",
+  "thumbnail": "https://raw.githubusercontent.com/Aspertw/airmap-frontend-v5/master/g0v-airmap-thumbnail.png",
+  "document": "https://beta.hackfoldr.org/g0vairmap/g0v--riRTvbB0E5x",
+  "repository": "https://github.com/Aspertw/airmap-frontend-v5",
+  "licenses": [
+    "MIT"
+  ],
+  "keywords": [
+    "air pollution",
+    "pm2.5"
+  ],
+  "audience": [
+    "everyone"
+  ],
+  "products": [
+    "https://airmap.g0v.tw/"
+  ],
+  "partOf": "",
+  "contributors": [
+    "Aspertw",
+    "Lafudoci"
+  ]
+}
