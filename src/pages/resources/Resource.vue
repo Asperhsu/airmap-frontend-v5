@@ -9,7 +9,7 @@
                     <i class="fa fa-tachometer" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a href="https://airmap.g0v.asper.tw/widget" target="_blank">{{ lang('resource.tools.widget') }}</a>
+                    <a href="https://widget.airmap.g0v.tw" target="_blank">{{ lang('resource.tools.widget') }}</a>
                 </div>
                 <div class="right">
                     <i class="fa fa-external-link" aria-hidden="true"></i>
@@ -20,7 +20,7 @@
                     <i class="fa fa-picture-o" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a href="https://airmap.g0v.asper.tw/screenshot/hourly" target="_blank">{{ lang('resource.tools.screenshot.hourly') }}</a>
+                    <a href="https://airmap.g0v.tw/screenshot" target="_blank">{{ lang('resource.tools.screenshot.hourly') }}</a>
                 </div>
                 <div class="right">
                     <i class="fa fa-external-link" aria-hidden="true"></i>
@@ -31,7 +31,7 @@
                     <i class="fa fa-picture-o" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a href="https://airmap.g0v.asper.tw/screenshot/gif" target="_blank">{{ lang('resource.tools.screenshot.daily') }}</a>
+                    <a href="https://airmap.g0v.tw/screenshot/gif" target="_blank">{{ lang('resource.tools.screenshot.daily') }}</a>
                 </div>
                 <div class="right">
                     <i class="fa fa-external-link" aria-hidden="true"></i>
