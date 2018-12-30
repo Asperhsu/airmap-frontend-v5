@@ -1,14 +1,14 @@
 <template>
-    <v-ons-toolbar modifier="bulletin transparent" v-if="false">
+    <v-ons-toolbar modifier="bulletin transparent">
         <div class="center">
-            <a href="https://unihub.hfcc.com.tw/promote/lass2018/">7/21 LASS大會 @ 交大</a>
+            本網域將於3/1停用。<a href="https://airmap.g0v.tw">詳細資訊</a>
         </div>
     </v-ons-toolbar>
 </template>
 
 <style lang="scss">
     .toolbar--bulletin {
-        background: #97c8ff;
+        background: #fdff9a;
 
         a {
             color: #4f595d;

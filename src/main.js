@@ -28,22 +28,24 @@ Object.values(VOns).forEach(comp => Vue.component(comp.name, comp))
 
 
 // ga
-Vue.use(VueAnalytics, {
-    id: process.env.GA_ID,
-    router,
-    autoTracking: {
-        pageviewTemplate (route) {
-            return {
-                page: 'v5' + route.path,
-                title: document.title,
-                location: window.location.href
+if (process.env.GA_ID) {
+    Vue.use(VueAnalytics, {
+        id: process.env.GA_ID,
+        router,
+        autoTracking: {
+            pageviewTemplate (route) {
+                return {
+                    page: 'v5' + route.path,
+                    title: document.title,
+                    location: window.location.href
+                }
             }
+        },
+        debug: {
+            sendHitTask: process.env.NODE_ENV === 'production'
         }
-    },
-    debug: {
-        sendHitTask: process.env.NODE_ENV === 'production'
-    }
-});
+    });
+}
 
 // helpers
 window.lang = Vue.prototype.lang = lang;
