@@ -3,6 +3,7 @@ export default {
 
     tools: {
         title: 'Tools',
+        list: 'Site List',
         widget: 'Widget',
         screenshot: {
             hourly: 'Hourly Screenshot',

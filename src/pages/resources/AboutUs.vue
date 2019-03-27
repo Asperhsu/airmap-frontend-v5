@@ -9,7 +9,7 @@
                     <i class="fa fa-link" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a target="_blank" href="https://github.com/Aspertw/airmap-laravel">Backend 後端程式碼</a>
+                    <a target="_blank" href="https://github.com/Asperhsu/airmap-backend">Backend 後端程式碼</a>
                 </div>
                 <div class="right">
                     Laravel
@@ -20,7 +20,7 @@
                     <i class="fa fa-link" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a target="_blank" href="https://github.com/Aspertw/airmap-frontend-v5">Frontend 前端程式碼</a>
+                    <a target="_blank" href="https://github.com/Asperhsu/airmap-frontend-v5">Frontend 前端程式碼</a>
                 </div>
                 <div class="right">
                     JS
@@ -31,7 +31,7 @@
                     <i class="fa fa-link" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a target="_blank" href="https://github.com/Aspertw/airmap-widget">Widget 程式碼</a>
+                    <a target="_blank" href="https://github.com/Asperhsu/airmap-widget">Widget 程式碼</a>
                 </div>
                 <div class="right">
                     Vue.js
@@ -42,7 +42,7 @@
                     <i class="fa fa-link" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a target="_blank" href="https://github.com/Aspertw/noaa-windy-layer">Wind Layer</a>
+                    <a target="_blank" href="https://github.com/Asperhsu/noaa-windy-layer">Wind Layer</a>
                 </div>
                 <div class="right">
                     wind.js
@@ -72,7 +72,7 @@
                     <i class="fa fa-home" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a target="_blank" href="http://www.asper.tw/">Asper Blog!</a>
+                    <a target="_blank" href="https://blog.asper.one/">Asper Blog!</a>
                 </div>
             </v-ons-list-item>
             <v-ons-list-item>

@@ -18,13 +18,14 @@
         created () {
             registerSettingWatcher();
             emitSettingCommit();
-            this.checkShowWarning();
+            // this.checkShowWarning();
+            this.$store.commit('navigator/push', AppTabbar);
         },
 
         computed: {
             pageStack() { return this.$store.state.navigator.stack; },
             options() { return this.$store.state.navigator.options; },
-            lastShowWarning() { return this.$store.state.app.lastShowWarning; },
+            // lastShowWarning() { return this.$store.state.app.lastShowWarning; },
         },
 
         methods: {

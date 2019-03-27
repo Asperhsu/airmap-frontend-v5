@@ -3,6 +3,7 @@ export default {
 
     tools: {
         title: '工具',
+        list: '站點列表',
         widget: 'Widget 小工具',
         screenshot: {
             hourly: '整點截圖',

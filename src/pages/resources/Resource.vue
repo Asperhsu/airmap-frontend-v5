@@ -9,7 +9,7 @@
                     <i class="fa fa-tachometer" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a href="https://widget.airmap.g0v.tw" target="_blank">{{ lang('resource.tools.widget') }}</a>
+                    <a href="https://list.airmap.g0v.tw/" target="_blank">{{ lang('resource.tools.list') }}</a>
                 </div>
                 <div class="right">
                     <i class="fa fa-external-link" aria-hidden="true"></i>
@@ -17,21 +17,10 @@
             </v-ons-list-item>
             <v-ons-list-item>
                 <div class="left">
-                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                    <i class="fa fa-tachometer" aria-hidden="true"></i>
                 </div>
                 <div class="center">
-                    <a href="https://airmap.g0v.tw/screenshot" target="_blank">{{ lang('resource.tools.screenshot.hourly') }}</a>
-                </div>
-                <div class="right">
-                    <i class="fa fa-external-link" aria-hidden="true"></i>
-                </div>
-            </v-ons-list-item>
-            <v-ons-list-item>
-                <div class="left">
-                    <i class="fa fa-picture-o" aria-hidden="true"></i>
-                </div>
-                <div class="center">
-                    <a href="https://airmap.g0v.tw/screenshot/gif" target="_blank">{{ lang('resource.tools.screenshot.daily') }}</a>
+                    <a href="https://widget.airmap.g0v.tw/" target="_blank">{{ lang('resource.tools.widget') }}</a>
                 </div>
                 <div class="right">
                     <i class="fa fa-external-link" aria-hidden="true"></i>

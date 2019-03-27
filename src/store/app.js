@@ -7,7 +7,7 @@ export default {
 
     state: {
         lang: detectLang(),
-        mapType: 'town',
+        mapType: 'site',
         hideTabbar: false,
 
         indicatorTypes: {
