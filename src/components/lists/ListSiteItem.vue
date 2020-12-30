@@ -15,7 +15,7 @@
         </div>
 
         <div class="right">
-            <div class="publishAt">{{ site.publishedAt.format('(dd) hh:mm M/D') }}</div>
+            <div class="publishAt">{{ site.publishedAt.format('(dd) HH:mm M/D') }}</div>
 
             <div class="measures">
                 <div class="pm25">
